@@ -10,10 +10,10 @@ export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
 ### Uncomment only one of these!
 
 ### "nvim" as manpager
-#export MANPAGER="vim +Man!"
+export MANPAGER="vim -c ASMANPAGER -" # +Man!"
 
 ### "less" as manpager
-export MANPAGER="less"
+#export MANPAGER="less"
 
 ### SET VI MODE ###
 # Comment this line out to enable default emacs-like bindings
@@ -122,12 +122,22 @@ function ex {
             *.gz)        gunzip ./"$n"      ;;
             *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
             *.z)         uncompress ./"$n"  ;;
-            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+            *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
                          7z x ./"$n"        ;;
             *.xz)        unxz ./"$n"        ;;
             *.exe)       cabextract ./"$n"  ;;
             *.cpio)      cpio -id < ./"$n"  ;;
             *.cba|*.ace)      unace x ./"$n"      ;;
+			*.zpaq)      zpaq x ./"$n"      ;;
+            *.arc)       arc e ./"$n"       ;;
+            *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
+                            extract "$n.iso" && \rm -f "$n" ;;
+            *.zlib)      zlib-flate -uncompress < ./"$n" > ./"$n.tmp" && \
+                            mv ./"$n.tmp" ./"${n%.*zlib}" && rm -f "$n"   ;;
+            *.dmg)
+                         hdiutil mount ./"$n" -mountpoint "./$n.mounted" ;;
+            *.tar.zst)   tar -I zstd -xvf ./"$n"  ;;
+            *.zst)       zstd -d ./"$n"  ;;
             *)
                          echo "ex: '$n' - unknown archive method"
                          return 1
@@ -252,6 +262,22 @@ alias tb="nc termbin.com 9999"
 
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+
+# Safe copying-moving
+alias cp='cp -vi'
+alias mv='mv -vi'
+
+#verbose copying
+alias cpv='rsync -avh --info=progress2'
+
+# do sudo, or sudo the last command if no argument given
+s() { 
+    if [[ $# == 0 ]]; then
+        sudo $(history -p '!!')
+    else
+        sudo "$@"
+    fi
+}
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts

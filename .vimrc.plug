@@ -1,0 +1,8 @@
+call plug#begin('~/.vim/plug/')
+
+"Fugitive Vim github wrapper
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'lambdalisue/vim-manpager'
+
+call plug#end()

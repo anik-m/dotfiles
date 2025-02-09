@@ -62,6 +62,10 @@ require('lazy').setup({
 
   require 'Plugins/which-key',
 
+  require 'Plugins/peek',
+
+  require 'Plugins/render-markdown',
+
   -- theme applied
   require 'Themes/cyberdream',
 

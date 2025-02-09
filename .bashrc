@@ -25,7 +25,7 @@ bind -m vi-insert 'Control-l: clear-screen'
 [[ $- != *i* ]] && return
 
 ### PROMPT
-# This is commented out if using starship prompt
+# This is commented out if using starship or other prompt
 # PS1='[\u@\h \W]\$ '
 
 ### PATH
@@ -286,5 +286,6 @@ s() {
 
 ### SETTING THE STARSHIP PROMPT ###
 #eval "$(starship init bash)"
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/lightgreen.omp.json)"
+eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/neko.omp.json)"
 eval "$(zoxide init --cmd cd bash)"
+. "/home/nika/.deno/env"

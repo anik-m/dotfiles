@@ -1,96 +1,59 @@
-#[colors]
-#draw_bold_text_with_bright_colors = true
+[colors]
+draw_bold_text_with_bright_colors = true
 
-#[colors.bright]
-#black = "#5b6268"
-#blue = "#3071db"
-#cyan = "#46d9ff"
-#green = "#4db5bd"
-#magenta = "#a9a1e1"
-#red = "#da8548"
-#white = "#dfdfdf"
-#yellow = "#ecbe7b"
-#
-#[colors.cursor]
-#cursor = "#528bff"
-#text = "CellBackground"
-#
-#[colors.normal]
-#black = "#1c1f24"
-#blue = "#51afef"
-#cyan = "#5699af"
-#green = "#98be65"
-#magenta = "#c678dd"
-#red = "#ff6c6b"
-#white = "#abb2bf"
-#yellow = "#da8548"
-#
-#[colors.primary]
-#background = "#282c34"
-#foreground = "#bbc2cf"
-#
-#[colors.selection]
-#background = "#3e4451"
-#text = "CellForeground"
-
-
-[scrolling]
-multiplier = 3
-
-# Colors (Tokyo Night)
-# Source https//github.com/zatchheems/tokyo-night-alacritty-theme
-
-# Default colors
-[colors.primary]
-background = '#1a1b26'
-foreground = '#a9b1d6'
-
-# Normal colors
-[colors.normal]
-black   = '#32344a'
-red     = '#f7768e'
-green   = '#9ece6a'
-yellow  = '#e0af68'
-blue    = '#7aa2f7'
-magenta = '#ad8ee6'
-cyan    = '#449dab'
-white   = '#787c99'
-
-# Bright colors
 [colors.bright]
-black   = '#444b6a'
-red     = '#ff7a93'
-green   = '#b9f27c'
-yellow  = '#ff9e64'
-blue    = '#7da6ff'
-magenta = '#bb9af7'
-cyan    = '#0db9d7'
-white   = '#acb0d0'
+black = "#5b6268"
+blue = "#3071db"
+cyan = "#46d9ff"
+green = "#4db5bd"
+magenta = "#a9a1e1"
+red = "#da8548"
+white = "#dfdfdf"
+yellow = "#ecbe7b"
 
+[colors.cursor]
+cursor = "#528bff"
+text = "CellBackground"
+
+[colors.normal]
+black = "#1c1f24"
+blue = "#51afef"
+cyan = "#5699af"
+green = "#98be65"
+magenta = "#c678dd"
+red = "#ff6c6b"
+white = "#abb2bf"
+yellow = "#da8548"
+
+[colors.primary]
+background = "#282c34"
+foreground = "#bbc2cf"
+
+[colors.selection]
+background = "#3e4451"
+text = "CellForeground"
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 21.0
+size = 12.0
 
 [font.bold]
-family = "mononoki Nerd Font"
+family = "Source Code Pro"
 style = "Bold"
 
 [font.bold_italic]
-family = "mononoki Nerd Font"
+family = "Source Code Pro"
 style = "Bold Italic"
 
 [font.italic]
-family = "mononoki Nerd Font"
+family = "Source Code Pro"
 style = "Italic"
 
 [font.normal]
-family = "mononoki Nerd Font"
+family = "Source Code Pro"
 style = "Regular"
-#nerdfont options include- HeavyDataNerdFont,MartianMono,mononoki,ShureTechMono,SauceCodePro,SpaceMono,Terminess,VictorMono,
-#non nerdfont options - Source Code Pro
 
 [font.offset]
 x = 0
@@ -180,10 +143,12 @@ key = "End"
 mode = "~Alt"
 mods = "Shift"
 
+[scrolling]
+history = 5000
 
 [window]
 dynamic_padding = false
-opacity = 0.9
+opacity = 1.0
 title = "Alacritty"
 
 [window.class]
@@ -191,7 +156,5 @@ general = "Alacritty"
 instance = "Alacritty"
 
 [window.padding]
-x = 15
-y = 15
-
-
+x = 6
+y = 6

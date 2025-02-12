@@ -94,6 +94,9 @@ myModMask = mod4Mask        -- Sets modkey to super/windows key
 myTerminal :: String
 myTerminal = "alacritty"    -- Sets default terminal
 
+myFileManager :: String
+myFileManager = "pcmanfm"   -- Sets default gui file browser
+
 myBrowser :: String
 myBrowser = "firefox "  -- Sets browser
 
@@ -582,6 +585,7 @@ myKeys c =
   ^++^ subKeys "Favorite programs"
   [ ("M-S-<Return>", addName "Launch terminal"   $ spawn (myTerminal))
   , ("M-b", addName "Launch web browser"       $ spawn (myBrowser))
+  , ("M-f", addName "Launch file manager"       $ spawn (myFileManager))
   , ("M-M1-h", addName "Launch htop"           $ spawn (myTerminal ++ " -e htop"))]
 
   ^++^ subKeys "Monitors"
@@ -602,7 +606,7 @@ myKeys c =
 
   -- Floating windows
   ^++^ subKeys "Floating windows"
-  [ ("M-f", addName "Toggle float layout"        $ sendMessage (T.Toggle "floats"))
+  [ ("M-S-f", addName "Toggle float layout"        $ sendMessage (T.Toggle "floats"))
   , ("M-t", addName "Sink a floating window"     $ withFocused $ windows . W.sink)
   , ("M-S-t", addName "Sink all floated windows" $ sinkAll)]
 

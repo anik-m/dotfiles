@@ -286,6 +286,6 @@ s() {
 
 ### SETTING THE STARSHIP PROMPT ###
 #eval "$(starship init bash)"
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/space.omp.json)"
+eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/hunk.omp.json)"
 eval "$(zoxide init --cmd cd bash)"
 . "/home/nika/.deno/env"

@@ -1,4 +1,5 @@
   -- sajid introduced me to haskell. I am grateful
+
   -- Base
 import XMonad
 import System.Directory
@@ -596,7 +597,7 @@ myKeys c =
 
   -- Switch layouts
   ^++^ subKeys "Switch layouts"
-  [ ("M-<Tab>", addName "Switch to next layout"   $ sendMessage NextLayout)
+  [ ("M-S-<Tab>", addName "Switch to next layout"   $ sendMessage NextLayout)
   , ("M-<Space>", addName "Toggle noborders/full" $ sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)]
 
   -- Window resizing

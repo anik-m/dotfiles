@@ -51,10 +51,12 @@ Config { font            = "Ubuntu Bold 9"
                     , Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
                         -- Echos a "battery" icon in front of the pacman updates.
                     , Run Com "echo" ["<fn=2>\xf242</fn>"] "baticon" 3600
-                        -- Battery
-                    , Run BatteryP ["BAT0"] ["-t", "<acstatus><watts> (<left>%)"] 360
+                        -- Battery 0
+                    , Run BatteryN ["BAT0"] ["-t", "<acstatus><watts> (<left>%)"] 60 "battery1"
+                        -- Battery 1
+                    , Run BatteryN ["BAT1"] ["-t", "<acstatus><watts> (<left>%)"] 60 "battery2"
                         -- Time and date
-                    , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
+                    , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M:%S) " "date" 10
                         -- Script that dynamically adjusts xmobar padding depending on number of trayer icons.
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                         -- Prints out the left side items such as workspaces, layout, etc.
@@ -62,5 +64,5 @@ Config { font            = "Ubuntu Bold 9"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <action=`dm-run`><icon=haskell_20.xpm/> </action>   <fc=#666666>|</fc> %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#f7768e><fc=#f7768e>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#9ece6a><fc=#9ece6a><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#e0af68><fc=#e0af68><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#7aa2f7><fc=#7aa2f7>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#bb9af7><fc=#bb9af7>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#73daca><fc=#73daca>%bell%  <action=`alacritty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>   <box type=Bottom width=2 mb=2 color=#f7768e><fc=#f7768e>%baticon%  %battery%</fc></box>    <box type=Bottom width=2 mb=2 color=#9ece6a><fc=#9ece6a><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
+       , template = " <action=`dm-run`><icon=haskell_20.xpm/> </action>   <fc=#666666>|</fc> %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#f7768e><fc=#f7768e>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#9ece6a><fc=#9ece6a><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#e0af68><fc=#e0af68><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#7aa2f7><fc=#7aa2f7>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#bb9af7><fc=#bb9af7>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#73daca><fc=#73daca>%bell%  <action=`alacritty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>   <box type=Bottom width=2 mb=2 color=#f7768e><fc=#f7768e>%baticon%  %battery1%</fc></box>   <box type=Bottom width=2 mb=2 color=#f7768e><fc=#f7768e>%baticon%  %battery2%</fc></box>    <box type=Bottom width=2 mb=2 color=#9ece6a><fc=#9ece6a><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
        }

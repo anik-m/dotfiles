@@ -1,6 +1,4 @@
 -- Xmobar (http://projects.haskell.org/xmobar/)
--- This is one of the xmobar configurations for DTOS.
--- This config is packaged in the DTOS repo as 'dtos-xmobar'
 -- Color scheme: Monokai Pro
 -- Dependencies: 
    -- otf-font-awesome 
@@ -51,10 +49,12 @@ Config { font            = "Ubuntu Bold 9"
                     , Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
                         -- Echos a "battery" icon in front of the pacman updates.
                     , Run Com "echo" ["<fn=2>\xf242</fn>"] "baticon" 3600
-                        -- Battery
-                    , Run BatteryP ["BAT0"] ["-t", "<acstatus><watts> (<left>%)"] 360
+                        -- Battery 0
+                    , Run BatteryN ["BAT0"] ["-t", "<acstatus><watts> (<left>%)"] 60 "battery1"
+                        -- Battery 1
+                    , Run BatteryN ["BAT1"] ["-t", "<acstatus><watts> (<left>%)"] 60 "battery2"
                         -- Time and date
-                    , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
+                    , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M:%S) " "date" 10
                         -- Script that dynamically adjusts xmobar padding depending on number of trayer icons.
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                         -- Prints out the left side items such as workspaces, layout, etc.
@@ -62,5 +62,5 @@ Config { font            = "Ubuntu Bold 9"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#FF6188><fc=#FF6188>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A9DC76><fc=#A9DC76><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#FC9867><fc=#FC9867><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#FFD866><fc=#FFD866>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#AB9DF2><fc=#AB9DF2>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#78DCE8><fc=#78DCE8>%bell%  <action=`alacritty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>   <box type=Bottom width=2 mb=2 color=#FF6188><fc=#FF6188>%baticon%  %battery%</fc></box>    <box type=Bottom width=2 mb=2 color=#A9DC76><fc=#A9DC76><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
+       , template = " %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#FF6188><fc=#FF6188>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A9DC76><fc=#A9DC76><action=`alacritty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#FC9867><fc=#FC9867><action=`alacritty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#FFD866><fc=#FFD866>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#AB9DF2><fc=#AB9DF2>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#78DCE8><fc=#78DCE8>%bell%  <action=`alacritty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>   <box type=Bottom width=2 mb=2 color=#FF6188><fc=#FF6188>%baticon%  %battery1%</fc></box>   <box type=Bottom width=2 mb=2 color=#FF6188><fc=#FF6188>%baticon%  %battery2%</fc></box>    <box type=Bottom width=2 mb=2 color=#A9DC76><fc=#A9DC76><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
        }

@@ -446,7 +446,8 @@ myLayoutHook = avoidStruts
                                            ||| wideAccordion
 
 -- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-myWorkspaces = [" www ", " dev ", " sys ", " doc ", " vbox ", " gfx ", " mus ", " vid ", " chat "]
+--myWorkspaces = [" www ", " dev ", " sys ", " doc ", " vbox ", " gfx ", " mus ", " vid ", " chat "]
+myWorkspaces = [" ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
 -- myWorkspaces =
 --         " 1 : <fn=2>\xf111</fn> " :
 --         " 2 : <fn=2>\xf1db</fn> " :
@@ -492,7 +493,7 @@ myManageHook = composeAll
   , isFullscreen -->  doFullFloat
   ] <+> namedScratchpadManageHook myScratchPads
 
-soundDir = "/opt/dtos-sounds/" -- The directory that has the sound files
+soundDir = "/opt/os-sounds/" -- The directory that has the sound files
 
 startupSound  = soundDir ++ "startup-01.mp3"
 shutdownSound = soundDir ++ "shutdown-01.mp3"
@@ -571,7 +572,7 @@ myKeys c =
   [ ("M-p h", addName "List all dmscripts"     $ spawn "dm-hub")
   , ("M-p a", addName "Choose ambient sound"   $ spawn "dm-sounds")
   , ("M-p b", addName "Set background"         $ spawn "dm-setbg")
-  , ("M-p c", addName "Choose color scheme"    $ spawn "~/.local/bin/dtos-colorscheme")
+  , ("M-p c", addName "Choose color scheme"    $ spawn "~/.local/bin/colorscheme")
   , ("M-p C", addName "Pick color from scheme" $ spawn "dm-colpick")
   , ("M-p e", addName "Edit config files"      $ spawn "dm-confedit")
   , ("M-p i", addName "Take a screenshot"      $ spawn "dm-maim")

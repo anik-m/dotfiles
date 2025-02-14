@@ -38,6 +38,7 @@ return {
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
+      -- local compare = cmp.config.compare
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
 
@@ -104,6 +105,8 @@ return {
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
         sources = {
+          -- { name = 'jupynium', priority = 200 }, -- consider higher priority than LSP
+          { name = 'otter' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },

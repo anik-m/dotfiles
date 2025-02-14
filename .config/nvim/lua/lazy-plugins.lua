@@ -66,6 +66,10 @@ require('lazy').setup({
 
   require 'Plugins/render-markdown',
 
+  require 'Plugins/magma',
+
+  require 'Plugins/quarto',
+
   -- theme applied
   require 'Themes/cyberdream',
 

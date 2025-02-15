@@ -180,7 +180,7 @@ alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
-alias cdcd='cd Flow/Code/'
+# alias cdcd='cd Flow/Code/'
 
 # vim and emacs
 #alias vi="vim"
@@ -286,6 +286,6 @@ s() {
 
 ### SETTING THE STARSHIP PROMPT ###
 #eval "$(starship init bash)"
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/hunk.omp.json)"
+eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/neko.omp.json)"
 eval "$(zoxide init --cmd cd bash)"
 . "/home/nika/.deno/env"

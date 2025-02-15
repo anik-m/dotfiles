@@ -3,6 +3,12 @@ set relativenumber number
 set wildmenu
 set laststatus=2
 
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 "call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
 	source ~/.vimrc.plug

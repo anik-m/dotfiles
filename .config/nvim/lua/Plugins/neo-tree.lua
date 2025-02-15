@@ -22,4 +22,20 @@ return {
       },
     },
   },
+  config = {
+    popup_border_style = 'rounded',
+    -- sources = {
+    --   'filesystem',
+    --   'buffers',
+    -- },
+    filesystem = {
+      filtered_items = {
+        visible = true,
+        hide_gitignored = false,
+        hide_hidden = false,
+        hide_dotfiles = false,
+      },
+      follow_current_file = { enabled = true },
+    },
+  },
 }

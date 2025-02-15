@@ -10,6 +10,8 @@
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  -- add LazyVim and import its plugins
+  --{ 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -65,8 +67,6 @@ require('lazy').setup({
   require 'Plugins/peek',
 
   require 'Plugins/render-markdown',
-
-  require 'Plugins/magma',
 
   require 'Plugins/quarto',
 

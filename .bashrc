@@ -284,8 +284,19 @@ s() {
 # Or install it from the Arch User Repository: shell-color-scripts
 #colorscript random
 
+
+## Shell wrapper that provides the ability to change the current working directory when exiting Yazi- Same for Zsh
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 ### SETTING THE STARSHIP PROMPT ###
 #eval "$(starship init bash)"
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/neko.omp.json)"
+eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/nordtron.omp.json)"
 eval "$(zoxide init --cmd cd bash)"
 . "/home/nika/.deno/env"

@@ -33,6 +33,9 @@ require('lazy').setup {
   spec = {
     -- import your plugins
     { import = 'Plugins' },
+    { 'LunarVim/bigfile.nvim' },
+    { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
+    { 'godlygeek/tabular' }, -- format things as tables
     { import = 'Themes/tokyonight' },
     -- {
     --   'scottmckendry/cyberdream.nvim',

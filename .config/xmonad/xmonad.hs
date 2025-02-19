@@ -95,7 +95,8 @@ myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "alacritty"    -- Sets default terminal
+myTerminal = "wezterm"
+-- myTerminal = "alacritty"    -- Sets default terminal
 
 myFileManager :: String
 myFileManager = "pcmanfm"   -- Sets default gui file browser

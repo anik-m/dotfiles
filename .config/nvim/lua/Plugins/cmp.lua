@@ -33,14 +33,31 @@ return {
       --  nvim-cmp does not ship with all sources by default. They are split
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp', -- source for text in buffer
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-path', -- source for file system paths
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-calc',
+      'hrsh7th/cmp-emoji',
+      'f3fora/cmp-spell',
+      'ray-x/cmp-treesitter',
+      'kdheepak/cmp-latex-symbols',
+      'jmbuhr/cmp-pandoc-references',
+      'rafamadriz/friendly-snippets',
+      'onsails/lspkind-nvim',
+      'jmbuhr/otter.nvim',
     },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       -- local compare = cmp.config.compare
       local luasnip = require 'luasnip'
+      local lspkind = require 'lspkind'
       luasnip.config.setup {}
+
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+      end
 
       cmp.setup {
         snippet = { -- configure how nvim-cmp interacts with snippet engine

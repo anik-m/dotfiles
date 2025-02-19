@@ -10,7 +10,7 @@
 -- normal autocommands events (`:help autocmd-events`).
 --
 -- Then, because we use the `config` key, the configuration only runs
--- after the plugin has been loaded:
+-- ater the plugin has been loaded:
 --  config = function() ... end
 
 return {
@@ -23,6 +23,13 @@ return {
       -- Document existing key chains
       require('which-key').add {
         { '<leader>c', group = '[C]ode' },
+        { '<leader><cr>', send_cell, desc = 'run code cell' },
+        { '<leader>c', group = '[c]ode / [c]ell / [c]hunk' },
+        { '<leader>ci', new_terminal_ipython, desc = 'new [i]python terminal' },
+        { '<leader>cj', new_terminal_julia, desc = 'new [j]ulia terminal' },
+        { '<leader>cn', new_terminal_shell, desc = '[n]ew terminal with shell' },
+        { '<leader>cp', new_terminal_python, desc = 'new [p]ython terminal' },
+        { '<leader>cr', new_terminal_r, desc = 'new [R] terminal' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },

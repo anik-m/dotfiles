@@ -1,35 +1,26 @@
 ### EXPORT
-export TERM="xterm-256color"                       # getting proper colors
-export HISTCONTROL=ignoredups:erasedups            # no duplicate entries
-export EDITOR="nvim"        				       # $EDITOR use Neovim in terminal
-export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
-
-
-
-#export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
-#export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+export TERM="xterm-256color"                      # getting proper colors
+export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
+# export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export EDITOR="nvim"              # $EDITOR use Emacs in terminal
+export VISUAL="gvim"           # $VISUAL use Emacs in GUI mode
 
 ### SET MANPAGER
 ### Uncomment only one of these!
 
 ### "nvim" as manpager
-export MANPAGER="vim -c ASMANPAGER -" # +Man!"
+export MANPAGER="nvim +Man!"
 
 ### "less" as manpager
-#export MANPAGER="less"
+# export MANPAGER="less"
 
 ### SET VI MODE ###
+
 # Comment this line out to enable default emacs-like bindings
-set -o vi
-bind -m vi-command 'Control-l: clear-screen'
-bind -m vi-insert 'Control-l: clear-screen'
+bindkey -v
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
-### PROMPT
-# This is commented out if using starship or other prompt
-# PS1='[\u@\h \W]\$ '
 
 ### PATH
 if [ -d "$HOME/.bin" ] ;
@@ -80,17 +71,6 @@ case ${TERM} in
     ;;
 esac
 
-### SHOPT
-shopt -s autocd # change to named directory
-shopt -s cdspell # autocorrects cd misspellings
-shopt -s cmdhist # save multi-line commands in history as single line
-shopt -s dotglob
-shopt -s histappend # do not overwrite history
-shopt -s expand_aliases # expand aliases
-shopt -s checkwinsize # checks term size when bash regains control
-
-#ignore upper and lowercase when TAB completion
-bind "set completion-ignore-case on"
 
 ### COUNTDOWN   
 cdown () {
@@ -125,22 +105,12 @@ function ex {
             *.gz)        gunzip ./"$n"      ;;
             *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
             *.z)         uncompress ./"$n"  ;;
-            *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
                          7z x ./"$n"        ;;
             *.xz)        unxz ./"$n"        ;;
             *.exe)       cabextract ./"$n"  ;;
             *.cpio)      cpio -id < ./"$n"  ;;
             *.cba|*.ace)      unace x ./"$n"      ;;
-			*.zpaq)      zpaq x ./"$n"      ;;
-            *.arc)       arc e ./"$n"       ;;
-            *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
-                            extract "$n.iso" && \rm -f "$n" ;;
-            *.zlib)      zlib-flate -uncompress < ./"$n" > ./"$n.tmp" && \
-                            mv ./"$n.tmp" ./"${n%.*zlib}" && rm -f "$n"   ;;
-            *.dmg)
-                         hdiutil mount ./"$n" -mountpoint "./$n.mounted" ;;
-            *.tar.zst)   tar -I zstd -xvf ./"$n"  ;;
-            *.zst)       zstd -d ./"$n"  ;;
             *)
                          echo "ex: '$n' - unknown archive method"
                          return 1
@@ -177,20 +147,13 @@ up () {
 }
 
 ### ALIASES ###
-# navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-# alias cdcd='cd Flow/Code/'
-
 # vim and emacs
-#alias vi="vim"
-#alias vim="nvim"
-#alias emacs="emacsclient -c -a 'emacs'" # GUI versions of Emacs
-#alias em="/usr/bin/emacs -nw" # Terminal version of Emacs
-#alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon" # Kill Emacs and restart daemon..
+alias vim="nvim"
+### ZSH OPTIONS (Equivalent of bash's shopt)
+alias emacs="emacsclient -c -a 'emacs'" # GUI versions of Emacs
+alias em="/usr/bin/emacs -nw" # Terminal version of Emacs
+### ZSH OPTIONS (Equivalent of bash's shopt)
+alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon" # Kill Emacs and restart daemon..
 
 # Changing "ls" to "eza"
 alias ls='eza -al --color=always --group-directories-first' # my preferred listing
@@ -214,6 +177,16 @@ alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacma
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+### ZSH OPTIONS (Equivalent of bash's shopt)
+setopt autocd         # change to named directory
+# setopt cdspell        # autocorrects cd misspellings
+setopt histignorealldups  # save multi-line commands, no dupes (better than HISTCONTROL)
+setopt dotglob
+setopt histappend     # do not overwrite history
+setopt extendedglob   # Enable extended globbing (needed for some patterns below)
+unsetopt nomatch      # Print error if no glob match (good practice)
+
 
 # adding flags
 alias df='df -h'               # human-readable sizes
@@ -254,52 +227,34 @@ alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
 # change your default USER shell
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Log out and log back in for change to take effect.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Log out and log back in for change to take effect.'"
-#alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
+alias tofish="sudo chsh $USER -s /bin/fish && echo 'Log out and log back in for change to take effect.'"
 
 # bare git repo alias for managing my dotfiles
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
-
 # termbin
 alias tb="nc termbin.com 9999"
 
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
-# Safe copying-moving
-alias cp='cp -vi'
-alias mv='mv -vi'
-
-#verbose copying
-alias cpv='rsync -avh --info=progress2'
-
-# do sudo, or sudo the last command if no argument given
-s() { 
-    if [[ $# == 0 ]]; then
-        sudo $(history -p '!!')
-    else
-        sudo "$@"
-    fi
-}
-
 ### RANDOM COLOR SCRIPT ###
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts
 # Or install it from the Arch User Repository: shell-color-scripts
 #colorscript random
 
-
 ## Shell wrapper that provides the ability to change the current working directory when exiting Yazi- Same for Zsh
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+# No need for a function definition, use zsh's anonymous function feature
+y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [[ -n "$cwd" ]] && [[ "$cwd" != "$PWD" ]]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
 ### SETTING THE STARSHIP PROMPT ###
-#eval "$(starship init bash)"
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/themes/nordtron.omp.json)"
-eval "$(zoxide init --cmd cd bash)"
+# eval "$(starship init zsh)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/themes/nordtron.omp.json)"
+eval "$(zoxide init --cmd cd zsh)"
 . "/home/nika/.deno/env"

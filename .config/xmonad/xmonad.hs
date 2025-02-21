@@ -99,7 +99,8 @@ myTerminal = "wezterm"
 -- myTerminal = "alacritty"    -- Sets default terminal
 
 myFileManager :: String
-myFileManager = "pcmanfm"   -- Sets default gui file browser
+myFileManager = "pcmanfm"   -- Sets default file browser
+-- myFileManager = myTerminal ++ " -e yazi"   -- Sets default file browser
 
 myBrowser :: String
 myBrowser = "firefox "  -- Sets browser

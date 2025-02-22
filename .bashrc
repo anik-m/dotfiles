@@ -273,6 +273,9 @@ alias mv='mv -vi'
 #verbose copying
 alias cpv='rsync -avh --info=progress2'
 
+#Randomized wallpaper
+alias setbgx='feh --randomize --bg-fill ~/backgrounds/wallpapers/'
+
 # do sudo, or sudo the last command if no argument given
 s() { 
     if [[ $# == 0 ]]; then

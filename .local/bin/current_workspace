@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Get the currently focused workspace number in XMonad.
+# We use xprop to get the _NET_CURRENT_DESKTOP property of the root window.
+# This is a standard property that most window managers (including XMonad) support.
+# current_workspace=$(xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}')
+
+# XMonad workspace numbers are 0-based, so we add 1 to make them 1-based
+# (more user-friendly).  Remove the +1 if you prefer 0-based numbering.
+# adjusted_workspace=$((current_workspace + 1))
+
+# You can add any additional formatting here, icons, colors, etc.
+# For a simple number:
+# echo "$adjusted_workspace"
+
+# Example with an icon and some xmobar formatting:
+# echo "<fn=1>\xf111</fn> $adjusted_workspace"
+
+# Get the current workspace name from xprop.
+
+xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}' |
+  xargs -I{} bash -c 'xprop -id {} _NET_WM_DESKTOP_NAME' |
+  awk -F'"' '{print $2}'
+
+
+exit 0

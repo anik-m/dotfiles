@@ -7,7 +7,7 @@ export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
 
 
 #export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
-#export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
 
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -188,7 +188,7 @@ alias .5='cd ../../../../..'
 # vim and emacs
 #alias vi="vim"
 #alias vim="nvim"
-#alias emacs="emacsclient -c -a 'emacs'" # GUI versions of Emacs
+alias emacs="emacsclient -c -a 'emacs'" # GUI versions of Emacs
 #alias em="/usr/bin/emacs -nw" # Terminal version of Emacs
 #alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon" # Kill Emacs and restart daemon..
 
@@ -289,6 +289,9 @@ s() {
 # Get this script from my GitLab: gitlab.com/dwt1/shell-color-scripts
 # Or install it from the Arch User Repository: shell-color-scripts
 #colorscript random
+# cmatrix
+# pipes.sh
+fortune -e
 
 
 ## Shell wrapper that provides the ability to change the current working directory when exiting Yazi- Same for Zsh

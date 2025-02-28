@@ -451,7 +451,7 @@ myLayoutHook = avoidStruts
 
 -- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 --myWorkspaces = [" www ", " dev ", " sys ", " doc ", " vbox ", " gfx ", " mus ", " vid ", " chat "]
-myWorkspaces = [" ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
+myWorkspaces = ["০ "," ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
 -- myWorkspaces =
 --         " 1 : <fn=2>\xf111</fn> " :
 --         " 2 : <fn=2>\xf1db</fn> " :
@@ -541,7 +541,8 @@ myKeys c =
   , ("M-6", addName "Switch to workspace 6"    $ (windows $ W.greedyView $ myWorkspaces !! 5))
   , ("M-7", addName "Switch to workspace 7"    $ (windows $ W.greedyView $ myWorkspaces !! 6))
   , ("M-8", addName "Switch to workspace 8"    $ (windows $ W.greedyView $ myWorkspaces !! 7))
-  , ("M-9", addName "Switch to workspace 9"    $ (windows $ W.greedyView $ myWorkspaces !! 8))]
+  , ("M-9", addName "Switch to workspace 9"    $ (windows $ W.greedyView $ myWorkspaces !! 8))
+  , ("M-0", addName "Switch to workspace 0"    $ (windows $ W.greedyView $ myWorkspaces !! 9))]
 
   ^++^ subKeys "Send window to workspace"
   [ ("M-S-1", addName "Send to workspace 1"    $ (windows $ W.shift $ myWorkspaces !! 0))
@@ -552,7 +553,8 @@ myKeys c =
   , ("M-S-6", addName "Send to workspace 6"    $ (windows $ W.shift $ myWorkspaces !! 5))
   , ("M-S-7", addName "Send to workspace 7"    $ (windows $ W.shift $ myWorkspaces !! 6))
   , ("M-S-8", addName "Send to workspace 8"    $ (windows $ W.shift $ myWorkspaces !! 7))
-  , ("M-S-9", addName "Send to workspace 9"    $ (windows $ W.shift $ myWorkspaces !! 8))]
+  , ("M-S-9", addName "Send to workspace 9"    $ (windows $ W.shift $ myWorkspaces !! 8))
+  , ("M-S-0", addName "Send to workspace 0"    $ (windows $ W.shift $ myWorkspaces !! 9))]
 
   ^++^ subKeys "Move window to WS and go there"
   [ ("M-S-<Page_Up>", addName "Move window to next WS"   $ shiftTo Next nonNSP >> moveTo Next nonNSP)

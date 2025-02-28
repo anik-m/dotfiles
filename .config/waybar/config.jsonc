@@ -38,16 +38,28 @@
         "disable-scroll": true,
         "all-outputs": true,
         "warp-on-scroll": false,
-        "format": "{name}: {icon}",
+        //"format": "{name}: {icon}",
+        "format": "{icon}",
         "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            //"urgent": "",
-            //"focused": "",
-            //"default": ""
+            //"1": "",
+            //"2": "",
+            //"3": "",
+            //"4": "",
+            //"5": "",
+            "1": "০",
+            "2": "১",
+            "3": "২",
+            "4": "৩",
+            "5": "৪",
+            "6": "৫",
+            "7": "৬",
+            "8": "৭",
+            "9": "৮",
+            "10": "৯",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+
         }
     },
     "keyboard-state": {

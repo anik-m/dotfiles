@@ -1,0 +1,49 @@
+#!/bin/bash
+
+WAYBAR_DIR="$HOME/.config/waybar"
+STYLECSS="$WAYBAR_DIR/style.css"
+CONFIG="$WAYBAR_DIR/config"
+THEMES="$WAYBAR_DIR/themes"
+
+# Function to list available themes
+list_themes() {
+  find "$THEMES" -mindepth 1 -maxdepth 1 -type d -print0 | # Find directories in $THEMES
+    while IFS= read -r -d $'\0' theme_dir; do
+        basename "$theme_dir"  # Extract just the theme name (directory name)
+    done
+}
+
+# Main function
+main() {
+  # Use rofi to select a theme. -dmenu for a menu-like appearance.
+  # -i for case-insensitive matching.  -p for a prompt.
+  selected_theme=$(list_themes | rofi -dmenu -i -p "Select Waybar Theme:")
+
+  # Check if a theme was selected (rofi returns an empty string if canceled).
+  if [[ -z "$selected_theme" ]]; then
+    echo "No theme selected. Exiting."
+    exit 1
+  fi
+
+  # Construct the full paths to the theme's CSS and config files.
+  theme_style="$THEMES/$selected_theme/style-$selected_theme.css"
+  theme_config="$THEMES/$selected_theme/config-$selected_theme"
+
+  # Check if the selected theme's files exist.
+  if [[ ! -f "$theme_style" ]] || [[ ! -f "$theme_config" ]]; then
+    echo "Error: Theme '$selected_theme' files not found (style.css or config)." >&2
+    exit 1
+  fi
+
+  # Copy the selected theme's files to the Waybar configuration.
+  cp "$theme_style" "$STYLECSS"
+  cp "$theme_config" "$CONFIG"
+
+  # Restart Waybar.  Use killall and then start in the background.
+  killall waybar
+  waybar &
+
+  echo "Waybar theme set to: $selected_theme"
+}
+
+main

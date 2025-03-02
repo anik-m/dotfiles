@@ -1,0 +1,162 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "Ubuntu Nerd Font bold";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(43, 48, 59, 0.5); /* Semi-transparent dark background - GOOD for light and dark */
+    color: #f8f8f2;          /* Light text - GOOD for light and dark */
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* makes it so that windows can be transparent */
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.empty #window {
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+}
+
+#window {
+    font-weight: bold;
+    font-family: "Ubuntu";
+	margin-top: 2px;
+    border-radius: 10px;
+    /*padding: 0px 20px;*/
+	/*margin-bottom: 0px;*/
+    /*margin: 4px;*/
+}
+
+/*
+#workspaces {
+    padding: 0 5px;
+}
+*/
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #f8f8f2;  /* Light text - GOOD for light and dark */
+    border-top: 2px solid transparent;
+
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inherit;
+    border-color: transparent;
+
+}
+
+#workspaces button.focused {
+    color: #a9d18e;  /* Lighter green - visible on light & dark */
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top: 2px solid #a9d18e;  /* Lighter green - visible on light & dark */
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#mode {
+    background: #64727D;
+    border-bottom: 3px solid #f8f8f2; /* Light border */
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#custom-pacupdate,
+#tray,
+#mode {
+    padding: 0 8px;  /* Slightly reduced padding for tighter look */
+    margin: 2px 2px; /*Consistent spacing around*/
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);  /* Semi-transparent black - works well on light and dark */
+}
+
+#clock {
+    color: #a9d18e; /* Lighter green */
+    font-weight: bold;
+}
+
+#battery {
+    color: #f8f8f2; /* Light text */
+}
+
+#battery icon {
+    color: #f8f8f2; /* Light icon */
+}
+
+#battery.charging {
+    color: #a9d18e; /* Lighter Green*/
+	background-color: #268bd2;
+
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.warning:not(.charging) {
+    color: #f8f8f2;
+	background-color: #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#cpu {
+    color: #f8f8f2; /* Light text */
+}
+
+#memory {
+      color: #f8f8f2; /* Light text */
+}
+
+#network {
+    color: #f8f8f2; /* Light text */
+}
+
+#network.disconnected {
+    background: #f53c3c;
+	color: #f8f8f2;
+}
+
+#pulseaudio {
+    color: #f8f8f2;
+}
+
+#pulseaudio.muted {
+    color: #64727D;
+	background: #f53c3c;
+
+}
+
+#custom-pacupdate {
+      color: #a9d18e; /* Lighter Green*/
+}
+
+#tray {
+
+}

@@ -87,7 +87,6 @@ import XMonad.Util.SpawnOnce
       -- TokyoNight
       --
 import Colors.TokyoNight
-
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
 
@@ -103,7 +102,8 @@ myFileManager = "pcmanfm"   -- Sets default file browser
 -- myFileManager = myTerminal ++ " -e yazi"   -- Sets default file browser
 
 myBrowser :: String
-myBrowser = "firefox "  -- Sets browser
+myBrowser = "librewolf"
+-- myBrowser = "firefox "  -- Sets browser
 
 myEmacs :: String
 myEmacs = "emacsclient -c -a 'emacs' "  -- Makes emacs keybindings easier to type
@@ -141,7 +141,7 @@ myStartupHook = do
   spawnOnce "notify-log $HOME/.log/notify.log"
   -- spawn "/usr/bin/emacs --daemon" -- emacs daemon for the emacsclient
 
-
+  spawn "~/.config/polybar/launch.sh"
   -- spawnOnce ("sleep 2 && conky --config $HOME/.config/conky/xmonad/" ++ colorScheme ++ "-01.conkyrc")
   spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22")
 
@@ -533,28 +533,28 @@ myKeys c =
   -- , ("M-/", addName "DTOS Help"                $ spawn "~/.local/bin/dtos-help")]
 
   ^++^ subKeys "Switch to workspace"
-  [ ("M-1", addName "Switch to workspace 1"    $ (windows $ W.greedyView $ myWorkspaces !! 0))
-  , ("M-2", addName "Switch to workspace 2"    $ (windows $ W.greedyView $ myWorkspaces !! 1))
-  , ("M-3", addName "Switch to workspace 3"    $ (windows $ W.greedyView $ myWorkspaces !! 2))
-  , ("M-4", addName "Switch to workspace 4"    $ (windows $ W.greedyView $ myWorkspaces !! 3))
-  , ("M-5", addName "Switch to workspace 5"    $ (windows $ W.greedyView $ myWorkspaces !! 4))
-  , ("M-6", addName "Switch to workspace 6"    $ (windows $ W.greedyView $ myWorkspaces !! 5))
-  , ("M-7", addName "Switch to workspace 7"    $ (windows $ W.greedyView $ myWorkspaces !! 6))
-  , ("M-8", addName "Switch to workspace 8"    $ (windows $ W.greedyView $ myWorkspaces !! 7))
-  , ("M-9", addName "Switch to workspace 9"    $ (windows $ W.greedyView $ myWorkspaces !! 8))
-  , ("M-0", addName "Switch to workspace 0"    $ (windows $ W.greedyView $ myWorkspaces !! 9))]
+  [ ("M-1", addName "Switch to workspace 0"    $ (windows $ W.greedyView $ myWorkspaces !! 0))
+  , ("M-2", addName "Switch to workspace 1"    $ (windows $ W.greedyView $ myWorkspaces !! 1))
+  , ("M-3", addName "Switch to workspace 2"    $ (windows $ W.greedyView $ myWorkspaces !! 2))
+  , ("M-4", addName "Switch to workspace 3"    $ (windows $ W.greedyView $ myWorkspaces !! 3))
+  , ("M-5", addName "Switch to workspace 4"    $ (windows $ W.greedyView $ myWorkspaces !! 4))
+  , ("M-6", addName "Switch to workspace 5"    $ (windows $ W.greedyView $ myWorkspaces !! 5))
+  , ("M-7", addName "Switch to workspace 6"    $ (windows $ W.greedyView $ myWorkspaces !! 6))
+  , ("M-8", addName "Switch to workspace 7"    $ (windows $ W.greedyView $ myWorkspaces !! 7))
+  , ("M-9", addName "Switch to workspace 8"    $ (windows $ W.greedyView $ myWorkspaces !! 8))
+  , ("M-0", addName "Switch to workspace 9"    $ (windows $ W.greedyView $ myWorkspaces !! 9))]
 
   ^++^ subKeys "Send window to workspace"
-  [ ("M-S-1", addName "Send to workspace 1"    $ (windows $ W.shift $ myWorkspaces !! 0))
-  , ("M-S-2", addName "Send to workspace 2"    $ (windows $ W.shift $ myWorkspaces !! 1))
-  , ("M-S-3", addName "Send to workspace 3"    $ (windows $ W.shift $ myWorkspaces !! 2))
-  , ("M-S-4", addName "Send to workspace 4"    $ (windows $ W.shift $ myWorkspaces !! 3))
-  , ("M-S-5", addName "Send to workspace 5"    $ (windows $ W.shift $ myWorkspaces !! 4))
-  , ("M-S-6", addName "Send to workspace 6"    $ (windows $ W.shift $ myWorkspaces !! 5))
-  , ("M-S-7", addName "Send to workspace 7"    $ (windows $ W.shift $ myWorkspaces !! 6))
-  , ("M-S-8", addName "Send to workspace 8"    $ (windows $ W.shift $ myWorkspaces !! 7))
-  , ("M-S-9", addName "Send to workspace 9"    $ (windows $ W.shift $ myWorkspaces !! 8))
-  , ("M-S-0", addName "Send to workspace 0"    $ (windows $ W.shift $ myWorkspaces !! 9))]
+  [ ("M-S-1", addName "Send to workspace 0"    $ (windows $ W.shift $ myWorkspaces !! 0))
+  , ("M-S-2", addName "Send to workspace 1"    $ (windows $ W.shift $ myWorkspaces !! 1))
+  , ("M-S-3", addName "Send to workspace 2"    $ (windows $ W.shift $ myWorkspaces !! 2))
+  , ("M-S-4", addName "Send to workspace 3"    $ (windows $ W.shift $ myWorkspaces !! 3))
+  , ("M-S-5", addName "Send to workspace 4"    $ (windows $ W.shift $ myWorkspaces !! 4))
+  , ("M-S-6", addName "Send to workspace 5"    $ (windows $ W.shift $ myWorkspaces !! 5))
+  , ("M-S-7", addName "Send to workspace 6"    $ (windows $ W.shift $ myWorkspaces !! 6))
+  , ("M-S-8", addName "Send to workspace 7"    $ (windows $ W.shift $ myWorkspaces !! 7))
+  , ("M-S-9", addName "Send to workspace 8"    $ (windows $ W.shift $ myWorkspaces !! 8))
+  , ("M-S-0", addName "Send to workspace 9"    $ (windows $ W.shift $ myWorkspaces !! 9))]
 
   ^++^ subKeys "Move window to WS and go there"
   [ ("M-S-<Page_Up>", addName "Move window to next WS"   $ shiftTo Next nonNSP >> moveTo Next nonNSP)
@@ -713,12 +713,8 @@ myKeys c =
 
 main :: IO ()
 main = do
-  -- Launching three instances of xmobar on their monitors.
-  xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  xmproc1 <- spawnPipe ("xmobar -x 1 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  xmproc2 <- spawnPipe ("xmobar -x 2 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  -- the xmonad, ya know...what the WM is named after!
-  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ ewmh $ docks $ def
+  
+  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ docks . ewmh $ def
     { manageHook         = myManageHook <+> manageDocks
     , handleEventHook    = windowedFullscreenFixEventHook <> swallowEventHook (className =? "Alacritty"  <||> className =? "st-256color" <||> className =? "XTerm") (return True) <> trayerPaddingXmobarEventHook
     , modMask            = myModMask
@@ -729,28 +725,47 @@ main = do
     , borderWidth        = myBorderWidth
     , normalBorderColor  = myNormColor
     , focusedBorderColor = myFocusColor
-    , logHook = dynamicLogWithPP $  filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
-        { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
-                        >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
-                        >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
-        , ppCurrent = xmobarColor color06 "" . wrap
-                      ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">") "</box>"
-          -- Visible but not current workspace
-        , ppVisible = xmobarColor color06 "" . clickable
-          -- Hidden workspace
-        , ppHidden = xmobarColor color05 "" . wrap
-                     ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">") "</box>" . clickable
-          -- Hidden workspaces (no windows)
-        , ppHiddenNoWindows = xmobarColor color05 ""  . clickable
-          -- Title of active window
-        , ppTitle = xmobarColor color16 "" . shorten 60
-          -- Separator character
-        , ppSep =  "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>"
-          -- Urgent workspace
-        , ppUrgent = xmobarColor color02 "" . wrap "!" "!"
-          -- Adding # of windows on current workspace to the bar
-        , ppExtras  = [windowCount]
-          -- order of things in xmobar
-        , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-        }
     }
+
+
+  -- Launching three instances of xmobar on their monitors.
+  -- xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- xmproc1 <- spawnPipe ("xmobar -x 1 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- xmproc2 <- spawnPipe ("xmobar -x 2 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- the xmonad, ya know...what the WM is named after!
+  -- xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ ewmh $ docks $ def
+  --   { manageHook         = myManageHook <+> manageDocks
+  --   , handleEventHook    = windowedFullscreenFixEventHook <> swallowEventHook (className =? "Alacritty"  <||> className =? "st-256color" <||> className =? "XTerm") (return True) <> trayerPaddingXmobarEventHook
+  --   , modMask            = myModMask
+  --   , terminal           = myTerminal
+  --   , startupHook        = myStartupHook
+  --   , layoutHook         = showWName' myShowWNameTheme $ myLayoutHook
+  --   , workspaces         = myWorkspaces
+  --   , borderWidth        = myBorderWidth
+  --   , normalBorderColor  = myNormColor
+  --   , focusedBorderColor = myFocusColor
+  --   , logHook = dynamicLogWithPP $  filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
+  --       -- { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
+  --       --                 -- >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
+  --       --                 -- >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
+  --       -- , ppCurrent = xmobarColor color06 "" . wrap
+  --       --               ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">") "</box>"
+  --       --   -- Visible but not current workspace
+  --       -- , ppVisible = xmobarColor color06 "" . clickable
+  --       --   -- Hidden workspace
+  --       -- , ppHidden = xmobarColor color05 "" . wrap
+  --       --              ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">") "</box>" . clickable
+  --       --   -- Hidden workspaces (no windows)
+  --       -- , ppHiddenNoWindows = xmobarColor color05 ""  . clickable
+  --       --   -- Title of active window
+  --       -- , ppTitle = xmobarColor color16 "" . shorten 60
+  --       --   -- Separator character
+  --       -- , ppSep =  "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>"
+  --       --   -- Urgent workspace
+  --       -- , ppUrgent = xmobarColor color02 "" . wrap "!" "!"
+  --       --   -- Adding # of windows on current workspace to the bar
+  --       -- , ppExtras  = [windowCount]
+  --       --   -- order of things in xmobar
+  --       -- , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+  --       -- }
+  --   }

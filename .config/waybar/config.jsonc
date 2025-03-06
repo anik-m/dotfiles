@@ -4,7 +4,7 @@
      "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 5, // Gaps between modules (4px)
+    "spacing": 3, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
@@ -160,8 +160,8 @@
         },
         "exec-if": "which waybar-module-pacman-updates",
         "exec": "waybar-module-pacman-updates --no-zero-output",
-        "on-click": "alacritty -e sudo pacman -Syu"
-        "interval":300
+        "on-click": "alacritty -e sudo pacman -Syu",
+        "interval":30
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -170,7 +170,7 @@
     },
     "battery": {
         "bat": "BAT0",
-        "interval": 2,
+        "interval": 1,
         "states": {
             // "good": 95,
             "warning": 30,
@@ -187,7 +187,7 @@
     },
     "battery#bat2": {
         "bat": "BAT1",
-        "interval": 2,
+        "interval": 1,
         "states": {
             // "good": 95,
             "warning": 30,

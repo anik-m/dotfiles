@@ -223,74 +223,74 @@ runSelectedAction' conf actions = do
 --   , ("Utilities",  spawnSelected' gsUtilities)
 --   ]
 
-gsCategories =
-  [ ("Games",      "xdotool key super+alt+1")
-  , ("Education",  "xdotool key super+alt+2")
-  , ("Internet",   "xdotool key super+alt+3")
-  , ("Multimedia", "xdotool key super+alt+4")
-  , ("Office",     "xdotool key super+alt+5")
-  , ("Settings",   "xdotool key super+alt+6")
-  , ("System",     "xdotool key super+alt+7")
-  , ("Utilities",  "xdotool key super+alt+8")
-  ]
+-- gsCategories =
+--   [ ("Games",      "xdotool key super+alt+1")
+--   , ("Education",  "xdotool key super+alt+2")
+--   , ("Internet",   "xdotool key super+alt+3")
+--   , ("Multimedia", "xdotool key super+alt+4")
+--   , ("Office",     "xdotool key super+alt+5")
+--   , ("Settings",   "xdotool key super+alt+6")
+--   , ("System",     "xdotool key super+alt+7")
+--   , ("Utilities",  "xdotool key super+alt+8")
+--   ]
 
-gsGames =
-  [ ("0 A.D.", "0ad")
-  , ("Battle For Wesnoth", "wesnoth")
-  , ("OpenArena", "openarena")
-  , ("Sauerbraten", "sauerbraten")
-  , ("Steam", "steam")
-  , ("Unvanquished", "unvanquished")
-  , ("Xonotic", "xonotic-glx")
-  ]
+-- gsGames =
+--   [ ("0 A.D.", "0ad")
+--   , ("Battle For Wesnoth", "wesnoth")
+--   , ("OpenArena", "openarena")
+--   , ("Sauerbraten", "sauerbraten")
+--   , ("Steam", "steam")
+--   , ("Unvanquished", "unvanquished")
+--   , ("Xonotic", "xonotic-glx")
+--   ]
 
-gsEducation =
-  [ ("GCompris", "gcompris-qt")
-  , ("Kstars", "kstars")
-  , ("Minuet", "minuet")
-  , ("Scratch", "scratch")
-  ]
-
-gsInternet =
-  [ ("Brave", "brave")
-  , ("Discord", "discord")
-  , ("Element", "element-desktop")
-  , ("Firefox", "firefox")
-  , ("LBRY App", "lbry")
-  , ("Mailspring", "mailspring")
-  , ("Nextcloud", "nextcloud")
-  , ("Qutebrowser", "qutebrowser")
-  , ("Transmission", "transmission-gtk")
-  , ("Zoom", "zoom")
-  ]
-
-gsMultimedia =
-  [ ("Audacity", "audacity")
-  , ("Blender", "blender")
-  , ("Deadbeef", "deadbeef")
-  , ("Kdenlive", "kdenlive")
-  , ("OBS Studio", "obs")
-  , ("VLC", "vlc")
-  ]
-
-gsOffice =
-  [ ("Document Viewer", "evince")
-  , ("LibreOffice", "libreoffice")
-  , ("LO Base", "lobase")
-  , ("LO Calc", "localc")
-  , ("LO Draw", "lodraw")
-  , ("LO Impress", "loimpress")
-  , ("LO Math", "lomath")
-  , ("LO Writer", "lowriter")
-  ]
-
-gsSettings =
-  [ ("ARandR", "arandr")
-  , ("ArchLinux Tweak Tool", "archlinux-tweak-tool")
-  , ("Customize Look and Feel", "lxappearance")
-  , ("Firewall Configuration", "sudo gufw")
-  ]
-
+-- gsEducation =
+--   [ ("GCompris", "gcompris-qt")
+--   , ("Kstars", "kstars")
+--   , ("Minuet", "minuet")
+--   , ("Scratch", "scratch")
+--   ]
+--
+-- gsInternet =
+--   [ ("Brave", "brave")
+--   , ("Discord", "discord")
+--   , ("Element", "element-desktop")
+--   , ("Firefox", "firefox")
+--   , ("LBRY App", "lbry")
+--   , ("Mailspring", "mailspring")
+--   , ("Nextcloud", "nextcloud")
+--   , ("Qutebrowser", "qutebrowser")
+--   , ("Transmission", "transmission-gtk")
+--   , ("Zoom", "zoom")
+--   ]
+--
+-- gsMultimedia =
+--   [ ("Audacity", "audacity")
+--   , ("Blender", "blender")
+--   , ("Deadbeef", "deadbeef")
+--   , ("Kdenlive", "kdenlive")
+--   , ("OBS Studio", "obs")
+--   , ("VLC", "vlc")
+--   ]
+--
+-- gsOffice =
+--   [ ("Document Viewer", "evince")
+--   , ("LibreOffice", "libreoffice")
+--   , ("LO Base", "lobase")
+  -- , ("LO Calc", "localc")
+  -- , ("LO Draw", "lodraw")
+  -- , ("LO Impress", "loimpress")
+  -- , ("LO Math", "lomath")
+  -- , ("LO Writer", "lowriter")
+  -- ]
+  --
+-- gsSettings =
+--   [ ("ARandR", "arandr")
+--   , ("ArchLinux Tweak Tool", "archlinux-tweak-tool")
+--   , ("Customize Look and Feel", "lxappearance")
+--   , ("Firewall Configuration", "sudo gufw")
+--   ]
+--
 gsSystem =
   [ ("Alacritty", "alacritty")
   , ("Bash", (myTerminal ++ " -e bash"))
@@ -665,19 +665,19 @@ myKeys c =
 
   ^++^ subKeys "GridSelect"
   -- , ("C-g g", addName "Select favorite apps"     $ runSelectedAction' defaultGSConfig gsCategories)
-  [ ("M-M1-<Return>", addName "Select favorite apps" $ spawnSelected'
-       $ gsGames ++ gsEducation ++ gsInternet ++ gsMultimedia ++ gsOffice ++ gsSettings ++ gsSystem ++ gsUtilities)
-  , ("M-M1-c", addName "Select favorite apps"    $ spawnSelected' gsCategories)
-  , ("M-M1-t", addName "Goto selected window"    $ goToSelected $ mygridConfig myColorizer)
-  , ("M-M1-b", addName "Bring selected window"   $ bringSelected $ mygridConfig myColorizer)
-  , ("M-M1-1", addName "Menu of games"           $ spawnSelected' gsGames)
-  , ("M-M1-2", addName "Menu of education apps"  $ spawnSelected' gsEducation)
-  , ("M-M1-3", addName "Menu of Internet apps"   $ spawnSelected' gsInternet)
-  , ("M-M1-4", addName "Menu of multimedia apps" $ spawnSelected' gsMultimedia)
-  , ("M-M1-5", addName "Menu of office apps"     $ spawnSelected' gsOffice)
-  , ("M-M1-6", addName "Menu of settings apps"   $ spawnSelected' gsSettings)
-  , ("M-M1-7", addName "Menu of system apps"     $ spawnSelected' gsSystem)
-  , ("M-M1-8", addName "Menu of utilities apps"  $ spawnSelected' gsUtilities)]
+  -- [ ("M-M1-<Return>", addName "Select favorite apps" $ spawnSelected'
+  --      $ gsGames ++ gsEducation ++ gsInternet ++ gsMultimedia ++ gsOffice ++ gsSettings ++ gsSystem ++ gsUtilities)
+  -- , ("M-M1-c", addName "Select favorite apps"    $ spawnSelected' gsCategories)
+  [ ("M-M1-t", addName "Goto selected window"    $ goToSelected $ mygridConfig myColorizer)
+  , ("M-M1-b", addName "Bring selected window"   $ bringSelected $ mygridConfig myColorizer) ]
+  -- , ("M-M1-1", addName "Menu of games"           $ spawnSelected' gsGames)
+  -- , ("M-M1-2", addName "Menu of education apps"  $ spawnSelected' gsEducation)
+  -- , ("M-M1-3", addName "Menu of Internet apps"   $ spawnSelected' gsInternet)
+  -- , ("M-M1-4", addName "Menu of multimedia apps" $ spawnSelected' gsMultimedia)
+  -- , ("M-M1-5", addName "Menu of office apps"     $ spawnSelected' gsOffice)
+  -- , ("M-M1-6", addName "Menu of settings apps"   $ spawnSelected' gsSettings)
+  -- , ("M-M1-7", addName "Menu of system apps"     $ spawnSelected' gsSystem)
+  -- , ("M-M1-8", addName "Menu of utilities apps"  $ spawnSelected' gsUtilities)]
 
   -- Emacs (SUPER-e followed by a key)
   ^++^ subKeys "Emacs"
@@ -713,8 +713,12 @@ myKeys c =
 
 main :: IO ()
 main = do
-  
-  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ docks . ewmh $ def
+  -- Launching three instances of xmobar on their monitors.
+  -- xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- xmproc1 <- spawnPipe ("xmobar -x 1 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- xmproc2 <- spawnPipe ("xmobar -x 2 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+  -- the xmonad, ya know...what the WM is named after!
+  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ ewmh $ docks $ def
     { manageHook         = myManageHook <+> manageDocks
     , handleEventHook    = windowedFullscreenFixEventHook <> swallowEventHook (className =? "Alacritty"  <||> className =? "st-256color" <||> className =? "XTerm") (return True) <> trayerPaddingXmobarEventHook
     , modMask            = myModMask
@@ -725,47 +729,28 @@ main = do
     , borderWidth        = myBorderWidth
     , normalBorderColor  = myNormColor
     , focusedBorderColor = myFocusColor
+    , logHook = dynamicLogWithPP $  filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
+        -- { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
+        --                 -- >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
+        --                 -- >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
+        -- , ppCurrent = xmobarColor color06 "" . wrap
+        --               ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">") "</box>"
+        --   -- Visible but not current workspace
+        -- , ppVisible = xmobarColor color06 "" . clickable
+        --   -- Hidden workspace
+        -- , ppHidden = xmobarColor color05 "" . wrap
+        --              ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">") "</box>" . clickable
+        --   -- Hidden workspaces (no windows)
+        -- , ppHiddenNoWindows = xmobarColor color05 ""  . clickable
+        --   -- Title of active window
+        -- , ppTitle = xmobarColor color16 "" . shorten 60
+        --   -- Separator character
+        -- , ppSep =  "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>"
+        --   -- Urgent workspace
+        -- , ppUrgent = xmobarColor color02 "" . wrap "!" "!"
+        --   -- Adding # of windows on current workspace to the bar
+        -- , ppExtras  = [windowCount]
+        --   -- order of things in xmobar
+        -- , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+        -- }
     }
-
-
-  -- Launching three instances of xmobar on their monitors.
-  -- xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  -- xmproc1 <- spawnPipe ("xmobar -x 1 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  -- xmproc2 <- spawnPipe ("xmobar -x 2 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
-  -- the xmonad, ya know...what the WM is named after!
-  -- xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ ewmh $ docks $ def
-  --   { manageHook         = myManageHook <+> manageDocks
-  --   , handleEventHook    = windowedFullscreenFixEventHook <> swallowEventHook (className =? "Alacritty"  <||> className =? "st-256color" <||> className =? "XTerm") (return True) <> trayerPaddingXmobarEventHook
-  --   , modMask            = myModMask
-  --   , terminal           = myTerminal
-  --   , startupHook        = myStartupHook
-  --   , layoutHook         = showWName' myShowWNameTheme $ myLayoutHook
-  --   , workspaces         = myWorkspaces
-  --   , borderWidth        = myBorderWidth
-  --   , normalBorderColor  = myNormColor
-  --   , focusedBorderColor = myFocusColor
-  --   , logHook = dynamicLogWithPP $  filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
-  --       -- { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
-  --       --                 -- >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
-  --       --                 -- >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
-  --       -- , ppCurrent = xmobarColor color06 "" . wrap
-  --       --               ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">") "</box>"
-  --       --   -- Visible but not current workspace
-  --       -- , ppVisible = xmobarColor color06 "" . clickable
-  --       --   -- Hidden workspace
-  --       -- , ppHidden = xmobarColor color05 "" . wrap
-  --       --              ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">") "</box>" . clickable
-  --       --   -- Hidden workspaces (no windows)
-  --       -- , ppHiddenNoWindows = xmobarColor color05 ""  . clickable
-  --       --   -- Title of active window
-  --       -- , ppTitle = xmobarColor color16 "" . shorten 60
-  --       --   -- Separator character
-  --       -- , ppSep =  "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>"
-  --       --   -- Urgent workspace
-  --       -- , ppUrgent = xmobarColor color02 "" . wrap "!" "!"
-  --       --   -- Adding # of windows on current workspace to the bar
-  --       -- , ppExtras  = [windowCount]
-  --       --   -- order of things in xmobar
-  --       -- , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-  --       -- }
-  --   }

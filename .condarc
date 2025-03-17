@@ -1,0 +1,14 @@
+auto_activate_base: false
+
+create_default_packages:
+  - pip
+  - ipython
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - libgcc-ng
+channels:
+  - conda-forge
+  - defaults
+channel_priority: strict

@@ -1,6 +1,6 @@
 module Colors.Nord where
 
-import XMonad
+-- import XMonad
 
 colorScheme = "nord"
 

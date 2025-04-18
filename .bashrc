@@ -5,9 +5,9 @@ export EDITOR="nvim"        				       # $EDITOR use Neovim in terminal
 export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
 
 
-export GTK_IM_MODULE=ibus
-export QT_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
+# export GTK_IM_MODULE=ibus
+# export QT_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus
 
 #export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
 export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode

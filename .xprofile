@@ -1,7 +1,35 @@
-# Settings for Bangla input
-export GTK_IM_MODULE='ibus'
-export QT_IM_MODULE='ibus'
-export XMODIFIERS=@im='ibus'
+# ~/.xprofile
 
-#Toolbar for anthy
-ibus-daemon -rxRd
+# Check if the session type IS x11
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+
+    # --- Settings for X11 Session Only ---
+
+    # Set environment variables for IBus
+    export GTK_IM_MODULE='ibus'
+    export QT_IM_MODULE='ibus'
+    export XMODIFIERS=@im='ibus'
+
+    # Optional: Explicitly start ibus-daemon if needed for X11.
+    # (See note in Method 1 about auto-start vs explicit start)
+    # Example:
+    if ! pgrep -x "ibus-daemon" > /dev/null; then
+       # Use your preferred flags, -d backgrounds it
+       ibus-daemon -rxRd &
+    fi
+
+    echo "IBus configured for X11 session." # Optional: Add a log message for testing
+
+fi
+
+# --- Other general .xprofile settings go outside the 'if' block ---
+# export SOME_OTHER_VARIABLE=some_value
+
+
+# # Settings for Bangla input
+# export GTK_IM_MODULE='ibus'
+# export QT_IM_MODULE='ibus'
+# export XMODIFIERS=@im='ibus'
+#
+# #Toolbar for anthy
+# ibus-daemon -rxRd

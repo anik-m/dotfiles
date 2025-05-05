@@ -204,7 +204,10 @@ alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARE
 alias l..='eza -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
 alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
 
+# clear unnecessary files
+alias pacscc='sudo pacman -Scc'
 # pacman and yay
+alias sysup='pacsyu&&parsua'
 alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs
 alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
 alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)

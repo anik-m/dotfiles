@@ -134,7 +134,7 @@ myStartupHook = do
   spawn "killall trayer"  -- kill current trayer on each restart
   spawn "killall polybar" -- adding this in case of switching between xmobar and polybar.
 
-  spawnOnce "lxsession"
+  -- spawnOnce "lxsession"
   spawnOnce "picom"
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
@@ -452,7 +452,7 @@ myLayoutHook = avoidStruts
 
 -- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 --myWorkspaces = [" www ", " dev ", " sys ", " doc ", " vbox ", " gfx ", " mus ", " vid ", " chat "]
-myWorkspaces = ["০ "," ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
+myWorkspaces = [" ০ "," ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
 -- myWorkspaces =
 --         " 1 : <fn=2>\xf111</fn> " :
 --         " 2 : <fn=2>\xf1db</fn> " :
@@ -562,8 +562,10 @@ myKeys c =
   , ("M-S-<Page_Down>", addName "Move window to prev WS" $ shiftTo Prev nonNSP >> moveTo Prev nonNSP)]
 
   ^++^ subKeys "Window navigation"
-  [ ("M-j", addName "Move focus to next window"                $ windows W.focusDown)
-  , ("M-k", addName "Move focus to prev window"                $ windows W.focusUp)
+  [ ("M1-<Tab>", addName "Move focus to next window"                $ windows W.focusDown)
+  , ("M1-S-<Tab>", addName "Move focus to previous window"                $ windows W.focusUp)
+  -- ,("M-j", addName "Move focus to next window"                $ windows W.focusDown)
+  -- , ("M-k", addName "Move focus to prev window"                $ windows W.focusUp)
   , ("M-m", addName "Move focus to master window"              $ windows W.focusMaster)
   , ("M-S-j", addName "Swap focused window with next window"   $ windows W.swapDown)
   , ("M-S-k", addName "Swap focused window with prev window"   $ windows W.swapUp)

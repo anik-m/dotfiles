@@ -10,7 +10,7 @@ export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
 # export XMODIFIERS=@im=ibus
 
 #export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
-export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
+#export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
 
 ### SET MANPAGER
 ### Uncomment only one of these!

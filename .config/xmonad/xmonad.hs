@@ -93,6 +93,9 @@ myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=
 myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
 
+myMessenger :: String
+myMessenger = "Telegram"
+
 myTerminal :: String
 myTerminal = "wezterm"
 -- myTerminal = "alacritty"    -- Sets default terminal
@@ -598,6 +601,7 @@ myKeys c =
   ^++^ subKeys "Favorite programs"
   [ ("M-S-<Return>", addName "Launch terminal"   $ spawn (myTerminal))
   , ("M-b", addName "Launch web browser"       $ spawn (myBrowser))
+  , ("M-t", addName "Launch messenger"       $ spawn (myTerminal ++ " -e Telegram"))
   , ("M-f", addName "Launch file manager"       $ spawn (myFileManager))
   , ("M-M1-h", addName "Launch htop"           $ spawn (myTerminal ++ " -e htop"))]
 

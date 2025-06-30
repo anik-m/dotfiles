@@ -2,7 +2,7 @@
 export TERM="xterm-256color"                       # getting proper colors
 export HISTCONTROL=ignoredups:erasedups            # no duplicate entries
 export EDITOR="nvim"        				       # $EDITOR use Neovim in terminal
-export VISUAL="gvim"           					   # $VISUAL use gvim in GUI mode
+export VISUAL="nvim"           					   # $VISUAL use gvim in GUI mode
 
 
 # export GTK_IM_MODULE=ibus
@@ -248,6 +248,12 @@ alias push='git push origin'
 alias stat='git status'  # 'status' is protected name so using 'stat' instead
 alias tag='git tag'
 alias newtag='git tag -a'
+
+#latex related commands
+#alias pdfcompilenointeract = "pdflatex -interaction=nonstopmode"
+
+#ghostscript related
+#alias gspdf ="gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=foo-compressed.pdf"
 
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"

@@ -37,4 +37,14 @@ echo ":: Installing packages from pkglist.txt using Paru..."
 cd ~/dotfiles
 paru -S --noconfirm - < pkglist.txt
 
+#install dmenu
+echo ":: Installing dmenu ::"
+git clone https://gitlab.com/dwt1/dmenu-distrotube.git
+cd dmenu-distrotube
+makepkg -cf
+sudo pacman -U *.pkg.tar.zst
+cd ..
+rm -rf dmenu-distrotube
+
+
 echo "Installation complete! Reboot for all changes to take effect."

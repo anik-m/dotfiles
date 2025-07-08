@@ -23,7 +23,6 @@ chaotic-mirrorlist
 clairvoyant
 cliphist
 cmatrix
-cowsay
 cups
 dunst
 efibootmgr
@@ -41,8 +40,6 @@ flatseal
 fortune-mod
 freetube
 fzf
-geany
-geany-plugins
 gimp
 git
 grub

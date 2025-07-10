@@ -206,6 +206,10 @@ alias l...='eza -al --color=always --group-directories-first ../../../' # ls on 
 
 # clear unnecessary files
 alias pacscc='sudo pacman -Scc'
+alias rmdblck='sudo rm /var/lib/pacman/db.lck'
+alias rmpacsync='sudo rm -R /var/lib/pacman/sync'
+alias pacrm='rmdblck&&rmpacsync'
+
 # pacman and yay
 alias sysup='pacsyu&&parsua'
 alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs

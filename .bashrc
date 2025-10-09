@@ -341,3 +341,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+export QSYS_ROOTDIR="/home/nika/.cache/paru/clone/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/24.1/quartus/sopc_builder/bin"

@@ -258,3 +258,5 @@ y() {
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/themes/nordtron.omp.json)"
 eval "$(zoxide init --cmd cd zsh)"
 . "/home/nika/.deno/env"
+
+export QSYS_ROOTDIR="/home/nika/.cache/paru/clone/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/24.1/quartus/sopc_builder/bin"

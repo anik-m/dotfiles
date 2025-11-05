@@ -7,6 +7,7 @@
     "spacing": 3, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
+        "custom/pomodoro",  // Added custom module
         "hyprland/workspaces",
         "hyprland/mode"
         //"sway/scratchpad",
@@ -159,9 +160,19 @@
             "updated": "👍"
         },
         "exec-if": "which waybar-module-pacman-updates",
-        "exec": "waybar-module-pacman-updates --no-zero-output",
+        "exec": "/home/nika/.local/bin/waybar-module-pacman-updates",
         "on-click": "alacritty -e sudo pacman -Syu",
         "interval":30
+    },
+    "custom/pomodoro": {
+        "format": "{}",
+        "exec": "/home/nika/.local/bin/waybar-pomodoro",
+        "return-type": "json",
+        "interval": 1,
+        // Add the full path to ALL click commands:
+        "on-click": "/home/nika/.local/bin/waybar-pomodoro toggle",
+        "on-click-right": "/home/nika/.local/bin/waybar-pomodoro cycle",
+        "on-click-middle": "/home/nika/.local/bin/waybar-pomodoro stop"
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -271,3 +282,4 @@
 		}
     }
 }
+

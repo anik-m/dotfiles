@@ -157,6 +157,44 @@ window#waybar.empty #window {
       color: #a9d18e; /* Lighter Green*/
 }
 
+#custom-pomodoro {
+    padding: 0 10px;
+    border-radius: 8px;
+    color: #ffffff;
+}
+
+#custom-pomodoro.work {
+    background-color: #f44336; /* Red for work */
+}
+
+#custom-pomodoro.short-break {
+    background-color: #4caf50; /* Green for short break */
+}
+
+#custom-pomodoro.long-break {
+    background-color: #2196f3; /* Blue for long break */
+}
+
+#custom-pomodoro.paused {
+    background-color: #ff9800; /* Orange for paused */
+    color: #333333;
+}
+
+#custom-pomodoro.finished {
+    background-color: #9c27b0; /* Purple for finished */
+    animation: blink 1s ease-in-out infinite;
+}
+
+#custom-pomodoro.stopped {
+    background-color: #555555; /* Gray for stopped */
+}
+
+/* A simple blinking animation for the 'finished' state */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
 #tray {
 
 }

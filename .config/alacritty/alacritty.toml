@@ -188,7 +188,7 @@ mods = "Shift"
 
 [window]
 dynamic_padding = false
-opacity = 0.9
+opacity = 0.95
 title = "Alacritty"
 
 [window.class]

@@ -8,7 +8,7 @@
 
 window#waybar {
     background: rgba(43, 48, 59, 0.5); /* Semi-transparent dark background - GOOD for light and dark */
-    color: #f8f8f2;          /* Light text - GOOD for light and dark */
+    color: #f8f8f2;         /* Light text - GOOD for light and dark */
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -30,10 +30,10 @@ window#waybar.empty #window {
 #window {
     font-weight: bold;
     font-family: "Ubuntu";
-	margin-top: 2px;
+    margin-top: 2px;
     border-radius: 10px;
     /*padding: 0px 20px;*/
-	/*margin-bottom: 0px;*/
+    /*margin-bottom: 0px;*/
     /*margin: 4px;*/
 }
 
@@ -69,14 +69,34 @@ window#waybar.empty #window {
 #workspaces button.urgent {
     background-color: #eb4d4b;
 }
+#workspaces button.active {
+    /* Text (icon) colour */
+    color: #ffffff;          /* white text */
 
+    /* Background colour – change this to whatever you like */
+    /* a nice blue   */
+    /* background: #3b82f6; */
+    /* background: rgba(0, 0, 0, 0.2); */
+    /* Optional: a subtle border or radius */
+    /* border-radius: 4px; */
+    /* border: 2px solid #1e40af; */
+
+    /* A larger radius for a "bubbly" feel */
+    /* border-radius: 9999px;  */
+
+    /* Add a line underneath */
+    /* border-bottom: 3px solid #ffffff;  */
+    
+    /* Or a line on top */
+    border-top: 3px solid #ffffff;
+}
 #mode {
     background: #64727D;
     border-bottom: 3px solid #f8f8f2; /* Light border */
 }
 
 #clock,
-#battery,
+#custom-batterycheck,
 #cpu,
 #memory,
 #network,
@@ -95,17 +115,19 @@ window#waybar.empty #window {
     font-weight: bold;
 }
 
-#battery {
+#custom-batterycheck {
     color: #f8f8f2; /* Light text */
 }
 
-#battery icon {
+/* --- THIS IS THE FIX --- */
+#custom-batterycheck icon {
     color: #f8f8f2; /* Light icon */
 }
 
-#battery.charging {
+/* --- THIS IS THE FIX --- */
+#custom-batterycheck.charging {
     color: #a9d18e; /* Lighter Green*/
-	background-color: #268bd2;
+    background-color: #268bd2;
 
 }
 
@@ -115,10 +137,18 @@ window#waybar.empty #window {
         color: #000000;
     }
 }
-
-#battery.warning:not(.charging) {
+tooltip {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    background: rgba(30,30,30,0.94);
+    color: #fafafa;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+/* --- THIS IS THE FIX --- */
+#custom-batterycheck.warning:not(.charging) {
     color: #f8f8f2;
-	background-color: #f53c3c;
+    background-color: #f53c3c;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -131,7 +161,7 @@ window#waybar.empty #window {
 }
 
 #memory {
-      color: #f8f8f2; /* Light text */
+     color: #f8f8f2; /* Light text */
 }
 
 #network {
@@ -140,7 +170,7 @@ window#waybar.empty #window {
 
 #network.disconnected {
     background: #f53c3c;
-	color: #f8f8f2;
+    color: #f8f8f2;
 }
 
 #pulseaudio {
@@ -149,12 +179,12 @@ window#waybar.empty #window {
 
 #pulseaudio.muted {
     color: #64727D;
-	background: #f53c3c;
+    background: #f53c3c;
 
 }
 
 #custom-pacupdate {
-      color: #a9d18e; /* Lighter Green*/
+     color: #a9d18e; /* Lighter Green*/
 }
 
 #custom-pomodoro {

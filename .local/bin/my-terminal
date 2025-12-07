@@ -1,0 +1,3 @@
+#!/bin/sh
+# Unifies terminal across X11 and Wayland
+exec alacritty "$@"

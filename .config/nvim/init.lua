@@ -76,25 +76,8 @@ require 'options'
 -- -- -- [[ basic keymaps ]]
 require 'keymaps'
 
--- -- [[ install `lazy.nvim` plugin manager ]]
--- require 'lazy-bootstrap'
---
--- -- [[ configure and install plugins ]]
---require 'lazy-plugins'
 --
 --
 
--- -- set <space> as the leader key
--- -- see `:help mapleader`
--- --  note: must happen before plugins are loaded (otherwise wrong leader will be used)
--- vim.g.mapleader = ' '
--- vim.g.maplocalleader = ' '
---
--- -- set to true if you have a nerd font installed and selected in the terminal
--- vim.g.have_nerd_font = true
---
--- --LazyVim can stay lazy
--- vim.g.lazyvim_check_order = false
---
 -- -- The line beneath this is called `modeline`. See `:help modeline`
 -- -- vim: ts=2 sts=2 sw=2 et

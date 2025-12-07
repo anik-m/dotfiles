@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Detects session to pick the right flags or tool
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    exec rofi -show drun -show-icons # Ensure you use a Wayland-compatible fork or wofi
+else
+    exec rofi -show drun -show-icons
+fi

@@ -86,7 +86,7 @@ import XMonad.Util.SpawnOnce
       -- TomorrowNight
       -- TokyoNight
       --
-import Colors.TokyoNight
+import Colors.Nord
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
 
@@ -97,15 +97,15 @@ myMessenger :: String
 myMessenger = "Telegram"
 
 myTerminal :: String
-myTerminal = "wezterm"
--- myTerminal = "alacritty"    -- Sets default terminal
+-- myTerminal = "wezterm"
+myTerminal = "alacritty"    -- Sets default terminal
 
 myFileManager :: String
 myFileManager = "pcmanfm"   -- Sets default file browser
 -- myFileManager = myTerminal ++ " -e yazi"   -- Sets default file browser
 
-myBrowser :: String
-myBrowser = "librewolf"
+-- myBrowser :: String
+-- myBrowser = "librewolf"
 -- myBrowser = "firefox "  -- Sets browser
 
 myEmacs :: String
@@ -133,7 +133,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce (mySoundPlayer ++ startupSound)
-  spawn "killall conky"   -- kill current conky on each restart
+  -- spawn "killall conky"   -- kill current conky on each restart
   spawn "killall trayer"  -- kill current trayer on each restart
   spawn "killall polybar" -- adding this in case of switching between xmobar and polybar.
 
@@ -149,7 +149,7 @@ myStartupHook = do
   -- spawnOnce ("sleep 2 && conky --config $HOME/.config/conky/xmonad/" ++ colorScheme ++ "-01.conkyrc")
   spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22")
 
-  spawn ("sleep 5 && conky")
+  -- spawn ("sleep 5 && conky")
   --aspawnOnce "xargs xwallpaper --stretch < ~/.cache/wall"
   -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
   spawnOnce "feh --randomize --bg-fill ~/backgrounds/wallpapers/"  -- feh set random wallpaper
@@ -532,7 +532,8 @@ myKeys c =
   , ("M-S-q", addName "Quit XMonad"            $ spawn "dm-logout")
   , ("M-S-c", addName "Kill focused window"    $ kill1)
   , ("M-S-a", addName "Kill all windows on WS" $ killAll)
-  , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "~/.local/bin/dm-run"])
+  -- , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "~/.local/bin/dm-run"])
+  , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "rofi -show drun -show-icons"])
   , ("M-S-b", addName "Toggle bar show/hide"   $ sendMessage ToggleStruts) ]
   -- , ("M-/", addName "DTOS Help"                $ spawn "~/.local/bin/dtos-help")]
 
@@ -565,10 +566,10 @@ myKeys c =
   , ("M-S-<Page_Down>", addName "Move window to prev WS" $ shiftTo Prev nonNSP >> moveTo Prev nonNSP)]
 
   ^++^ subKeys "Window navigation"
-  [ ("M1-<Tab>", addName "Move focus to next window"                $ windows W.focusDown)
-  , ("M1-S-<Tab>", addName "Move focus to previous window"                $ windows W.focusUp)
-  -- ,("M-j", addName "Move focus to next window"                $ windows W.focusDown)
-  -- , ("M-k", addName "Move focus to prev window"                $ windows W.focusUp)
+  [ ("M-<Tab>", addName "Move focus to next window"                $ windows W.focusDown)
+  , ("M-S-<Tab>", addName "Move focus to previous window"                $ windows W.focusUp)
+  ,("M-j", addName "Move focus to next window"                $ windows W.focusDown)
+  , ("M-k", addName "Move focus to prev window"                $ windows W.focusUp)
   , ("M-m", addName "Move focus to master window"              $ windows W.focusMaster)
   , ("M-S-j", addName "Swap focused window with next window"   $ windows W.swapDown)
   , ("M-S-k", addName "Swap focused window with prev window"   $ windows W.swapUp)
@@ -600,9 +601,9 @@ myKeys c =
 
   ^++^ subKeys "Favorite programs"
   [ ("M-S-<Return>", addName "Launch terminal"   $ spawn (myTerminal))
-  , ("M-b", addName "Launch web browser"       $ spawn (myBrowser))
+  -- , ("M-b", addName "Launch web browser"       $ spawn (myBrowser))
   , ("M-t", addName "Launch messenger"       $ spawn (myTerminal ++ " -e Telegram"))
-  , ("M-f", addName "Launch file manager"       $ spawn (myFileManager))
+  -- , ("M-f", addName "Launch file manager"       $ spawn (myFileManager))
   , ("M-M1-h", addName "Launch htop"           $ spawn (myTerminal ++ " -e htop"))]
 
   ^++^ subKeys "Monitors"
@@ -611,8 +612,11 @@ myKeys c =
 
   -- Switch layouts
   ^++^ subKeys "Switch layouts"
-  [ ("M-S-<Tab>", addName "Switch to next layout"   $ sendMessage NextLayout)
-  , ("M-<Space>", addName "Toggle noborders/full" $ sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)]
+  [ ("M-<Space>", addName "Switch to next layout"   $ sendMessage NextLayout)
+  -- , ("M-S-<Space>", addName "Reset Layout"     $ setLayout $ XMonad.layoutHook conf) -- Reset
+  , ("M-v", addName "Toggle Floating"          $ withFocused $ windows . W.sink) -- Match Hyprland's "V"
+  , ("M-S-v", addName "Force Float"            $ withFocused float)
+   , ("M-f", addName "Toggle noborders/full" $ sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)]
 
   -- Window resizing
   ^++^ subKeys "Window resizing"
@@ -707,7 +711,7 @@ myKeys c =
   , ("<XF86AudioMute>", addName "Toggle audio mute"   $ spawn "amixer set Master toggle")
   , ("<XF86AudioLowerVolume>", addName "Lower vol"    $ spawn "amixer set Master 5%- unmute")
   , ("<XF86AudioRaiseVolume>", addName "Raise vol"    $ spawn "amixer set Master 5%+ unmute")
-  , ("<XF86HomePage>", addName "Open home page"       $ spawn (myBrowser ++ " https://www.youtube.com/c/DistroTube"))
+  -- , ("<XF86HomePage>", addName "Open home page"       $ spawn (myBrowser ++ " https://www.youtube.com/c/DistroTube"))
   , ("<XF86Search>", addName "Web search (dmscripts)" $ spawn "dm-websearch")
   , ("<XF86Mail>", addName "Email client"             $ runOrRaise "thunderbird" (resource =? "thunderbird"))
   , ("<XF86Calculator>", addName "Calculator"         $ runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))

@@ -2,7 +2,7 @@ return {
   {
     'shaunsingh/nord.nvim',
     enabled = false,
-    lazy = false,
-    priority = 1000,
+    -- lazy = false,
+    -- priority = 1000,
   },
 }

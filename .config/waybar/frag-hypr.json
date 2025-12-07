@@ -1,0 +1,33 @@
+{
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "group/activity": {
+    "modules": [
+      "custom/pomodoro",
+      "hyprland/window"
+    ]
+  },
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{icon}",
+    "format-icons": {
+      "1": "০",
+      "2": "১",
+      "3": "২",
+      "4": "৩",
+      "5": "৪",
+      "6": "৫",
+      "7": "৬",
+      "8": "৭",
+      "9": "৮",
+      "10": "৯"
+    }
+  },
+  "hyprland/window": {
+    "format": "{title}",
+    "tooltip": false
+  }
+}

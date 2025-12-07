@@ -33,16 +33,20 @@ require('lazy').setup {
   spec = {
     -- import your plugins
     { import = 'Plugins' },
+    { import = 'Themes' },
     { 'LunarVim/bigfile.nvim' },
     { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
     { 'godlygeek/tabular' }, -- format things as tables
-    { import = 'Themes/tokyonight' },
+
+    -- { 'EdenEast/nightfox.nvim' }, -- nightfox
+    -- { import = 'Themes/tokyonight' },
     -- {
     --   'scottmckendry/cyberdream.nvim',
     --   lazy = false,
     --   priority = 1000,
     -- },
   },
+  -- vim.cmd("colorscheme tokyonight")
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   -- install = { colorscheme = { 'cyberdream' } },

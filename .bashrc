@@ -197,7 +197,7 @@ alias emacs="emacsclient -c -a 'emacs'" # GUI versions of Emacs
 
 # Changing "ls" to "eza"
 # alias ls='eza -al --color=always --group-directories-first' # my preferred listing
-alias la='eza -a --color=always --group-directories-first'  # all files and dirs
+alias la='eza -la --color=always --group-directories-first'  # all files and dirs
 alias ll='eza -l --color=always --group-directories-first'  # long format
 alias lt='eza -aT --color=always --group-directories-first' # tree listing
 alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARENT directory
@@ -209,14 +209,18 @@ alias pacscc='sudo pacman -Scc'
 alias rmdblck='sudo rm /var/lib/pacman/db.lck'
 alias rmpacsync='sudo rm -R /var/lib/pacman/sync'
 alias pacrm='rmdblck&&rmpacsync'
+alias packeyup='sudo pacman-key --refresh-keys'
 
 # pacman and yay
+# alias sysup='pacsyu&&parsua'
 alias sysup='pacsyu&&parsua'
 alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs
 alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
 alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)
+alias yaysua='yay -Sua --noconfirm'             # update only AUR pkgs (yay)
 alias parsyu='paru -Syu --noconfirm'             # update standard pkgs and AUR pkgs (paru)
-alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
+alias yaysyu='yay -Syu --noconfirm'             # update standard pkgs and AUR pkgs (yay)
+# alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
 alias orphan='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages (DANGEROUS!)
 
 # get fastest mirrors

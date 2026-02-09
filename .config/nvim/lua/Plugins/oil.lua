@@ -20,7 +20,7 @@ return {
   -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
   lazy = false,
   vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open current directory' }),
-  vim.keymap.set('n', '<Leader>-', function()
+  vim.keymap.set('n', '<Leader>_', function()
     require('oil').toggle_float()
   end, { desc = 'Open floating current directory' }),
 }

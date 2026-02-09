@@ -16,7 +16,7 @@ return {
     cmd = 'Neotree', -- lazy‑load only when :Neotree is called
     keys = {
       -- Open NeoTree on the left side
-      { ';', ':Neotree toggle left<CR>', desc = 'Toggle NeoTree' },
+      { '<Leader>-', ':Neotree toggle left<CR>', desc = 'Toggle NeoTree' },
     },
     config = function()
       --------------------------------------------------------------------

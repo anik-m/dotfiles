@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-WALLPAPER_DIR="$HOME/backgrounds/wallpapers/"
+WALLPAPER_DIR="$HOME/backgrounds/wallpapers"
 
-if [[ $XDG_SESSION_TYPE = 'wayland' ]]; then
-	CURRENT_WALL=$(hyprctl hyprpaper listloaded)
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    # Get current wallpaper path
+    CURRENT_WALL=$(hyprctl hyprpaper listloaded | head -n1)
 
-	# Get a random wallpaper that is not the current one
-	WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+    # Pick random wallpaper excluding current
+    WALLPAPER=$(find "$WALLPAPER_DIR" -type f | grep -vxF "$CURRENT_WALL" | shuf -n1)
 
-	# Apply the selected wallpaper
-	hyprctl hyprpaper reload ,"$WALLPAPER"	
+    # Preload and apply wallpaper
+    hyprctl hyprpaper preload "$WALLPAPER"
+    hyprctl hyprpaper wallpaper ",$WALLPAPER"
+
+    # Optional: unload old wallpaper
+    [[ -n "$CURRENT_WALL" ]] && \
+        hyprctl hyprpaper unload "$CURRENT_WALL"
 else
-	feh --randomize --bg-fill $WALLPAPER_DIR
+    feh --randomize --bg-fill "$WALLPAPER_DIR"
 fi

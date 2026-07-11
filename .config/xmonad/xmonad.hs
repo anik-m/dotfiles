@@ -153,6 +153,7 @@ myStartupHook = do
   --aspawnOnce "xargs xwallpaper --stretch < ~/.cache/wall"
   -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
   spawnOnce "feh --randomize --bg-fill ~/backgrounds/wallpapers/"  -- feh set random wallpaper
+  spawnOnce "fcitx5"
   -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
   setWMName "LG3D"
 
@@ -453,9 +454,9 @@ myLayoutHook = avoidStruts
                                            ||| tallAccordion
                                            ||| wideAccordion
 
--- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+myWorkspaces = [" 0 ", " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 --myWorkspaces = [" www ", " dev ", " sys ", " doc ", " vbox ", " gfx ", " mus ", " vid ", " chat "]
-myWorkspaces = [" ০ "," ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
+-- myWorkspaces = [" ০ "," ১ ", " ২ ", " ৩ ", " ৪ ", " ৫ ", " ৬ ", " ৭ ", " ৮ ", " ৯ "]
 -- myWorkspaces =
 --         " 1 : <fn=2>\xf111</fn> " :
 --         " 2 : <fn=2>\xf1db</fn> " :
@@ -491,7 +492,7 @@ myManageHook = composeAll
   , className =? "Yad"             --> doCenterFloat
   , title =? "Oracle VM VirtualBox Manager"   --> doFloat
   , title =? "Order Chain - Market Snapshots" --> doFloat
-  , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 0 )
+  , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
   , className =? "Brave-browser"   --> doShift ( myWorkspaces !! 0 )
   , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
   , className =? "Gimp"            --> doShift ( myWorkspaces !! 5 )
@@ -528,9 +529,10 @@ myKeys c =
   subKeys "Xmonad Essentials"
   [ ("M-C-r", addName "Recompile XMonad"       $ spawn "xmonad --recompile")
   , ("M-S-r", addName "Restart XMonad"         $ spawn "xmonad --restart")
-  --, ("M-S-q", addName "Quit XMonad"            $ sequence_ [spawn (mySoundPlayer ++ shutdownSound), io exitSuccess])
-  , ("M-S-q", addName "Quit XMonad"            $ spawn "dm-logout")
-  , ("M-S-c", addName "Kill focused window"    $ kill1)
+  , ("M-S-e", addName "Exit XMonad"            $ sequence_ [spawn (mySoundPlayer ++ shutdownSound), io exitSuccess])
+  , ("M-S-c", addName "Quit XMonad"            $ spawn "dm-logout")
+  -- , ("M-S-e", addName "exit XMonad"            $ io exitSuccess)
+  , ("M-S-q", addName "Kill focused window"    $ kill1)
   , ("M-S-a", addName "Kill all windows on WS" $ killAll)
   -- , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "~/.local/bin/dm-run"])
   , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "rofi -show drun -show-icons"])

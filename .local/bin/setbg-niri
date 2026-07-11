@@ -9,9 +9,9 @@ TRANSITION_ANGLE="30"
 TRANSITION_DURATION="0.5" # in seconds
 
 # Start swww daemon if not running
-if ! pgrep -x "swww-daemon" > /dev/null; then
-    echo "Starting swww-daemon..."
-    swww-daemon
+if ! pgrep -x "awww-daemon" > /dev/null; then
+    echo "Starting awww-daemon..."
+    awww-daemon
 fi
 
 # Get a list of image files
@@ -27,5 +27,5 @@ fi
 RANDOM_IMAGE="${IMAGES[RANDOM % ${#IMAGES[@]}]}"
 
 # Set the wallpaper
-swww img "$RANDOM_IMAGE" --transition-type "$TRANSITION_TYPE" --transition-duration "$TRANSITION_DURATION" --transition-angle "$TRANSITION_ANGLE" --resize crop
+awww img "$RANDOM_IMAGE" --transition-type "$TRANSITION_TYPE" --transition-duration "$TRANSITION_DURATION" --transition-angle "$TRANSITION_ANGLE" --resize crop
 notify-send "Wallpaper changed" "$RANDOM_IMAGE"

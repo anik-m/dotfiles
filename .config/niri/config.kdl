@@ -275,7 +275,9 @@ layout {
 
 // spawn-at-startup "sleep 2 && waybar -c $HOME/.config/waybar/config-niri.jsonc"
 spawn-sh-at-startup "waybar -c $HOME/.config/waybar/config-niri.jsonc"
-spawn-sh-at-startup "sleep2 && swww-daemon"
+spawn-sh-at-startup "sleep 2 && awww-daemon"
+spawn-sh-at-startup "~/.local/bin/setbg-niri"
+spawn-at-startup "fcitx5"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
@@ -373,7 +375,7 @@ binds {
     Mod+Shift+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Return hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-show-icons"; }
     Mod+Shift+W hotkey-overlay-title="Change into random wallpaper" { spawn "~/.local/bin/setbg-niri"; }
-    Mod+Shift+Q { quit; }
+    Mod+Shift+C { quit; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -400,7 +402,7 @@ binds {
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Shift+C repeat=false { close-window; }
+    Mod+Shift+Q repeat=false { close-window; }
 
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
@@ -606,6 +608,7 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    Mod+Shift+M { screenshot; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -618,7 +621,7 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
+    // Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like

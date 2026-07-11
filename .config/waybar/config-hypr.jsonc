@@ -65,6 +65,7 @@
         "all-outputs": true,
         "warp-on-scroll": false,
         //"format": "{name}: {icon}",
+        "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
             //"1": "",

@@ -162,7 +162,6 @@ animations {
 
 # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
 dwindle {
-    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = true # You probably want this
 }
 
@@ -223,8 +222,8 @@ $mainMod = SUPER # Sets "Windows" key as main modifier
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod SHIFT, Return, exec, $terminal
 bind = $mainMod, Return, exec, $menu
-bind = $mainMod SHIFT, C, killactive,
-bind = $mainMod SHIFT, Q, exec, uwsm stop
+bind = $mainMod SHIFT, Q, killactive,
+bind = $mainMod SHIFT, C, exec, uwsm stop
 # bind = $mainMod SHIFT, Q, exec, dm-logout -r
 #bind = $mainMod SHIFT, Q, exit,
 #bind = $mainMod, M, exit,
@@ -239,7 +238,7 @@ bind = $mainMod SHIFT, F, fullscreen, 0
 #bind = $mainMod, E, exec, $fileManager
 bind = $mainMod, V, togglefloating,
 bind = $mainMod SHIFT, W, exec, $terminal -e .local/bin/setbg
-bind = $mainMod, P, pseudo, # dwindle
+# bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, T, togglesplit, # dwindle
 
 # Move focus with mainMod + arrow keys

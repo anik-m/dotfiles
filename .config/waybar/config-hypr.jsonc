@@ -5,6 +5,9 @@
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 3, // Gaps between modules (4px)
+    "include": [
+      "/home/nika/.config/waybar/hyprwhspr-module-niri.jsonc"
+    ],
     // Choose the order of the modules
       "modules-left": [
         "group/activity"
@@ -13,6 +16,7 @@
         "hyprland/workspaces"
       ],
       "modules-right": [
+        "custom/hyprwhspr",
         "group/utils",        // <-- GROUP
         "clock",
         "group/system-state"       // <-- GROUP

@@ -27,7 +27,7 @@ return {
         backend = 'kitty',
         integrations = {
           markdown = {
-            enabled = true,
+            enabled = false,
             only_render_image_at_cursor = true,
             -- only_render_image_at_cursor_mode = "popup",
             filetypes = { 'markdown', 'vimwiki', 'quarto' },

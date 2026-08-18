@@ -1,9 +1,5 @@
 -- converted from hyprland.conf to lua format for hyprland 0.55+
 
--- docs:
--- :contentreference[oaicite:0]{index=0}
--- :contentreference[oaicite:1]{index=1}
-
 --------------------------------------------------
 -- variables
 --------------------------------------------------

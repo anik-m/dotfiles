@@ -266,6 +266,9 @@ alias newtag='git tag -a'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
+#video downloading options
+alias ysub="yt-dlp --write-subs --sub-langs en --embed-subs"
+
 # gpg encryption
 # verify signature for isos
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"

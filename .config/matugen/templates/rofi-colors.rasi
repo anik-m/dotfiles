@@ -1,0 +1,41 @@
+* {
+    /* backgrounds */
+    bg:                 {{ colors.surface.default.hex }};
+    bg-trans:           {{ colors.surface.default.hex }}4a;
+
+    bg-alt:             {{ colors.surface_container.default.hex }};
+    bg-alt-trans:       {{ colors.surface_container.default.hex }}5a;
+
+    bg-hover:           {{ colors.surface_container_high.default.hex }};
+
+    bg-selected:        {{ colors.primary_container.default.hex }};
+    bg-selected-trans:  {{ colors.primary_container.default.hex }}8a;
+
+    /* primary cyber accent */
+    cyan:               {{ colors.source_color.default.hex }};
+    cyan-trans:         {{ colors.source_color.default.hex }}5a;
+    cyan-dim:           {{ colors.primary.default.hex }};
+
+    blue:               {{ colors.secondary.default.hex }};
+
+    /* secondary cyber accent */
+    violet:             {{ colors.tertiary.default.hex }};
+    magenta:            {{ colors.tertiary_fixed.default.hex }};
+
+    /* text */
+    text:               {{ colors.on_surface.default.hex }};
+    text-dim:           {{ colors.on_surface_variant.default.hex }};
+    white:              {{ colors.on_background.default.hex }};
+
+    /* status */
+    red:                {{ colors.error.default.hex }};
+    green:              {{ colors.secondary.default.hex }};
+    yellow:             {{ colors.tertiary.default.hex }};
+
+    /* borders */
+    border:             {{ colors.primary.default.hex }};
+
+    /* highlights */
+    highlight-cyan:     bold {{ colors.source_color.default.hex }};
+    highlight-violet:   bold {{ colors.tertiary.default.hex }};
+}

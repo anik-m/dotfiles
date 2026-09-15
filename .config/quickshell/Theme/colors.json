@@ -1,0 +1,31 @@
+{
+    "colors": {
+"background": "#f5fbf7",
+        "surface": "#f5fbf7",
+        "surface_variant": "#dbe5e0",
+
+        "surface_container_lowest": "#ffffff",
+        "surface_container_low": "#eff5f1",
+        "surface_container": "#e9efeb",
+        "surface_container_high": "#e3eae6",
+        "surface_container_highest": "#dee4e0",
+
+        "primary": "#0d6b58",
+        "on_primary": "#ffffff",
+        "primary_container": "#a2f2da",
+        "on_primary_container": "#002019",
+
+        "secondary": "#4b635b",
+        "on_secondary": "#ffffff",
+
+        "on_surface": "#171d1b",
+        "on_surface_variant": "#3f4945",
+
+        "outline": "#6f7975",
+        "outline_variant": "#bfc9c4",
+
+        "error": "#ba1a1a",
+        "on_error": "#ffffff"
+
+    }
+}

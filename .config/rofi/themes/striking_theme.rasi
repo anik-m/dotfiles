@@ -1,0 +1,416 @@
+/*
+ * ╔══════════════════════════════════════════════════════════╗
+ * ║                  CYBERDECK // ROFI                       ║
+ * ║             futuristic terminal interface                ║
+ * ╚══════════════════════════════════════════════════════════╝
+ *
+ * Recommended font:
+ *   JetBrainsMono Nerd Font
+ *
+ * Example:
+ *   rofi -show drun -theme ~/.config/rofi/sci-fi.rasi
+ */
+
+@import "colors.rasi"
+* {
+    /* ─────────────────────────────────────
+     * PALETTE
+     * ───────────────────────────────────── */
+
+
+    // bg:                 #080b12;
+    // bg-alt:             #0d121c;
+    // bg-hover:           #111a28;
+    // bg-selected:        #102b3d;
+    //
+    // cyan:               #00e5ff;
+    // cyan-dim:           #087f91;
+    // blue:               #2684ff;
+    //
+    // violet:             #9d7cff;
+    // magenta:            #ff4fd8;
+    //
+    // text:               #d7f7ff;
+    // text-dim:           #7193a0;
+    // white:              #f4fbff;
+    //
+    // red:                #ff5370;
+    // green:              #39ff9c;
+    // yellow:             #ffe66d;
+    //
+    // border:             #16495a;
+    //
+    // /* ─────────────────────────────────────
+    //  * COMPLETE PROPERTY VALUES
+    //  *
+    //  * Rofi references must represent the
+    //  * entire property value.
+    //  * ───────────────────────────────────── */
+    //
+    // highlight-cyan:     bold #00e5ff;
+    // highlight-violet:   bold #9d7cff;
+    //
+    /* ─────────────────────────────────────
+     * FONTS
+     * ───────────────────────────────────── */
+
+    font:               "JetBrainsMono Nerd Font 11";
+    prompt-font:        "JetBrainsMono Nerd Font Bold 11";
+
+    /* ─────────────────────────────────────
+     * DEFAULTS
+     * ───────────────────────────────────── */
+
+    background-color:   transparent;
+    text-color:         @text;
+    spacing:             6px;
+}
+
+
+/* ═══════════════════════════════════════════
+ * WINDOW
+ * ═══════════════════════════════════════════ */
+
+window {
+    width:              620px;
+
+    transparency:       "real";
+    background-color:   @bg-trans;
+
+    border:             3px;
+    border-color:       @cyan-dim;
+
+    padding:            14px;
+
+    border-radius:      8px;
+}
+
+
+/* ═══════════════════════════════════════════
+ * MAINBOX
+ * ═══════════════════════════════════════════ */
+
+mainbox {
+    border:             0;
+    padding:            0;
+
+    spacing:            10px;
+}
+
+
+/* ═══════════════════════════════════════════
+ * INPUT BAR
+ * ═══════════════════════════════════════════ */
+
+inputbar {
+    spacing:            8px;
+    padding:            2;
+}
+
+
+/* ───────────────────────────────────────────
+ * PROMPT
+ * ─────────────────────────────────────────── */
+
+prompt {
+    padding:            7px 10px;
+
+    background-color:   @cyan-trans;
+    text-color:         #031017;
+
+    font:               @prompt-font;
+
+    border-radius:      3px;
+}
+
+
+/* ───────────────────────────────────────────
+ * ENTRY
+ * ─────────────────────────────────────────── */
+
+entry {
+    expand:             true;
+
+    padding:            7px 10px;
+
+  //  background-color:   @bg-alt;
+    background-color:   @bg-alt-trans;
+    text-color:         @white;
+
+    cursor-color:       @cyan;
+    cursor-width:       2px;
+
+    placeholder:        "SEARCH SYSTEM...";
+    placeholder-color:  @text-dim;
+
+    border:             1px;
+    border-color:       @border;
+
+    border-radius:      3px;
+}
+
+
+/* ───────────────────────────────────────────
+ * CASE INDICATOR
+ * ─────────────────────────────────────────── */
+
+case-indicator {
+    spacing:            0;
+    padding:            7px;
+
+    text-color:         @violet;
+}
+
+
+/* ═══════════════════════════════════════════
+ * LISTVIEW
+ * ═══════════════════════════════════════════ */
+
+listview {
+    fixed-height: true;
+    dynamic: true;
+
+    lines: 8;
+    columns: 1;
+
+    spacing: 3px;
+
+    scrollbar: true;
+    scrollbar-width: 4px;
+
+    padding: 4px 0px 0px 0px;
+
+    border: 1px 0px 0px 0px;
+    border-color: @border;
+}
+
+/* ═══════════════════════════════════════════
+ * ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element {
+    orientation:        horizontal;
+
+    spacing:            12px;
+
+    padding:            7px 10px;
+
+    border:             1px;
+    border-color:       transparent;
+
+    border-radius:      4px;
+
+    children:           [ element-icon, element-text ];
+}
+
+
+/* ───────────────────────────────────────────
+ * ICON
+ * ─────────────────────────────────────────── */
+
+element-icon {
+    size:               1.25em;
+
+    horizontal-align:   0.5;
+    vertical-align:     0.5;
+
+    background-color:   transparent;
+
+    text-color:         @cyan;
+}
+
+
+/* ───────────────────────────────────────────
+ * TEXT
+ * ─────────────────────────────────────────── */
+
+element-text {
+    vertical-align:     0.5;
+
+    background-color:   transparent;
+
+    text-color:         @text;
+
+    highlight:          @highlight-cyan;
+}
+
+
+/* ═══════════════════════════════════════════
+ * NORMAL ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element.normal.normal {
+    background-color:   transparent;
+}
+
+
+/* ═══════════════════════════════════════════
+ * ALTERNATE ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element.alternate.normal {
+    background-color:   @bg-alt-trans;
+    text-color:         @text;
+}
+
+
+/* ═══════════════════════════════════════════
+ * SELECTED ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element.selected.normal {
+    background-color:   @bg-selected-trans;
+
+    border:             2px;
+    border-color:       @cyan;
+
+    text-color:         @white;
+}
+
+
+element.selected.normal element-icon {
+    text-color:         @cyan;
+}
+
+
+element.selected.normal element-text {
+    text-color:         @white;
+
+    highlight:          @highlight-cyan;
+}
+
+
+/* ═══════════════════════════════════════════
+ * URGENT ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element.normal.urgent,
+element.alternate.urgent {
+    text-color:         @red;
+}
+
+
+element.selected.urgent {
+    background-color:   #351321;
+
+    border-color:       @red;
+
+    text-color:         @white;
+}
+
+
+element.selected.urgent element-icon {
+    text-color:         @red;
+}
+
+
+/* ═══════════════════════════════════════════
+ * ACTIVE ELEMENT
+ * ═══════════════════════════════════════════ */
+
+element.normal.active,
+element.alternate.active {
+    text-color:         @green;
+}
+
+
+element.selected.active {
+    background-color:   #0b3027;
+
+    border-color:       @green;
+
+    text-color:         @white;
+}
+
+
+element.selected.active element-icon {
+    text-color:         @green;
+}
+
+
+/* ═══════════════════════════════════════════
+ * SCROLLBAR
+ * ═══════════════════════════════════════════ */
+
+scrollbar {
+    width:              4px;
+
+    background-color:   transparent;
+
+    handle-width:       4px;
+    handle-color:       @cyan-dim;
+
+    border:             0;
+}
+
+
+/* ═══════════════════════════════════════════
+ * MESSAGE
+ * ═══════════════════════════════════════════ */
+
+message {
+    padding: 6px 8px;
+
+    background-color: @bg-alt-trans;
+
+    border: 1px;
+    border-color: @border;
+
+    border-radius: 3px;
+}
+
+
+/* ═══════════════════════════════════════════
+ * SIDEBAR
+ * ═══════════════════════════════════════════ */
+
+sidebar {
+    border:             1px 0px 0px 0px;
+    border-color:       @border;
+}
+
+
+/* ═══════════════════════════════════════════
+ * MODE SWITCHER
+ * ═══════════════════════════════════════════ */
+
+mode-switcher {
+    spacing:            5px;
+}
+
+
+
+button {
+    padding: 5px 10px;
+
+    background-color: @bg-alt-trans;
+    text-color: @text-dim;
+
+    border-radius: 3px;
+}
+
+button.selected {
+    background-color: @cyan-trans;
+    text-color: #031017;
+}
+
+
+
+/* ═══════════════════════════════════════════
+ * ELEMENT GLOBAL COLORS
+ * ═══════════════════════════════════════════ */
+
+element-text,
+element-icon {
+    background-color:   transparent;
+}
+
+
+/* ═══════════════════════════════════════════
+ * CYBERDECK TERMINAL FEEL
+ * ═══════════════════════════════════════════ */
+
+textbox-prompt-colon {
+    str:                " // ";
+    text-color:         @violet;
+}

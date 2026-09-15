@@ -1,49 +1,11 @@
-#[colors]
-#draw_bold_text_with_bright_colors = true
-
-#[colors.bright]
-#black = "#5b6268"
-#blue = "#3071db"
-#cyan = "#46d9ff"
-#green = "#4db5bd"
-#magenta = "#a9a1e1"
-#red = "#da8548"
-#white = "#dfdfdf"
-#yellow = "#ecbe7b"
-#
-#[colors.cursor]
-#cursor = "#528bff"
-#text = "CellBackground"
-#
-#[colors.normal]
-#black = "#1c1f24"
-#blue = "#51afef"
-#cyan = "#5699af"
-#green = "#98be65"
-#magenta = "#c678dd"
-#red = "#ff6c6b"
-#white = "#abb2bf"
-#yellow = "#da8548"
-#
-#[colors.primary]
-#background = "#282c34"
-#foreground = "#bbc2cf"
-#
-#[colors.selection]
-#background = "#3e4451"
-#text = "CellForeground"
-
-
 [scrolling]
 multiplier = 3
 
-# Colors (Tokyo Night)
-# Source https//github.com/zatchheems/tokyo-night-alacritty-theme
-
 [general]
 import = [
-    "~/alacritty/themes/alacritty-theme/themes/tokyo_night.toml"
+    "~/.config/alacritty/colors.toml"
 ]
+live_config_reload = true
 
 # Default colors
 # [colors.primary]
@@ -77,7 +39,7 @@ import = [
 TERM = "xterm-256color"
 
 [font]
-size = 21.0
+size = 15.0
 
 [font.bold]
 family = "mononoki Nerd Font"
@@ -188,7 +150,7 @@ mods = "Shift"
 
 [window]
 dynamic_padding = false
-opacity = 0.95
+opacity = 0.9
 title = "Alacritty"
 
 [window.class]
@@ -199,4 +161,5 @@ instance = "Alacritty"
 x = 15
 y = 15
 
-
+# [colors]
+# transparent_background_colors = true

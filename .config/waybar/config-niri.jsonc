@@ -1,16 +1,18 @@
 // -*- mode: jsonc -*-
 {
-     "layer": "top", // Waybar at top layer
-     "position": "top", // Waybar position (top|bottom|left|right)
+    "reload_style_on_change": true,
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 3, // Gaps between modules (4px)
     "include": [
-      "/home/nika/.config/waybar/hyprwhspr-module-niri.jsonc"
+        "/home/nika/.config/waybar/hyprwhspr-module-niri.jsonc",
+        "/home/nika/.config/waybar/waybar-clock.json"
     ],
     // Choose the order of the modules
       "modules-left": [
-        "group/activity"
+        "group/times"
       ],
       "modules-center": [
         "niri/workspaces"
@@ -18,10 +20,9 @@
       "modules-right": [
         "custom/hyprwhspr",
         "group/utils",        // <-- GROUP
-        "clock",
         "group/system-state"       // <-- GROUP
       ],
-      "group/activity": {
+      "group/times": {
         "orientation": "horizontal",
         "spacing": 30,
         "drawer": {
@@ -29,8 +30,10 @@
             "transition-left-to-right": true
         },
         "modules": [
-        "custom/pomodoro",
-        "niri/window"
+        "clock",
+        "custom/timer",
+        "custom/pomodoro"
+        // "niri/window"
         ]
       },
       "group/system-state": {
@@ -45,7 +48,8 @@
           "memory",
           "cpu",
           "temperature",
-          "power-profiles-daemon"
+          "custom/power"
+          // "power-profiles-daemon"
         ]
       },
       "group/utils": {
@@ -60,10 +64,10 @@
             "pulseaudio",
             "custom/pacupdate",
             "network",
-            "custom/power"
         ]
       },
     // Modules configuration
+
     "niri/workspaces": {
         // "disable-scroll": true,
         // "tooltip": true,
@@ -96,6 +100,7 @@
         // "warp-on-scroll": false,
         //"format": "{name}: {icon}",
     },
+
     //"keyboard-state": {
     //    "numlock": true,
     //    "capslock": true,
@@ -153,36 +158,57 @@
         // "icon-size": 21,
         "spacing": 10
     },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%d-%m-%Y}",
-        "calendar": {
-                    "mode": "month",
-                    "format": {
-                        "months": "<span color='#ff6699'><b>{}</b></span>",
-                    "days": "<span color='#cdd6f4'><b>{}</b></span>",
-                        "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
-                        "today": "<span color='#ffcc66'><b>{}</b></span>"
-            }
-        }
-    },
+
+    // "clock": {
+    //     "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    //     "format-alt": "{:%d-%m-%Y}",
+    //     "calendar": {
+    //         "mode": "month",
+    //         "format": {
+    //             "months": "<b>{}</b>",
+    //             "days": "{}",
+    //             "weekdays": "<b>{}</b>",
+    //             "today": "<b><u>{}</u></b>"
+    //         }
+    //     }
+    // },
+
+//     "clock": {
+// "tooltip-format": "<big>{:%Y %B}</big>\n<span font='JetBrainsMono Nerd Font 12pt'>{calendar}</span>",
+//         "format-alt": "{:%d-%m-%Y}",
+//         "calendar": {
+//                     "mode": "month",
+//                     "format": {
+//                         "months": "<span color='#ff6699'><b>{}</b></span>",
+//                         "days": "<span color='#cdd6f4'>{}</span>",
+//                         "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
+//                         "today": "<span color='#ffcc66'><b>{}</b></span>"
+//             }
+//         }
+//     },
+//
+
     "cpu": {
         "format": "{usage}% ",
         //"tooltip": false,
         "interval":30
     },
+
     "memory": {
         "format": "{}% ",
         "interval":30
     },
+    
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
+        "format": "{temperatureC}°C{icon}",
+        // "format-icons": ["", "", ""]
+        "format-icons": ["󰔄", "󰔏", "󰔐"]
     },
+
     "custom/pacupdate": {
         "exec": "/home/nika/.local/bin/waybar-update-tracker",
         "return-type": "json",
@@ -194,9 +220,10 @@
         //     "updated": "👍"
         // },
         // "exec-if": "which waybar-module-pacman-updates",
-        "on-click": "alacritty -e sudo pacman -Syu",
+        "on-click": "alacritty -e sudo pacman -Syu && sudo paru -Sua",
         "interval":60
     },
+
     "custom/pomodoro": {
         "format": "{}",
         "exec": "$HOME/.local/bin/waybar-pomodoro",
@@ -207,22 +234,60 @@
         "on-click-right": "$HOME/.local/bin/waybar-pomodoro cycle",
         "on-click-middle": "$HOME/.local/bin/waybar-pomodoro stop"
     },
+
+    "custom/timer": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/scripts/waybar-stopwatch",
+        "return-type": "json",
+        "interval": 1,
+
+        "on-click": "$HOME/.config/waybar/scripts/waybar-stopwatch toggle",
+        "on-click-right": "$HOME/.config/waybar/scripts/waybar-stopwatch reset"
+    },
+    
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
+
+    
     "custom/batterycheck": {
-      "exec": "/home/nika/.config/waybar/scripts/waybar-battery-update.sh",
-      "return-type": "json",
-      "interval": 10,
-      "format": "{text}", 
-      "tooltip-format": "{alt}",
-      "states": {
-        "warning": 30,
-        "critical": 15
-      }
+        "exec": "$HOME/.config/waybar/scripts/waybar-battery-update.sh",
+        "return-type": "json",
+        "interval": 10,
+
+        "format": "{icon} {text}",
+
+        "format-icons": [
+            "󰂎",
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ],
+
+        "tooltip": true
     },
+
+    // "custom/batterycheck": {
+    //   "exec": "$HOME/.config/waybar/scripts/waybar-battery-update.sh",
+    //   "return-type": "json",
+    //   "interval": 10,
+    //   "format": "{text}", 
+    //   "tooltip-format": "{alt}",
+    //   "states": {
+    //     "warning": 30,
+    //     "critical": 15
+    //   }
+    // },
+    //
     "power-profiles-daemon": {
           "format": " {icon} ",
           "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
@@ -234,6 +299,27 @@
             "power-saver": ""
           }
     },
+
+    // "network": {
+    //     "tooltip": true,
+    //     "rotate": 0,
+    //
+    //     "format-wifi": "{essid} ({signalStrength}%) ",
+    //     "format-ethernet": "{ipaddr}/{cidr} 󰈀",
+    //     "format-linked": "{ifname} (No IP) 󰈀",
+    //     "format-disconnected": "Disconnected ⚠",
+    //
+    //     "tooltip-format-wifi": "Network: <big><b>{essid}</b></big>\nSignal: <b>{signaldBm} dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency} MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>",
+    //     "tooltip-format-ethernet": "Interface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>",
+    //     "tooltip-format-disconnected": "Network disconnected",
+    //
+    //     "format-alt": "<span foreground='#99ffdd'>󰇚 {bandwidthDownBytesCompact}</span> <span foreground='#ffcc66'>󰕒 {bandwidthUpBytesCompact}</span>",
+    //
+    //     "on-click": "~/.local/bin/network-menu",
+    //
+    //     "interval": 2
+    // },
+
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "tooltip": true,
@@ -248,36 +334,50 @@
         "interval": 2  
         //"format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-bluetooth": "{volume}% {icon} 󰂯 {format_source}",
+        "format-bluetooth-muted": "󰅶 {icon} 󰂯 {format_source}",
+        "format-muted": "󰅶 {format_source}",
+        "format-source": "{volume}% 󰍬",
+        "format-source-muted": "󰍭",
+
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+            "headphone": "󰋋",
+            "hands-free": "󰂑",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "speaker": "󰓃",
+            "hdmi": "󰡁",
+            "hifi": "󰋌",
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
-        "on-click": "pavucontrol"
+
+        // "on-click": "pavucontrol"
+        // "on-click": "qs ipc call audio toggle"
+
+        "on-click": "qs -c $HOME/.config/quickshell/audio ipc call audio toggle"
     },
+
     "custom/power": {
         "format" : "⏻ ",
         "tooltip": false,
-        "menu": "on-click",
-        "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-        "menu-actions": {
-                "shutdown": "shutdown",
-                "reboot": "reboot",
-                "suspend": "systemctl suspend",
-                "hibernate": "systemctl hibernate"
-        }
+        "on-click": "$HOME/.local/bin/power-menu"
     }
+    // "custom/power": {
+    //     "format" : "⏻ ",
+    //     "tooltip": false,
+    //     "menu": "on-click",
+    //     "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+    //     "menu-actions": {
+    //             "shutdown": "shutdown",
+    //             "reboot": "reboot",
+    //             "suspend": "systemctl suspend",
+    //             "hibernate": "systemctl hibernate"
+    //     }
+    // }
 }
 

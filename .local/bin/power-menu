@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+
+# ─────────────────────────────────────────────
+# Power Menu
+# Supports:
+#   - Niri
+#   - Hyprland
+#   - Generic Wayland
+#   - X11
+# ─────────────────────────────────────────────
+
+# Detect session type
+SESSION_TYPE="${XDG_SESSION_TYPE:-unknown}"
+
+# Detect compositor
+if [[ -n "$NIRI_SOCKET" ]] && command -v niri >/dev/null 2>&1; then
+    COMPOSITOR="niri"
+elif [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]] && command -v hyprctl >/dev/null 2>&1; then
+    COMPOSITOR="hyprland"
+else
+    COMPOSITOR="unknown"
+fi
+
+
+notify() {
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "$@"
+    fi
+}
+
+# ─────────────────────────────────────────────
+# Actions
+# ─────────────────────────────────────────────
+
+lock_screen() {
+    if [[ "$SESSION_TYPE" == "x11" ]]; then
+
+        if command -v i3lock >/dev/null 2>&1; then
+            i3lock
+        elif command -v xsecurelock >/dev/null 2>&1; then
+            xsecurelock
+        else
+            notify "Power Menu" \
+                "No X11 screen locker found.\nInstall i3lock or xsecurelock."
+        fi
+
+    else
+        if command -v swaylock >/dev/null 2>&1; then
+            swaylock
+        else
+            notify "Power Menu" \
+                "swaylock is not installed."
+        fi
+    fi
+}
+
+
+logout_session() {
+    case "$COMPOSITOR" in
+
+        niri)
+            niri msg action quit --skip-confirmation
+            ;;
+
+        hyprland)
+            if command -v uwsm >/dev/null 2>&1; then
+                uwsm stop
+            elif command -v hyprctl >/dev/null 2>&1; then
+                hyprctl dispatch exit
+            else
+                loginctl terminate-session "$XDG_SESSION_ID"
+            fi
+            ;;
+
+        *)
+            # Generic fallback for X11 / other sessions
+            if [[ -n "$XDG_SESSION_ID" ]]; then
+                loginctl terminate-session "$XDG_SESSION_ID"
+            else
+                notify "Power Menu" \
+                    "Unable to determine current session."
+            fi
+            ;;
+
+    esac
+}
+
+
+confirm_action() {
+    local action="$1"
+
+    local result
+
+    result=$(printf '%s\n' \
+        "󰄬  Yes" \
+        "󰅖  Cancel" |
+        rofi \
+            -dmenu \
+            -i \
+            -no-custom \
+            -p "$action?" \
+            -theme-str '
+                window {
+                    width: 300px;
+                }
+
+                listview {
+                    lines: 2;
+                }
+            ')
+
+    [[ "$result" == "󰄬  Yes" ]]
+}
+
+
+# ─────────────────────────────────────────────
+# Menu
+# ─────────────────────────────────────────────
+
+options="󰌾  Lock
+󰍃  Logout
+󰒲  Suspend
+󰤄  Hibernate
+󰜉  Reboot
+󰐥  Shutdown"
+
+chosen=$(printf '%s\n' "$options" | rofi \
+    -dmenu \
+    -i \
+    -no-custom \
+    -p "Power" \
+    -theme-str '
+        window {
+            width: 300px;
+        }
+
+        listview {
+            lines: 6;
+        }
+    ')
+
+
+# ─────────────────────────────────────────────
+# Handle selection
+# ─────────────────────────────────────────────
+
+case "$chosen" in
+
+    "󰌾  Lock")
+        lock_screen
+        ;;
+
+    "󰍃  Logout")
+        if confirm_action "Logout"; then
+            logout_session
+        fi
+        ;;
+
+    "󰒲  Suspend")
+        if confirm_action "Suspend"; then
+            systemctl suspend
+        fi
+        ;;
+
+    "󰤄  Hibernate")
+        if confirm_action "Hibernate"; then
+            systemctl hibernate
+        fi
+        ;;
+
+    "󰜉  Reboot")
+        if confirm_action "Reboot"; then
+            systemctl reboot
+        fi
+        ;;
+
+    "󰐥  Shutdown")
+        if confirm_action "Shutdown"; then
+            systemctl poweroff
+        fi
+        ;;
+
+esac

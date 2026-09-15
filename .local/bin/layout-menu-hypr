@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+layouts=(
+	"Scrolling"
+	"Dwindle"
+	"Master"
+	"Monocle"
+)
+
+selected="$(
+	printf '%s\n' "${layouts[@]}" |
+		rofi \
+			-dmenu \
+			-i \
+			-p "Layout" \
+			-no-custom
+)"
+
+case "$selected" in
+	Scrolling)
+		layout="scrolling"
+		;;
+
+	Dwindle)
+		layout="dwindle"
+		;;
+
+	Master)
+		layout="master"
+		;;
+
+	Monocle)
+		layout="monocle"
+		;;
+
+	*)
+		exit 0
+		;;
+esac
+
+hyprctl eval "hl.config({ general = { layout = \"$layout\" } })"

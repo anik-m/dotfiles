@@ -1,0 +1,428 @@
+
+#!/usr/bin/env bash
+
+# ─────────────────────────────────────────────
+# Network Menu
+# Uses NetworkManager / nmcli
+# Works with Niri, Hyprland and X11
+# ─────────────────────────────────────────────
+
+# ─────────────────────────────────────────────
+# Check NetworkManager
+# ─────────────────────────────────────────────
+
+if ! command -v nmcli >/dev/null 2>&1; then
+    notify-send "Network Menu" "nmcli is not installed."
+    exit 1
+fi
+
+if ! nmcli -t -f RUNNING general | grep -q '^running$'; then
+    notify-send "Network Menu" "NetworkManager is not running."
+    exit 1
+fi
+
+
+# ─────────────────────────────────────────────
+# Icons
+# ─────────────────────────────────────────────
+
+wifi_icon=""
+ethernet_icon="󰈀"
+lock_icon="󰌾"
+open_icon="󰒢"
+disconnect_icon="󰖪"
+refresh_icon="󰑐"
+wifi_on_icon="󰖩"
+wifi_off_icon="󰖪"
+
+
+# ─────────────────────────────────────────────
+# Wi-Fi signal icon
+# ─────────────────────────────────────────────
+
+signal_icon() {
+    local signal="$1"
+
+    if (( signal >= 80 )); then
+        echo "󰤨"
+    elif (( signal >= 60 )); then
+        echo "󰤥"
+    elif (( signal >= 40 )); then
+        echo "󰤢"
+    elif (( signal >= 20 )); then
+        echo "󰤟"
+    else
+        echo "󰤯"
+    fi
+}
+
+
+# ─────────────────────────────────────────────
+# Current connection
+# ─────────────────────────────────────────────
+
+current_connection() {
+    nmcli -t -f TYPE,NAME,DEVICE connection show --active 2>/dev/null |
+        head -n 1
+}
+
+
+# ─────────────────────────────────────────────
+# Main menu
+# ─────────────────────────────────────────────
+
+show_menu() {
+
+    local wifi_state
+    wifi_state=$(nmcli -t -f WIFI g)
+
+    local current_wifi
+    current_wifi=$(nmcli -t -f ACTIVE,SSID,SIGNAL,DEVICE dev wifi 2>/dev/null |
+        awk -F: '$1 == "yes" {print; exit}')
+
+    local current_eth
+    current_eth=$(nmcli -t -f TYPE,STATE,CONNECTION dev status 2>/dev/null |
+        awk -F: '$1 == "ethernet" && $2 == "connected" {print; exit}')
+
+
+    # Build menu
+    local options=""
+
+    # Current Wi-Fi
+    if [[ -n "$current_wifi" ]]; then
+        IFS=: read -r active ssid signal device <<< "$current_wifi"
+
+        options+="$(signal_icon "$signal")  $ssid  ($signal%)"$'\n'
+        options+="────────────────────────"$'\n'
+    fi
+
+
+    # Current Ethernet
+    if [[ -n "$current_eth" ]]; then
+        IFS=: read -r type state connection <<< "$current_eth"
+
+        options+="$ethernet_icon  $connection"$'\n'
+        options+="────────────────────────"$'\n'
+    fi
+
+
+    # Wi-Fi toggle
+    if [[ "$wifi_state" == "enabled" ]]; then
+        options+="$wifi_off_icon  Disable Wi-Fi"$'\n'
+    else
+        options+="$wifi_on_icon  Enable Wi-Fi"$'\n'
+    fi
+
+    options+="$refresh_icon  Rescan"$'\n'
+    options+="$disconnect_icon  Disconnect"$'\n'
+    options+="$wifi_icon  Available Networks"$'\n'
+
+
+    # Show menu
+    local chosen
+
+    chosen=$(printf '%s\n' "$options" | rofi \
+        -dmenu \
+        -i \
+        -no-custom \
+        -p "Network" \
+        -theme-str '
+            window {
+                width: 420px;
+            }
+
+            listview {
+                lines: 10;
+            }
+        ')
+
+    case "$chosen" in
+
+        "󰖪  Disable Wi-Fi")
+            nmcli radio wifi off
+            ;;
+
+        "󰖩  Enable Wi-Fi")
+            nmcli radio wifi on
+            ;;
+
+        "󰑐  Rescan")
+            nmcli device wifi rescan
+            sleep 1
+            show_networks
+            ;;
+
+        "󰖪  Disconnect")
+            disconnect_menu
+            ;;
+
+        "  Available Networks")
+            show_networks
+            ;;
+
+        *)
+            # If the user selected the currently-connected Wi-Fi,
+            # open its details.
+            if [[ -n "$current_wifi" ]]; then
+                IFS=: read -r active ssid signal device <<< "$current_wifi"
+
+                if [[ "$chosen" == "$(signal_icon "$signal")  $ssid  ($signal%)" ]]; then
+                    show_network_details "$device"
+                fi
+            fi
+            ;;
+    esac
+}
+
+
+# ─────────────────────────────────────────────
+# Wi-Fi networks
+# ─────────────────────────────────────────────
+
+show_networks() {
+
+    # Force a fresh scan
+    nmcli device wifi rescan >/dev/null 2>&1
+
+    local networks
+
+    networks=$(nmcli -t \
+        -f IN-USE,SSID,SIGNAL,SECURITY,BARS \
+        device wifi list \
+        --rescan no 2>/dev/null |
+        awk -F: '
+        BEGIN {
+            seen[""] = 1
+        }
+
+        {
+            inuse=$1
+            ssid=$2
+            signal=$3
+            security=$4
+            bars=$5
+
+            # Skip hidden networks
+            if (ssid == "")
+                next
+
+            # Avoid duplicate SSIDs
+            if (seen[ssid])
+                next
+
+            seen[ssid]=1
+
+            if (inuse == "*")
+                prefix="󰄬 "
+            else
+                prefix="   "
+
+            if (security == "--" || security == "")
+                icon="󰒢"
+            else
+                icon="󰌾"
+
+            printf "%s%s  %s  %s%%  %s\n",
+                prefix, icon, ssid, signal, security
+        }')
+
+
+    if [[ -z "$networks" ]]; then
+        notify-send "Network Menu" "No Wi-Fi networks found."
+        return
+    fi
+
+
+    local chosen
+
+    chosen=$(printf '%s\n' "$networks" | rofi \
+        -dmenu \
+        -i \
+        -no-custom \
+        -p "Wi-Fi" \
+        -theme-str '
+            window {
+                width: 500px;
+            }
+
+            listview {
+                lines: 12;
+            }
+        ')
+
+
+    [[ -z "$chosen" ]] && return
+
+
+    # Strip our visual formatting
+    local ssid
+
+    ssid=$(sed -E \
+        's/^[[:space:]]*(󰄬|󰌾|󰒢)[[:space:]]+//' <<< "$chosen" |
+        sed -E 's/[[:space:]]+[0-9]+%[[:space:]]+.*$//')
+
+
+    connect_network "$ssid"
+}
+
+
+# ─────────────────────────────────────────────
+# Connect to network
+# ─────────────────────────────────────────────
+
+connect_network() {
+
+    local ssid="$1"
+
+    [[ -z "$ssid" ]] && return
+
+
+    # Check whether NetworkManager already knows this connection
+    if nmcli -t -f NAME connection show | grep -Fxq "$ssid"; then
+
+        nmcli connection up "$ssid" >/dev/null 2>&1
+
+        if [[ $? -eq 0 ]]; then
+            notify-send "Network" "Connected to $ssid"
+        else
+            notify-send "Network" "Failed to connect to $ssid"
+        fi
+
+        return
+    fi
+
+
+    # Ask for password
+    local password
+
+    password=$(rofi \
+        -dmenu \
+        -password \
+        -p "Password" \
+        -theme-str '
+            window {
+                width: 400px;
+            }
+        ')
+
+
+    [[ -z "$password" ]] && return
+
+
+    if nmcli device wifi connect "$ssid" password "$password" >/dev/null 2>&1; then
+        notify-send "Network" "Connected to $ssid"
+    else
+        notify-send "Network" "Failed to connect to $ssid"
+    fi
+}
+
+
+# ─────────────────────────────────────────────
+# Disconnect
+# ─────────────────────────────────────────────
+
+disconnect_menu() {
+
+    local devices
+
+    devices=$(nmcli -t \
+        -f DEVICE,TYPE,STATE,CONNECTION \
+        device status 2>/dev/null |
+        awk -F: '$3 == "connected" {
+            printf "%s  %s  %s\n", $1, $2, $4
+        }')
+
+
+    if [[ -z "$devices" ]]; then
+        notify-send "Network" "No active connections."
+        return
+    fi
+
+
+    local chosen
+
+    chosen=$(printf '%s\n' "$devices" | rofi \
+        -dmenu \
+        -i \
+        -no-custom \
+        -p "Disconnect" \
+        -theme-str '
+            window {
+                width: 450px;
+            }
+        ')
+
+
+    [[ -z "$chosen" ]] && return
+
+
+    local device
+    device=$(awk '{print $1}' <<< "$chosen")
+
+
+    if nmcli device disconnect "$device" >/dev/null 2>&1; then
+        notify-send "Network" "Disconnected $device"
+    else
+        notify-send "Network" "Failed to disconnect $device"
+    fi
+}
+
+
+# ─────────────────────────────────────────────
+# Network details
+# ─────────────────────────────────────────────
+
+show_network_details() {
+
+    local device="$1"
+
+    local details
+
+    details=$(nmcli device show "$device" 2>/dev/null |
+        awk -F: '
+        /GENERAL.CONNECTION:/ {
+            print "Connection: " $2
+        }
+
+        /GENERAL.DEVICE:/ {
+            print "Interface: " $2
+        }
+
+        /IP4.ADDRESS\[1\]:/ {
+            print "IP: " $2
+        }
+
+        /IP4.GATEWAY:/ {
+            print "Gateway: " $2
+        }
+
+        /IP4.DNS\[1\]:/ {
+            print "DNS: " $2
+        }
+
+        /WIFI-PROPERTIES.SIGNAL:/ {
+            print "Signal: " $2 "%"
+        }
+        ')
+
+
+    printf '%s\n' "$details" | rofi \
+        -dmenu \
+        -p "Network Details" \
+        -theme-str '
+            window {
+                width: 500px;
+            }
+
+            listview {
+                lines: 8;
+            }
+        '
+}
+
+
+# ─────────────────────────────────────────────
+# Start
+# ─────────────────────────────────────────────
+
+show_menu

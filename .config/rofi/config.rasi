@@ -1,0 +1,9 @@
+configuration {
+ modi: "window,drun,ssh,combi";
+ font: "iosevka-bold 10";
+ combi-modi: "window,drun,ssh";
+ }
+//@theme "~/.config/rofi/themes/sci-fi.rasi"
+
+
+@theme "/home/nika/.config/rofi/themes/striking_theme.rasi"

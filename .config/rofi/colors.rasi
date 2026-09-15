@@ -1,0 +1,41 @@
+* {
+    /* backgrounds */
+    bg:                 #0f1513;
+    bg-trans:           #0f15134a;
+
+    bg-alt:             #1b211f;
+    bg-alt-trans:       #1b211f5a;
+
+    bg-hover:           #252b29;
+
+    bg-selected:        #005142;
+    bg-selected-trans:  #0051428a;
+
+    /* primary cyber accent */
+    cyan:               #102b24;
+    cyan-trans:         #102b245a;
+    cyan-dim:           #86d6bf;
+
+    blue:               #b2ccc2;
+
+    /* secondary cyber accent */
+    violet:             #a9cbe3;
+    magenta:            #c6e7ff;
+
+    /* text */
+    text:               #dee4e0;
+    text-dim:           #bfc9c4;
+    white:              #dee4e0;
+
+    /* status */
+    red:                #ffb4ab;
+    green:              #b2ccc2;
+    yellow:             #a9cbe3;
+
+    /* borders */
+    border:             #86d6bf;
+
+    /* highlights */
+    highlight-cyan:     bold #102b24;
+    highlight-violet:   bold #a9cbe3;
+}

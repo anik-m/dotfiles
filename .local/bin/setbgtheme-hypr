@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+
+# ============================================================
+# wallpaper + dynamic theme
+# awww version for Hyprland
+# ============================================================
+
+set -u
+
+wallpaper_dir="$HOME/backgrounds/wallpapers"
+
+# ============================================================
+# transition settings
+# ============================================================
+
+transition_type="wipe"
+transition_angle="30"
+transition_duration="0.5"
+
+# ============================================================
+# start awww daemon if not running
+# ============================================================
+
+if ! pgrep -x "awww-daemon" >/dev/null; then
+    echo "starting awww-daemon..."
+    awww-daemon >/dev/null 2>&1 &
+    sleep 0.5
+fi
+
+# ============================================================
+# verify awww is available
+# ============================================================
+
+if ! command -v awww >/dev/null 2>&1; then
+    echo "error: awww is not installed"
+    exit 1
+fi
+
+if ! pgrep -x "awww-daemon" >/dev/null; then
+    echo "error: awww-daemon failed to start"
+    exit 1
+fi
+
+# ============================================================
+# find wallpapers
+# ============================================================
+
+mapfile -t images < <(
+    find "$wallpaper_dir" -type f \
+        \( -iname "*.jpg" \
+        -o -iname "*.jpeg" \
+        -o -iname "*.png" \
+        -o -iname "*.webp" \) \
+        -print
+)
+
+if [ "${#images[@]}" -eq 0 ]; then
+    echo "error: no images found in $wallpaper_dir"
+    exit 1
+fi
+
+# ============================================================
+# pick random wallpaper
+# ============================================================
+
+random_image="${images[RANDOM % ${#images[@]}]}"
+
+echo "wallpaper: $random_image"
+
+# ============================================================
+# set wallpaper with awww
+# ============================================================
+
+awww img "$random_image" \
+    --transition-type "$transition_type" \
+    --transition-duration "$transition_duration" \
+    --transition-angle "$transition_angle" \
+    --resize crop
+
+awww_status=$?
+
+if [ "$awww_status" -ne 0 ]; then
+    echo "error: awww failed with status $awww_status"
+    exit 1
+fi
+
+# ============================================================
+# determine wallpaper brightness
+# ============================================================
+
+source_color=$(matugen image "$random_image" --show-source-colors | head -n 1)
+
+if [[ ! "$source_color" =~ ^#[0-9a-fA-F]{6}$ ]]; then
+    echo "error: could not determine dominant source color"
+    echo "source color: $source_color"
+    exit 1
+fi
+
+hex="${source_color#\#}"
+
+r=$((16#${hex:0:2}))
+g=$((16#${hex:2:2}))
+b=$((16#${hex:4:2}))
+
+brightness=$(( (299 * r + 587 * g + 114 * b) / 1000 ))
+
+echo "dominant source color: $source_color"
+echo "RGB: $r $g $b"
+echo "brightness: $brightness"
+
+# ============================================================
+# choose Matugen mode
+# ============================================================
+
+if (( brightness <= 128 )); then
+    matugen_mode="dark"
+    echo "dark wallpaper -> using dark Matugen theme"
+else
+    matugen_mode="light"
+    echo "bright wallpaper -> using light Matugen theme"
+fi
+
+# ============================================================
+# generate theme
+# ============================================================
+
+matugen image "$random_image" \
+    -m "$matugen_mode" \
+    --source-color-index 0
+
+matugen_status=$?
+
+echo "matugen exit status: $matugen_status"
+
+if [ "$matugen_status" -ne 0 ]; then
+    echo "error: matugen failed"
+    exit 1
+fi
+
+echo "matugen finished successfully"
+
+# ============================================================
+# reload Waybar
+# ============================================================
+
+pkill -SIGUSR2 waybar
+
+echo "waybar reload requested"
+
+# ============================================================
+# notification
+# ============================================================
+
+# notify-send \
+#     "Wallpaper changed" \
+#     "$(basename "$random_image")"

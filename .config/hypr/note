@@ -1,0 +1,527 @@
+I’m continuing work on my modular Hyprland configuration.
+
+Environment
+Hyprland: 0.56.2
+Hyprland commit: efb50993780079460b0cbed1363e2166a2de1d9f
+Hyprutils: 0.14.x
+Hyprgraphics: 0.5.x
+Hyprcursor: 0.1.x
+Hyprlang: 0.6.8
+Configuration uses Hyprland's Lua configuration API, not legacy hyprland.conf syntax.
+
+Before proposing or finalizing any Hyprland-specific option, dispatcher, Lua API, plugin option, or animation feature, check the current Hyprland 0.56.x documentation/source. Do not invent syntax.
+
+Current modular structure
+~/.config/hypr/
+├── hyprland.lua
+└── lua/
+    ├── appearance.lua
+    ├── animations.lua
+    ├── input.lua
+    ├── plugins.lua
+    └── keybinds/
+        ├── init.lua
+        ├── apps.lua
+        ├── window.lua
+        ├── navigation.lua
+        ├── workspace.lua
+        ├── layout.lua
+        ├── mouse.lua
+        └── media.lua
+
+
+Responsibilities should remain separated.
+
+appearance.lua
+
+Owns:
+
+rounding
+blur
+shadows
+glow
+opacity
+wobble
+other visual/decorative configuration
+Matugen colors
+animations.lua
+
+Owns only native Hyprland animations:
+
+animation curves
+window open/close
+window movement
+fading
+workspace transitions
+layer transitions
+border/shadow/glow animation
+
+Do not put plugin configuration here.
+
+plugins.lua
+
+Owns Hyprland plugins.
+
+Currently installed/enabled:
+
+hyprfocus by Vaxry
+Version: 1.0
+Description: Flashfocus for Hyprland
+
+
+hyprpm list reports:
+
+hyprfocus
+enabled: true
+
+
+hyprctl plugins list confirms it is loaded.
+
+Current working plugins.lua:
+
+local M = {}
+
+function M.setup()
+	hl.config({
+		plugin = {
+			hyprfocus = {
+				keyboard_focus_animation = "shrink",
+				mouse_focus_animation = "flash",
+				animate_floating = true,
+			},
+		},
+	})
+end
+
+return M
+
+
+This has been verified with:
+
+hyprctl reload
+hyprctl configerrors
+
+
+and there are no errors.
+
+These values currently report:
+
+plugin:hyprfocus:keyboard_focus_animation
+str: shrink
+set: true
+
+plugin:hyprfocus:mouse_focus_animation
+str: flash
+set: true
+
+plugin:hyprfocus:animate_floating
+bool: true
+set: true
+
+
+Do NOT try to use the old unsupported nested Hyprfocus configuration such as:
+
+flash = {
+	flash_opacity = ...
+}
+
+shrink = {
+	shrink_percentage = ...
+}
+
+
+unless the installed plugin version is first verified to support those options.
+
+Also:
+
+type(hl.plugin)
+→ table
+
+type(hl.plugin.hyprfocus)
+→ nil
+
+
+This is not necessarily an error; the installed plugin does not expose a Lua namespace there.
+
+Current native animations goal
+
+I want a polished, futuristic, visually interesting desktop.
+
+Animations do NOT need to be Niri-inspired.
+
+Use native Hyprland animation features where possible.
+
+Desired effects:
+
+smooth window opening
+distinctive window closing
+spring-like movement/resizing where appropriate
+smooth workspace transitions
+subtle layer/Rofi animations
+border/glow transitions
+tasteful—not excessive—motion
+no fake or unsupported animation options
+
+A previous animation design used native styles such as:
+
+popin
+gnomed
+slide
+slidefade
+
+
+and named curves such as:
+
+cinematic
+snappy
+smooth
+soft_spring
+snappy_spring
+
+
+This general visual direction is good.
+
+Do not introduce unsupported styles without checking Hyprland 0.56.x documentation.
+
+Appearance goal
+
+The visual direction is:
+
+dark / glassy / futuristic / neon
+
+Desired native effects include:
+
+rounded corners
+blur
+aurora-style blur if supported
+motion blur
+restrained wobble
+shadows
+glow
+Matugen colors
+
+Important: previously I accidentally used unsupported wobble configuration keys. Do not repeat that mistake. Verify the exact Hyprland 0.56.2 option names/types first.
+
+Hyprfocus
+
+Hyprfocus is working.
+
+The desired behavior is:
+
+keyboard focus → shrink
+mouse focus     → flash
+floating windows → animated
+
+
+Current verified configuration:
+
+hl.config({
+	plugin = {
+		hyprfocus = {
+			keyboard_focus_animation = "shrink",
+			mouse_focus_animation = "flash",
+			animate_floating = true,
+		},
+	},
+})
+
+
+Keep this separate from native animations.lua.
+
+Other plugin
+
+I attempted to install:
+
+hyprtrails
+
+
+but it is NOT currently installed.
+
+Current hyprpm list only shows:
+
+borders-plus-plus
+csgo-vulkan-fix
+hyprbars
+hyprfocus
+
+
+with only hyprfocus enabled.
+
+Do not assume hyprtrails is available. If we revisit it, first check the current Hyprland plugin repository/version compatibility.
+
+Keybinding constraints
+
+These must remain unchanged.
+
+Workspaces
+SUPER + 1..9/0
+→ focus workspaces 1..10
+
+SUPER + SHIFT + 1..9/0
+→ move current window to workspaces 1..10
+
+
+Never use these bindings for layout selection.
+
+Mouse workspace switching
+SUPER + mouse_down
+→ next workspace
+
+SUPER + mouse_up
+→ previous workspace
+
+
+These are intentionally mouse-wheel workspace bindings.
+
+Do NOT repurpose them for scrolling-layout navigation.
+
+Layouts
+
+Required layouts:
+
+scrolling
+dwindle
+master
+monocle
+
+
+Default:
+
+general = {
+	layout = "dwindle",
+}
+
+
+Layout cycle:
+
+scrolling
+↓
+dwindle
+↓
+master
+↓
+monocle
+↓
+scrolling
+
+
+Bindings:
+
+SUPER + SHIFT + TAB
+→ next layout
+
+SUPER + CTRL + SHIFT + TAB
+→ previous layout
+
+
+Explicit layout selection:
+
+SUPER + SHIFT + P
+→ ~/.local/bin/hypr-layout-menu
+
+
+Do NOT use:
+
+SUPER + SHIFT + L
+
+
+for layout selection because SUPER + SHIFT + H/L are reserved for movement.
+
+Rofi layout selector
+
+The external script is:
+
+~/.local/bin/hypr-layout-menu
+
+
+It should present:
+
+Scrolling
+Dwindle
+Master
+Monocle
+
+
+and switch to the selected layout.
+
+Do not blindly use:
+
+hyprctl keyword
+
+
+or:
+
+hl.config({ general = { layout = ... } })
+
+
+for runtime layout switching without verifying the correct Hyprland 0.56.2 mechanism.
+
+Scrolling layout
+
+The desired scrolling-layout configuration is approximately:
+
+scrolling = {
+	fullscreen_on_one_column = true,
+	column_width = 0.5,
+	focus_fit_method = 1,
+	follow_focus = true,
+	follow_min_visible = 0.4,
+	explicit_column_widths = "0.333, 0.5, 0.667, 1.0",
+	wrap_focus = true,
+	wrap_swapcol = true,
+	direction = "right",
+}
+
+
+But every option must be verified against the actual Hyprland 0.56.2 implementation before finalizing.
+
+Important scrolling-layout focus issue
+
+There was a persistent problem where:
+
+SUPER + h/l
+
+
+would bounce between non-adjacent windows instead of behaving like:
+
+1 → 2 → 3 → 4
+
+
+or:
+
+4 → 3 → 2 → 1
+
+
+Testing showed that:
+
+hyprctl dispatch layoutmsg "focus r"
+
+
+did NOT work through the normal shell interface because Hyprland interpreted the command through its Lua dispatch path.
+
+However, I found that adding appropriate layoutmsg bindings directly to the configuration and testing them with keys resulted in the desired sequential behavior.
+
+Therefore:
+
+Do not assume hl.dsp.layout("focus r") or hl.dispatch(...) is equivalent to the working native layoutmsg behavior.
+
+If working on the layout module, investigate the exact Hyprland 0.56.2 Lua dispatcher/API representation of:
+
+layoutmsg focus r
+layoutmsg focus l
+
+
+and use the actual supported mechanism.
+
+Do not reintroduce the old bouncing implementation.
+
+Current workspace.lua
+
+The workspace module must retain:
+
+for ws = 1, 9 do
+	local key = ws
+
+	hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = ws }))
+
+	hl.bind(
+		mod .. " + SHIFT + " .. key,
+		hl.dsp.window.move({ workspace = ws })
+	)
+end
+
+hl.bind(mod .. " + 0", hl.dsp.focus({ workspace = 10 }))
+
+hl.bind(
+	mod .. " + SHIFT + 0",
+	hl.dsp.window.move({ workspace = 10 })
+)
+
+hl.bind(
+	mod .. " + mouse_down",
+	hl.dsp.focus({ workspace = "e+1" })
+)
+
+hl.bind(
+	mod .. " + mouse_up",
+	hl.dsp.focus({ workspace = "e-1" })
+)
+
+
+Do not duplicate those bindings in layout.lua.
+
+Important Lua API lessons already discovered
+
+These caused errors previously:
+
+Wrong
+hl.dsp.window.move("d")
+
+Correct form
+hl.dsp.window.move({
+	direction = "d",
+})
+
+
+Likewise, don't assume a dispatcher exists merely because a string resembles a Hyprland command.
+
+The following must be verified before use:
+
+hl.get_active_workspace()
+hl.get_active_special_workspace()
+hl.get_config()
+hl.dispatch()
+hl.dsp.layout(...)
+hl.dsp.focus(...)
+hl.dsp.window.move(...)
+
+
+The fact that one of these functions exists does not mean a particular argument form is valid.
+
+Current debugging commands
+
+These are useful:
+
+hyprctl configerrors
+
+hyprctl getoption <option>
+
+hyprctl activewindow -j
+
+hyprctl version
+
+hyprctl plugins list
+
+hyprpm list
+
+
+Lua testing can be done with:
+
+hyprctl repl '...'
+
+
+and:
+
+hyprctl eval '...'
+
+
+Remember that hyprctl eval executes Lua in this Hyprland version. Do not treat it as the old legacy keyword interface.
+
+Current priority
+
+Continue improving the configuration rather than redesigning it.
+
+Priorities:
+
+Keep the modular architecture.
+Keep all existing workspace bindings.
+Keep mouse-wheel workspace switching.
+Keep the four layouts.
+Keep Hyprfocus working.
+Improve native animations and visual effects.
+Add other plugins only after verifying compatibility.
+Prefer actual Hyprland 0.56.2 functionality over Niri-like approximations.
+Never invent dispatcher/configuration syntax.
+When something is unsupported, say so explicitly and either use the closest real Hyprland feature or leave it unbound.
+
+When providing replacement files, provide complete runnable files, not pseudocode or fragments.

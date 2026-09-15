@@ -1,0 +1,43 @@
+<* if {{ is_dark_mode }} *>
+
+{
+    "clock": {
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "format-alt": "{:%d-%m-%Y}",
+
+        "calendar": {
+            "mode": "month",
+
+            "format": {
+                "months": "<span color='{{ colors.primary.light.hex }}' size='large'><b>{}</b></span>",
+                "days": "<span color='{{ colors.on_surface.light.hex }}'><b>{}</b></span>",
+                "weeks": "<span color='{{ colors.secondary.light.hex }}'><b>W{}</b></span>",
+                "weekdays": "<span color='{{ colors.tertiary.light.hex }}'><b>{}</b></span>",
+                "today": "<span background='{{ colors.primary.light.hex }}' color='{{ colors.on_primary.light.hex }}'><b><u>{}</u></b></span>"
+            }
+        }
+    }
+}
+
+<* else *>
+
+{
+    "clock": {
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "format-alt": "{:%d-%m-%Y}",
+
+        "calendar": {
+            "mode": "month",
+
+            "format": {
+                "months": "<span color='{{ colors.primary.dark.hex }}' size='large'><b>{}</b></span>",
+                "days": "<span color='{{ colors.on_surface.dark.hex }}'><b>{}</b></span>",
+                "weeks": "<span color='{{ colors.secondary.dark.hex }}'><b>W{}</b></span>",
+                "weekdays": "<span color='{{ colors.tertiary.dark.hex }}'><b>{}</b></span>",
+                "today": "<span background='{{ colors.primary.dark.hex }}' color='{{ colors.on_primary.dark.hex }}'><b><u>{}</u></b></span>"
+            }
+        }
+    }
+}
+
+<* endif *>

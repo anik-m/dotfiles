@@ -1,0 +1,89 @@
+
+#!/usr/bin/env bash
+
+STATE="${XDG_RUNTIME_DIR:-/tmp}/waybar-stopwatch.state"
+
+# state format:
+# running|elapsed_seconds|started_epoch
+
+init() {
+    [[ -f "$STATE" ]] || echo "stopped|0|0" > "$STATE"
+}
+
+get_state() {
+    IFS='|' read -r STATUS ELAPSED STARTED < "$STATE"
+}
+
+save() {
+    echo "${STATUS}|${ELAPSED}|${STARTED}" > "$STATE"
+}
+
+output() {
+    get_state
+
+    local now elapsed
+
+    if [[ "$STATUS" == "running" ]]; then
+        now=$(date +%s)
+        elapsed=$((ELAPSED + now - STARTED))
+    else
+        elapsed=$ELAPSED
+    fi
+
+    local hours=$((elapsed / 3600))
+    local minutes=$(((elapsed % 3600) / 60))
+    local seconds=$((elapsed % 60))
+
+    if (( hours > 0 )); then
+        DISPLAY=$(printf "%02d:%02d:%02d" "$hours" "$minutes" "$seconds")
+    else
+        DISPLAY=$(printf "%02d:%02d" "$minutes" "$seconds")
+    fi
+
+    case "$STATUS" in
+        running)
+            CLASS="running"
+            ICON="󱎫"
+            ;;
+        stopped)
+            CLASS="stopped"
+            ICON="󱎫"
+            ;;
+    esac
+
+    printf '{"text":"%s %s","tooltip":"Stopwatch: %s\\nLeft click: pause/start\\nRight click: reset","class":"%s"}\n' \
+        "$ICON" "$DISPLAY" "$DISPLAY" "$CLASS"
+}
+
+start_stop() {
+    get_state
+
+    if [[ "$STATUS" == "running" ]]; then
+        NOW=$(date +%s)
+        ELAPSED=$((ELAPSED + NOW - STARTED))
+        STATUS="stopped"
+        STARTED=0
+    else
+        STARTED=$(date +%s)
+        STATUS="running"
+    fi
+
+    save
+}
+
+reset() {
+    echo "stopped|0|0" > "$STATE"
+}
+
+init
+
+case "$1" in
+    toggle)
+        start_stop
+        ;;
+    reset)
+        reset
+        ;;
+esac
+
+output

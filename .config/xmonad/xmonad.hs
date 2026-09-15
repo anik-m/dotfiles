@@ -86,7 +86,7 @@ import XMonad.Util.SpawnOnce
       -- TomorrowNight
       -- TokyoNight
       --
-import Colors.Nord
+import Colors.Wallpaper
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
 
@@ -152,7 +152,8 @@ myStartupHook = do
   -- spawn ("sleep 5 && conky")
   --aspawnOnce "xargs xwallpaper --stretch < ~/.cache/wall"
   -- spawnOnce "~/.fehbg &"  -- set last saved feh wallpaper
-  spawnOnce "feh --randomize --bg-fill ~/backgrounds/wallpapers/"  -- feh set random wallpaper
+  -- spawnOnce "feh --randomize --bg-fill ~/backgrounds/wallpapers/"  -- feh set random wallpaper
+  spawnOnce "~/.local/bin/setbgtheme-xmonad"
   spawnOnce "fcitx5"
   -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
   setWMName "LG3D"
@@ -530,7 +531,7 @@ myKeys c =
   [ ("M-C-r", addName "Recompile XMonad"       $ spawn "xmonad --recompile")
   , ("M-S-r", addName "Restart XMonad"         $ spawn "xmonad --restart")
   , ("M-S-e", addName "Exit XMonad"            $ sequence_ [spawn (mySoundPlayer ++ shutdownSound), io exitSuccess])
-  , ("M-S-c", addName "Quit XMonad"            $ spawn "dm-logout")
+  , ("M-S-c", addName "Power Menu"            $ spawn "~/.local/bin/power-menu")
   -- , ("M-S-e", addName "exit XMonad"            $ io exitSuccess)
   , ("M-S-q", addName "Kill focused window"    $ kill1)
   , ("M-S-a", addName "Kill all windows on WS" $ killAll)
@@ -538,6 +539,10 @@ myKeys c =
   , ("M-<Return>", addName "Run prompt"      $ sequence_ [spawn (mySoundPlayer ++ dmenuSound), spawn "rofi -show drun -show-icons"])
   , ("M-S-b", addName "Toggle bar show/hide"   $ sendMessage ToggleStruts) ]
   -- , ("M-/", addName "DTOS Help"                $ spawn "~/.local/bin/dtos-help")]
+
+  ^++^ subKeys "Wallpaper"
+  [ ("M-S-w", addName "Change wallpaper" $ spawn "~/.local/bin/setbgtheme-xmonad")
+  ]
 
   ^++^ subKeys "Switch to workspace"
   [ ("M-1", addName "Switch to workspace 0"    $ (windows $ W.greedyView $ myWorkspaces !! 0))
@@ -586,7 +591,7 @@ myKeys c =
   ^++^ subKeys "Dmenu scripts"
   [ ("M-p h", addName "List all dmscripts"     $ spawn "dm-hub")
   , ("M-p a", addName "Choose ambient sound"   $ spawn "dm-sounds")
-  , ("M-p b", addName "Set background"         $ spawn "dm-setbg")
+  -- , ("M-p b", addName "Set background"         $ spawn "dm-setbg")
   , ("M-p c", addName "Choose color scheme"    $ spawn "~/.local/bin/colorscheme")
   , ("M-p C", addName "Pick color from scheme" $ spawn "dm-colpick")
   , ("M-p e", addName "Edit config files"      $ spawn "dm-confedit")

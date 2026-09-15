@@ -1,0 +1,1011 @@
+
+Quickshell Desktop Shell — Project Context & Continuation Prompt
+
+You are helping me build a complete Linux desktop shell using Quickshell + QML, inspired by the UX and polish of DankMaterialShell (DMS) and Noctalia, but it should remain my own implementation rather than being a clone.
+
+Current environment
+Linux desktop
+Wayland
+Quickshell
+Hyprland
+Matugen for wallpaper-derived Material colors
+Some existing Waybar scripts are still being reused temporarily
+The goal is to eventually remove the Waybar dependency and make Quickshell a complete desktop shell
+
+The shell currently launches successfully.
+
+Current architecture
+
+The current color pipeline is:
+
+Wallpaper
+    ↓
+Matugen
+    ↓
+~/.config/quickshell/Theme/colors.json
+    ↓
+~/.config/quickshell/Theme/Colors.qml
+    ↓
+Quickshell UI
+
+
+This architecture should be preserved.
+
+Do NOT replace Matugen unless there is a compelling technical reason. Matugen already provides the Material-style wallpaper palette that I want.
+
+Important color decision
+
+My Matugen template intentionally uses the opposite light/dark palette in some cases.
+
+This is NOT an accidental mistake.
+
+The reason is that I want Quickshell windows, panels, cards, etc. to have enough contrast against the wallpaper.
+
+For example, when running a dark desktop, I may intentionally use the lighter Material palette for shell surfaces so the UI remains visually separated from a dark wallpaper.
+
+Do not automatically "fix" this by assuming:
+
+dark mode = Matugen dark colors
+light mode = Matugen light colors
+
+
+The desired behavior is:
+
+Wallpaper-derived colors
+        ↓
+Material palette
+        ↓
+Choose surface tones that provide good contrast with wallpaper
+
+
+Eventually this should be made more deliberate, perhaps through Material contrast settings or a shell-level surface strategy, rather than simply swapping entire palettes.
+
+Current Matugen configuration
+
+Current ~/.config/matugen/config.toml/config contains:
+
+[config]
+
+[templates.waybar]
+input_path = "~/.config/matugen/templates/colors.css"
+output_path = "~/.config/waybar/colors.css"
+# post_hook = "pkill -SIGUSR2 waybar"
+
+[templates.rofi]
+input_path = "~/.config/matugen/templates/rofi-colors.rasi"
+output_path = "~/.config/rofi/colors.rasi"
+
+[templates.waybar-clock]
+input_path = "~/.config/matugen/templates/waybar-clock.json"
+output_path = "~/.config/waybar/waybar-clock.json"
+
+[templates.alacritty]
+input_path = '~/.config/matugen/templates/alacritty.toml'
+output_path = '~/.config/alacritty/colors.toml'
+
+[templates.hyprland]
+input_path = "~/.config/matugen/templates/hyprland.lua"
+output_path = "~/.config/hypr/matugen-colors.lua"
+
+[templates.colors-sh]
+input_path = "~/.config/matugen/templates/colors.sh"
+output_path = "~/.config/matugen/generated/colors.sh"
+
+[templates.polybar]
+input_path = "~/.config/matugen/templates/polybar-colors.ini"
+output_path = "~/.config/polybar/colors.ini"
+
+[templates.xmonad]
+input_path = "~/.config/matugen/templates/xmonad-colors.hs"
+output_path = "~/.config/xmonad/lib/Colors/Wallpaper.hs"
+# post_hook = "~/.config/matugen/update-xmonad.sh"
+
+[templates.quickshell]
+input_path = "~/.config/matugen/templates/quickshell-colors.json"
+output_path = "~/.config/quickshell/Theme/colors.json"
+
+Current Matugen Quickshell template
+
+~/.config/matugen/templates/quickshell-colors.json currently generates:
+
+{
+    "colors": {
+<* if {{ is_dark_mode }} *>
+        "background": "{{ colors.background.light.hex }}",
+        "surface": "{{ colors.surface.light.hex }}",
+        "surface_variant": "{{ colors.surface_variant.light.hex }}",
+
+        "surface_container_lowest": "{{ colors.surface_container_lowest.light.hex }}",
+        "surface_container_low": "{{ colors.surface_container_low.hex }}",
+        "surface_container": "{{ colors.surface_container.light.hex }}",
+        "surface_container_high": "{{ colors.surface_container_high.light.hex }}",
+        "surface_container_highest": "{{ colors.surface_container_highest.light.hex }}",
+
+        "primary": "{{ colors.primary.light.hex }}",
+        "on_primary": "{{ colors.on_primary.light.hex }}",
+        "primary_container": "{{ colors.primary_container.light.hex }}",
+        "on_primary_container": "{{ colors.on_primary_container.light.hex }}",
+
+        "secondary": "{{ colors.secondary.light.hex }}",
+        "on_secondary": "{{ colors.on_secondary.light.hex }}",
+
+        "on_surface": "{{ colors.on_surface.light.hex }}",
+        "on_surface_variant": "{{ colors.on_surface_variant.light.hex }}",
+
+        "outline": "{{ colors.outline.light.hex }}",
+        "outline_variant": "{{ colors.outline_variant.light.hex }}",
+
+        "error": "{{ colors.error.light.hex }}",
+        "on_error": "{{ colors.on_error.light.hex }}"
+<* else *>
+        "background": "{{ colors.background.dark.hex }}",
+        "surface": "{{ colors.surface.dark.hex }}",
+        "surface_variant": "{{ colors.surface_variant.dark.hex }}",
+
+        "surface_container_lowest": "{{ colors.surface_container_lowest.dark.hex }}",
+        "surface_container_low": "{{ colors.surface_container_low.dark.hex }}",
+        "surface_container": "{{ colors.surface_container.dark.hex }}",
+        "surface_container_high": "{{ colors.surface_container_high.dark.hex }}",
+        "surface_container_highest": "{{ colors.surface_container_highest.dark.hex }}",
+
+        "primary": "{{ colors.primary.dark.hex }}",
+        "on_primary": "{{ colors.on_primary.dark.hex }}",
+        "primary_container": "{{ colors.primary_container.dark.hex }}",
+        "on_primary_container": "{{ colors.on_primary_container.dark.hex }}",
+
+        "secondary": "{{ colors.secondary.dark.hex }}",
+        "on_secondary": "{{ colors.secondary.dark.hex }}",
+
+        "on_surface": "{{ colors.on_surface.dark.hex }}",
+        "on_surface_variant": "{{ colors.on_surface_variant.dark.hex }}",
+
+        "outline": "{{ colors.outline.dark.hex }}",
+        "outline_variant": "{{ colors.outline_variant.dark.hex }}",
+
+        "error": "{{ colors.error.dark.hex }}",
+        "on_error": "{{ colors.error.dark.hex }}"
+<* endif *>
+    }
+}
+
+
+Note: the exact template may be refined later. Preserve the intentional contrast behavior.
+
+Current generated colors
+
+~/.config/quickshell/Theme/colors.json currently looks like:
+
+{
+    "colors": {
+        "background": "#0f1511",
+        "surface": "#0f1511",
+        "surface_variant": "#404943",
+
+        "surface_container_lowest": "#0a0f0c",
+        "surface_container_low": "#171d19",
+        "surface_container": "#1b211d",
+        "surface_container_high": "#262b27",
+        "surface_container_highest": "#303632",
+
+        "primary": "#90d5ae",
+        "on_primary": "#003822",
+        "primary_container": "#005234",
+        "on_primary_container": "#abf2c9",
+
+        "secondary": "#b4ccbc",
+        "on_secondary": "#203529",
+
+        "on_surface": "#dfe4de",
+        "on_surface_variant": "#c0c9c1",
+
+        "outline": "#8a938c",
+        "outline_variant": "#404943",
+
+        "error": "#ffb4ab",
+        "on_error": "#690005"
+    }
+}
+
+Current Colors.qml
+
+~/.config/quickshell/Theme/Colors.qml currently contains:
+
+pragma Singleton
+
+import QtQuick
+import Quickshell
+import Quickshell.Io
+
+Singleton {
+    id: root
+
+    FileView {
+        id: colorsFile
+
+        path: Quickshell.shellPath("Theme/colors.json")
+
+        blockLoading: true
+        watchChanges: true
+
+        onFileChanged: reload()
+    }
+
+    readonly property var data: JSON.parse(colorsFile.text())
+
+    readonly property color background:
+        data.colors.background
+
+    readonly property color surface:
+        data.colors.surface
+
+    readonly property color surfaceVariant:
+        data.colors.surface_variant
+
+    readonly property color surfaceContainerLowest:
+        data.colors.surface_container_lowest
+
+    readonly property color surfaceContainerLow:
+        data.colors.surface_container_low
+
+    readonly property color surfaceContainer:
+        data.colors.surface_container
+
+    readonly property color surfaceContainerHigh:
+        data.colors.surface_container_high
+
+    readonly property color surfaceContainerHighest:
+        data.colors.surface_container_highest
+
+    readonly property color primary:
+        data.colors.primary
+
+    readonly property color onPrimary:
+        data.colors.on_primary
+
+    readonly property color primaryContainer:
+        data.colors.primary_container
+
+    readonly property color onPrimaryContainer:
+        data.colors.on_primary_container
+
+    readonly property color secondary:
+        data.colors.secondary
+
+    readonly property color onSecondary:
+        data.colors.on_secondary
+
+    readonly property color onSurface:
+        data.colors.on_surface
+
+    readonly property color onSurfaceVariant:
+        data.colors.on_surface_variant
+
+    readonly property color outline:
+        data.colors.outline
+
+    readonly property color outlineVariant:
+        data.colors.outline_variant
+
+    readonly property color error:
+        data.colors.error
+
+    readonly property color onError:
+        data.colors.on_error
+
+    readonly property color text:
+        data.colors.on_surface
+
+    readonly property color textSecondary:
+        data.colors.on_surface_variant
+
+    readonly property color accent:
+        data.colors.primary
+
+    readonly property color accentText:
+        data.colors.on_primary
+
+    readonly property color popupBackground:
+        data.colors.surface_container_low
+
+    readonly property color popupBorder:
+        data.colors.outline_variant
+
+    readonly property color card:
+        data.colors.surface_container
+
+    readonly property color cardHover:
+        data.colors.surface_container_high
+
+    readonly property color cardSelected:
+        data.colors.primary_container
+
+    readonly property color sliderBackground:
+        data.colors.surface_container_highest
+
+    readonly property color sliderFill:
+        data.colors.primary
+}
+
+
+This is considered a good foundation.
+
+Do not unnecessarily rewrite it.
+
+Current StopwatchWidget.qml
+
+Current file:
+
+~/.config/quickshell/Bar/StopwatchWidget.qml
+
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import qs.Theme
+
+Text {
+    id: root
+
+    property string value: ""
+
+    text: value
+
+    color: Colors.text
+
+    font.pixelSize: 12
+
+    verticalAlignment: Text.AlignVCenter
+
+    Process {
+        id: stopwatch
+
+        command: [
+            "/usr/bin/bash",
+            "/home/nika/.config/waybar/scripts/waybar-stopwatch"
+        ]
+
+        running: true
+
+        stdout: SplitParser {
+            onRead: function(line) {
+                try {
+                    const json = JSON.parse(line)
+                    root.value =
+                        json.text !== undefined
+                            ? json.text
+                            : line
+                }
+                catch (e) {
+                    root.value = line
+                }
+            }
+        }
+    }
+
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            stopwatch.running = true
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        acceptedButtons:
+            Qt.LeftButton |
+            Qt.RightButton
+
+        onClicked: function(mouse) {
+            if (mouse.button === Qt.LeftButton)
+                toggle.running = true
+            else
+                reset.running = true
+        }
+    }
+
+    Process {
+        id: toggle
+
+        command: [
+            "/usr/bin/bash",
+            "/home/nika/.config/waybar/scripts/waybar-stopwatch",
+            "toggle"
+        ]
+    }
+
+    Process {
+        id: reset
+
+        command: [
+            "/usr/bin/bash",
+            "/home/nika/.config/waybar/scripts/waybar-stopwatch",
+            "reset"
+        ]
+    }
+}
+
+
+The Bash script exists and is executable:
+
+-rwxr-xr-x 1 nika nika 1633 Aug 22 12:09 /home/nika/.config/waybar/scripts/waybar-stopwatch
+
+
+It is a Bash script and works correctly when run manually:
+
+bash ~/.config/waybar/scripts/waybar-stopwatch
+
+
+and:
+
+~/.config/waybar/scripts/waybar-stopwatch
+
+
+both produce:
+
+{"text":"󱎫 00:00","tooltip":"Stopwatch: 00:00\nLeft click: pause/start\nRight click: reset","class":"stopped"}
+
+
+Quickshell originally produced repeated warnings:
+
+Process failed to start, likely because the binary could not be found.
+Command: QList("/home/nika/.config/waybar/scripts/waybar-stopwatch")
+
+
+The QML was subsequently changed to explicitly use /usr/bin/bash, so if the warning persists, check for stale/duplicate references elsewhere rather than changing this file blindly.
+
+Current NetworkWidget.qml
+
+Current file:
+
+~/.config/quickshell/Bar/NetworkWidget.qml
+
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import qs.Theme
+
+Text {
+    id: root
+
+    property string value: "Disconnected"
+
+    text: value
+
+    color:
+        value === "Disconnected"
+            ? Colors.accent
+            : Colors.text
+
+    font.pixelSize: 12
+
+    verticalAlignment: Text.AlignVCenter
+
+    Process {
+        id: network
+
+        command: [
+            "sh",
+            "-c",
+            "nmcli -t -f TYPE,STATE,CONNECTION dev status | awk -F: '$1==\"wifi\" && $2==\"connected\" {print \"wifi:\"$3; exit} $2==\"connected\" {print \"ethernet:\"$3; exit} END {if(!found) print \"disconnected\"}'"
+        ]
+
+        running: true
+
+        stdout: SplitParser {
+            onRead: function(line) {
+                if (line.startsWith("wifi:")) {
+                    root.value =
+                        " " +
+                        line.substring(5)
+                }
+
+                else if (
+                    line.startsWith("ethernet:")
+                ) {
+                    root.value =
+                        "󰈀 " +
+                        line.substring(9)
+                }
+
+                else {
+                    root.value =
+                        "Disconnected ⚠"
+                }
+            }
+        }
+    }
+
+    Timer {
+        interval: 2000
+
+        running: true
+
+        repeat: true
+
+        onTriggered: {
+            network.running = true
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            menu.running = true
+        }
+    }
+
+    Process {
+        id: menu
+
+        command: [
+            "/usr/bin/bash",
+            "/home/nika/.local/bin/network-menu"
+        ]
+    }
+}
+
+
+The network-menu executable is also being invoked explicitly through Bash.
+
+There is a minor bug in the network awk command: found is never set to 1, so the END block can print disconnected even after finding a connection. Fix this later.
+
+Current project goal
+
+The goal is to evolve this into a complete desktop shell with the polish and UX philosophy of Noctalia/DankMaterialShell.
+
+Do NOT simply recreate a status bar.
+
+The target is a full desktop shell containing:
+
+Top bar
+Workspaces
+Clock
+Network
+Audio
+Battery
+Bluetooth
+System tray
+Stopwatch
+Control center
+Network panel
+Audio panel
+Bluetooth panel
+Calendar
+Power menu
+Application launcher
+Notifications
+Notification history
+OSD
+Volume OSD
+Brightness OSD
+Media controls
+Wallpaper integration
+Matugen integration
+Clipboard
+System monitor
+Lock screen
+Power controls
+Settings
+Multi-monitor support
+Animations/transitions
+Consistent Material 3 visual language
+Desired project architecture
+
+Move toward:
+
+~/.config/quickshell/
+│
+├── shell.qml
+│
+├── Theme/
+│   ├── Colors.qml
+│   ├── Design.qml
+│   ├── Metrics.qml
+│   └── colors.json
+│
+├── Components/
+│   ├── Card.qml
+│   ├── Button.qml
+│   ├── IconButton.qml
+│   ├── Slider.qml
+│   ├── Toggle.qml
+│   ├── Popup.qml
+│   ├── Drawer.qml
+│   └── Separator.qml
+│
+├── Bar/
+│   ├── Bar.qml
+│   ├── Workspaces.qml
+│   ├── Clock.qml
+│   ├── Network.qml
+│   ├── Audio.qml
+│   ├── Battery.qml
+│   ├── Bluetooth.qml
+│   └── Tray.qml
+│
+├── Panels/
+│   ├── ControlCenter.qml
+│   ├── NetworkPanel.qml
+│   ├── AudioPanel.qml
+│   ├── BluetoothPanel.qml
+│   ├── CalendarPanel.qml
+│   └── PowerPanel.qml
+│
+├── Launcher/
+│   ├── Launcher.qml
+│   ├── AppSearch.qml
+│   └── AppItem.qml
+│
+├── Notifications/
+│   ├── NotificationPopup.qml
+│   └── NotificationCenter.qml
+│
+├── OSD/
+│   ├── OSD.qml
+│   ├── VolumeOSD.qml
+│   └── BrightnessOSD.qml
+│
+├── Desktop/
+│   ├── Wallpaper.qml
+│   └── Widgets.qml
+│
+├── Services/
+│   ├── AudioService.qml
+│   ├── NetworkService.qml
+│   ├── BatteryService.qml
+│   ├── BluetoothService.qml
+│   ├── MediaService.qml
+│   ├── NotificationService.qml
+│   └── SystemService.qml
+│
+└── Settings/
+    └── Settings.qml
+
+Architectural principle
+
+Separate:
+
+Theme
+Colors.qml
+Metrics.qml
+Design.qml
+
+
+from:
+
+Components
+Card
+Button
+Slider
+Popup
+Drawer
+
+
+from:
+
+Services
+AudioService
+NetworkService
+BatteryService
+BluetoothService
+NotificationService
+MediaService
+
+
+from:
+
+UI
+Bar
+ControlCenter
+Launcher
+Notifications
+OSD
+Settings
+
+
+A UI component should not contain lots of system logic.
+
+For example:
+
+NetworkService
+       ↓
+connected
+type
+ssid
+signal
+       ↓
+NetworkWidget
+
+
+rather than having the NetworkWidget independently implement everything.
+
+Material design system
+
+The existing Material palette should remain the source of truth.
+
+Build a semantic layer on top of it.
+
+For example, Design.qml should eventually expose things like:
+
+readonly property color window: Colors.background
+
+readonly property color panel: Colors.surfaceContainer
+readonly property color panelLow: Colors.surfaceContainerLow
+readonly property color panelHigh: Colors.surfaceContainerHigh
+
+readonly property color card: Colors.surfaceContainer
+readonly property color cardHover: Colors.surfaceContainerHigh
+readonly property color cardPressed: Colors.surfaceContainerHighest
+readonly property color cardActive: Colors.primaryContainer
+
+readonly property color accent: Colors.primary
+readonly property color accentContainer: Colors.primaryContainer
+
+readonly property color text: Colors.onSurface
+readonly property color textSecondary: Colors.onSurfaceVariant
+
+readonly property color border: Colors.outlineVariant
+readonly property color borderStrong: Colors.outline
+
+
+And Metrics.qml should define the geometry/design tokens:
+
+readonly property int radiusSmall: 8
+readonly property int radiusMedium: 12
+readonly property int radiusLarge: 16
+readonly property int radiusXLarge: 24
+
+readonly property int spacingSmall: 8
+readonly property int spacingMedium: 12
+readonly property int spacingLarge: 16
+
+readonly property int animationFast: 120
+readonly property int animationNormal: 200
+readonly property int animationSlow: 300
+
+
+The exact values can be adjusted after seeing the actual UI.
+
+Visual direction
+
+Aim for:
+
+Material 3
+wallpaper-derived colors
+rounded surfaces
+subtle translucency where appropriate
+good contrast
+restrained shadows
+consistent spacing
+smooth animations
+clear hierarchy
+compact but readable typography
+iconography consistent with the rest of the desktop
+panels that feel like part of the same system
+
+The UI should feel cohesive.
+
+Avoid making every widget look like a separate app.
+
+Control center target
+
+Something roughly like:
+
+╭────────────────────────────────────╮
+│             Quick Settings         │
+│                                    │
+│  ┌─────────────┐ ┌─────────────┐  │
+│  │     Wi-Fi   │ │  Bluetooth  │  │
+│  │     Home    │ │     Off     │  │
+│  └─────────────┘ └─────────────┘  │
+│                                    │
+│  🔊  ━━━━━━━━━━━━━●━━━━  72%      │
+│                                    │
+│  ☀   ━━━━━━━━━━━●━━━━━━  80%      │
+│                                    │
+│  ┌──────────────────────────────┐  │
+│  │           Power              │  │
+│  └──────────────────────────────┘  │
+╰────────────────────────────────────╯
+
+
+Do not copy this literally; it represents the desired UX.
+
+Launcher target
+
+A polished centered launcher:
+
+╭────────────────────────────────────╮
+│ 🔎  Search applications...         │
+│                                    │
+│ 󰉋  Files                           │
+│   Terminal                         │
+│   Browser                          │
+│ ⚙  Settings                         │
+╰────────────────────────────────────╯
+
+
+Eventually it should support:
+
+application search
+launching
+keyboard navigation
+calculator
+commands
+clipboard
+possibly running applications/windows
+Notifications
+
+Support:
+
+notification popups
+notification history
+dismiss
+clear all
+urgency
+app icon/name
+timestamps
+actions where possible
+
+Use D-Bus / appropriate Quickshell functionality rather than shelling out unnecessarily.
+
+OSD
+
+Support:
+
+volume
+brightness
+microphone
+keyboard layout where appropriate
+other useful system state
+
+OSD should use the same Material components and theme.
+
+Services
+
+Eventually stop depending on Waybar scripts.
+
+Current transitional architecture:
+
+Quickshell
+   ↓
+Process
+   ↓
+Waybar Bash script
+
+
+Desired architecture:
+
+Quickshell
+   ↓
+Quickshell service / process
+   ↓
+system interface
+   ↓
+UI
+
+
+For example, the stopwatch should eventually become a native QML service using Timer instead of calling the Waybar Bash script.
+
+Network should eventually become a proper service/state model rather than repeatedly running nmcli every two seconds if a better event-driven approach is available.
+
+Important development strategy
+
+Do NOT attempt to build the entire desktop in one giant rewrite.
+
+Build incrementally.
+
+Recommended order:
+
+Phase 1 — Foundation
+Inspect the existing Quickshell tree.
+Preserve working code.
+Fix any current process warnings.
+Establish Colors.qml.
+Add Design.qml.
+Add Metrics.qml.
+Create reusable Material components.
+Create a reusable popup/drawer system.
+Establish a consistent animation system.
+Phase 2 — Bar
+
+Build/refine:
+
+Workspaces
+Clock
+Network
+Audio
+Battery
+Bluetooth
+Tray
+Stopwatch
+
+The bar should become visually cohesive.
+
+Phase 3 — Control Center
+
+Implement:
+
+quick toggles
+Wi-Fi
+Bluetooth
+audio
+brightness
+battery/power information
+media
+power menu
+Phase 4 — Launcher
+
+Implement a polished application launcher with keyboard navigation.
+
+Phase 5 — Notifications
+
+Implement notification service, popup, and history.
+
+Phase 6 — OSD
+
+Implement volume, brightness, microphone, etc.
+
+Phase 7 — Desktop integration
+
+Implement:
+
+wallpaper
+Matugen refresh
+media
+clipboard
+lock screen
+power menu
+system monitor
+calendar
+settings
+multi-monitor behavior
+Phase 8 — Remove legacy dependencies
+
+Replace remaining Waybar scripts with native Quickshell services.
+
+Current immediate next step
+
+Before making architectural changes, inspect the existing project.
+
+Ask me to provide:
+
+tree -L 3 ~/.config/quickshell
+
+
+or, if tree is unavailable:
+
+find ~/.config/quickshell -maxdepth 3 -type f | sort
+
+
+Also inspect:
+
+cat ~/.config/quickshell/shell.qml
+
+
+Do not assume the existing shell.qml structure.
+
+Understand the existing implementation first, then propose changes that preserve working functionality.
+
+Critical working style
+
+When modifying the project:
+
+Explain what we are changing and why.
+Give complete replacement files when a file needs substantial modification.
+Do not silently remove existing functionality.
+Do not replace Matugen.
+Do not unnecessarily duplicate the color system.
+Prefer reusable components.
+Prefer native Quickshell/QML mechanisms over Bash scripts when practical.
+Keep system logic in services.
+Keep styling in the theme/design system.
+Keep UI components focused on presentation and interaction.
+Test each stage before moving to the next.
+If something is ambiguous, inspect the existing code rather than inventing architecture.
+
+The ultimate goal is a polished, cohesive, wallpaper-aware full desktop shell, inspired by the quality and UX of Noctalia/DankMaterialShell while remaining a custom Quickshell implementation.

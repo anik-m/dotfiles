@@ -1,6 +1,6 @@
+
 @import "/usr/lib/hyprwhspr/config/waybar/hyprwhspr-style.css";
 @import "colors.css";
-
 /* ============================================================
  * GLOBAL
  * ============================================================ */
@@ -8,22 +8,50 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font Propo", "Ubuntu", sans-serif;
+    /* font-family: "Ubuntu Nerd Font Bold"; */
+	font-family: "Ubuntu", "JetBrainsMono Nerd Font Propo", sans-serif;
     font-size: 13px;
     min-height: 0;
 }
 
 /* ============================================================
- * WAYBAR
+ * WAYBAR WINDOW
  * ============================================================ */
+
 
 window#waybar {
     background: transparent;
-    color: @on_background;
+    color: #f8f8f2;
 }
 
+/* window#waybar { */
+/* 	background : transparent; */
+    /* background: rgba(43, 48, 59, 0.5); */
+    /* color: #f8f8f2; */
+    /**/
+    /* transition-property: background-color; */
+    /* transition-duration: 0.5s; */
+/* } */
+
+/* window#waybar.hidden { */
+/*     opacity: 0.2; */
+/* } */
+
+/* Transparent when no window is present */
+/* window#waybar.empty { */
+/*     background-color: transparent; */
+/* } */
+/**/
+/* window#waybar.empty #window { */
+/*     padding: 0; */
+/*     border: none; */
+/*     background-color: transparent; */
+/* } */
+
 /* ============================================================
- * COMMON MODULES
+ * COMMON MODULE STYLE
+ *
+ * All normal indicators use this same background.
  * ============================================================ */
 
 #clock,
@@ -45,12 +73,8 @@ window#waybar {
 
     border-radius: 10px;
 
-    background-color: alpha(@surface_container, 0.68);
-    color: @on_surface;
-
-    transition:
-        background-color 200ms ease,
-        color 200ms ease;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -58,77 +82,70 @@ window#waybar {
  * ============================================================ */
 
 #window {
-    font-family: "JetBrainsMono Nerd Font";
+    /* font-family: "Ubuntu"; */
+	font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
 
     margin-top: 2px;
     border-radius: 10px;
-
-    color: @on_background;
 }
 
 /* ============================================================
  * WORKSPACES
  * ============================================================ */
 
+/* #workspaces { */
+/*     padding: 0 4px; */
+/*     margin: 2px 2px; */
+/*     border-radius: 10px; */
+/*     background-color: rgba(0, 0, 0, 0.3); */
+/* } */
+
 #workspaces {
+    background-color: @surface_container;
+    border-radius: 10px;
     margin: 2px;
     padding: 0 4px;
-
-    border-radius: 10px;
-
-    background-color: alpha(@surface_container, 0.70);
 }
 
-/* Workspace buttons */
+/* #workspaces button { */
+/*     padding: 0 7px; */
+/*     color: #f8f8f2; */
+/*     background-color: transparent; */
+/*     border: none; */
+/*     border-radius: 7px; */
+/* } */
 
+/* Individual workspace */
 #workspaces button {
-    padding: 0 6px;
-
     background-color: transparent;
-    color: @on_surface_variant;
-
-    border-radius: 8px;
-    border-top: 2px solid transparent;
-
-    transition:
-        background-color 150ms ease,
-        color 150ms ease;
+    color: @on_surface;
 }
 
 /* Hover */
-
 #workspaces button:hover {
-    background-color: alpha(@primary, 0.18);
-    color: @primary;
-
-    box-shadow: none;
-    border-color: transparent;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
 }
 
-/* Focused */
+/* #workspaces button.focused { */
+/*     color: #a9d18e; */
+/*     background-color: rgba(169, 209, 142, 0.12); */
+/*     border-top: 2px solid #a9d18e; */
+/* } */
 
+
+/* Focused */
 #workspaces button.focused {
     background-color: @primary_container;
     color: @on_primary_container;
-
     border-top: 2px solid @primary;
 }
 
-/* Active */
-
-#workspaces button.active {
-    background-color: @primary_container;
-    color: @on_primary_container;
-
-    border-top: 3px solid @primary;
-}
-
 /* Urgent */
-
 #workspaces button.urgent {
-    background-color: @error;
-    color: @on_error;
+    color: #ffffff;
+    background-color: #eb4d4b;
 }
 
 /* ============================================================
@@ -136,27 +153,31 @@ window#waybar {
  * ============================================================ */
 
 #mode {
-    background-color: @secondary_container;
-    color: @on_secondary_container;
+    color: #f8f8f2;
+    background-color: #64727d;
 
-    border-bottom: 3px solid @secondary;
+    border-bottom: 3px solid #f8f8f2;
 }
 
 /* ============================================================
  * CLOCK
  * ============================================================ */
 
+/* #clock { */
+/*     color: #a9d18e; */
+/*     font-weight: bold; */
+/* } */
+
 #clock {
     color: @primary;
     font-weight: bold;
 }
-
 /* ============================================================
  * CPU
  * ============================================================ */
 
 #cpu {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -164,7 +185,7 @@ window#waybar {
  * ============================================================ */
 
 #memory {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -172,7 +193,7 @@ window#waybar {
  * ============================================================ */
 
 #temperature {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -180,7 +201,7 @@ window#waybar {
  * ============================================================ */
 
 #power-profiles-daemon {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -188,12 +209,12 @@ window#waybar {
  * ============================================================ */
 
 #network {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 #network.disconnected {
-    background-color: @error;
-    color: @on_error;
+    background-color: #f53c3c;
+    color: #ffffff;
 }
 
 /* ============================================================
@@ -201,104 +222,138 @@ window#waybar {
  * ============================================================ */
 
 #pulseaudio {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 #pulseaudio.muted {
-    background-color: @error;
-    color: @on_error;
+    background-color: #f53c3c;
+    color: #ffffff;
 }
 
 /* ============================================================
- * BATTERY
+ * BATTERY CHECK
+ *
+ * Normal battery keeps the same background as every other
+ * indicator. Only charging/warning/critical change it.
  * ============================================================ */
 
 #custom-batterycheck {
+    color: #f8f8f2;
+
     min-width: 26px;
-    color: @on_surface;
+
+    transition:
+        color 200ms ease,
+        background-color 200ms ease;
 }
 
-/* Charging */
+/* Battery icon */
+#custom-batterycheck icon {
+    color: #f8f8f2;
+}
+
+/* ----------------------------
+ * Charging
+ * ---------------------------- */
 
 #custom-batterycheck.charging {
-    background-color: @primary_container;
-    color: @on_primary_container;
+    color: #dfffe0;
+    background-color: #268bd2;
 
-    box-shadow: 0 0 6px alpha(@primary, 0.45);
+    box-shadow: 0 0 6px rgba(38, 139, 210, 0.45);
 
     animation: charging-pulse 2s ease-in-out infinite;
 }
 
+#custom-batterycheck.charging icon {
+    color: #dfffe0;
+}
+
 @keyframes charging-pulse {
     0% {
-        background-color: @primary_container;
+        background-color: #268bd2;
     }
 
     50% {
-        background-color: @primary;
+        background-color: #2f9ee8;
     }
 
     100% {
-        background-color: @primary_container;
+        background-color: #268bd2;
     }
 }
 
-/* Warning */
+/* ----------------------------
+ * Battery Warning
+ * ---------------------------- */
 
 #custom-batterycheck.warning:not(.charging) {
-    background-color: @tertiary_container;
-    color: @on_tertiary_container;
+    color: #ffffff;
+    background-color: #f53c3c;
 
-    box-shadow: 0 0 8px alpha(@tertiary, 0.45);
+    box-shadow: 0 0 8px rgba(245, 60, 60, 0.5);
 
     animation: battery-warning 0.9s ease-in-out infinite alternate;
 }
 
+#custom-batterycheck.warning:not(.charging) icon {
+    color: #ffffff;
+}
+
 @keyframes battery-warning {
     from {
-        background-color: @tertiary_container;
-        box-shadow: 0 0 4px alpha(@tertiary, 0.30);
+        background-color: #f53c3c;
+        box-shadow: 0 0 4px rgba(245, 60, 60, 0.35);
     }
 
     to {
-        background-color: @tertiary;
-        box-shadow: 0 0 10px alpha(@tertiary, 0.65);
+        background-color: #ff6666;
+        box-shadow: 0 0 10px rgba(245, 60, 60, 0.75);
     }
 }
 
-/* Critical */
+/* ----------------------------
+ * Battery Critical
+ * ---------------------------- */
 
 #custom-batterycheck.critical:not(.charging) {
-    background-color: @error;
-    color: @on_error;
+    color: #ffffff;
+    background-color: #d90429;
 
-    box-shadow: 0 0 10px alpha(@error, 0.55);
+    box-shadow: 0 0 10px rgba(217, 4, 41, 0.55);
 
     animation: battery-critical 0.6s ease-in-out infinite alternate;
 }
 
+#custom-batterycheck.critical:not(.charging) icon {
+    color: #ffffff;
+}
+
 @keyframes battery-critical {
     from {
-        background-color: @error;
-        box-shadow: 0 0 5px alpha(@error, 0.35);
+        background-color: #d90429;
+        box-shadow: 0 0 5px rgba(217, 4, 41, 0.4);
     }
 
     to {
-        background-color: @error;
-        box-shadow: 0 0 12px alpha(@error, 0.75);
+        background-color: #ff1744;
+        box-shadow: 0 0 12px rgba(255, 23, 68, 0.8);
     }
 }
 
 /* ============================================================
- * PACMAN
+ * PACMAN / SYSTEM UPDATES
  * ============================================================ */
 
 #custom-pacupdate {
-    color: @primary;
+    color: #a9d18e;
 }
 
 /* ============================================================
  * POMODORO
+ *
+ * Same background as other modules.
+ * State is communicated through text color.
  * ============================================================ */
 
 #custom-pomodoro {
@@ -307,34 +362,40 @@ window#waybar {
 
     border-radius: 10px;
 
-    background-color: alpha(@surface_container, 0.88);
-    color: @on_surface;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
 }
 
+/* Work */
 #custom-pomodoro.work {
-    color: @primary;
+    color: #a9d18e;
 }
 
+/* Short break */
 #custom-pomodoro.short-break {
-    color: @secondary;
+    color: #a6e3a1;
 }
 
+/* Long break */
 #custom-pomodoro.long-break {
-    color: @tertiary;
+    color: #89dceb;
 }
 
+/* Paused */
 #custom-pomodoro.paused {
-    color: @tertiary;
+    color: #f9e2af;
 }
 
+/* Finished */
 #custom-pomodoro.finished {
-    color: @primary;
+    color: #cba6f7;
 
     animation: pomodoro-finished 1s ease-in-out infinite;
 }
 
+/* Stopped */
 #custom-pomodoro.stopped {
-    color: @error;
+    color: #f38ba8;
 }
 
 @keyframes pomodoro-finished {
@@ -356,15 +417,15 @@ window#waybar {
  * ============================================================ */
 
 #custom-timer {
-    color: @secondary;
+    color: #89dceb;
 }
 
 #custom-timer.running {
-    color: @primary;
+    color: #a6e3a1;
 }
 
 #custom-timer.stopped {
-    color: @tertiary;
+    color: #f9e2af;
 }
 
 /* ============================================================
@@ -372,7 +433,7 @@ window#waybar {
  * ============================================================ */
 
 #custom-power {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -380,7 +441,7 @@ window#waybar {
  * ============================================================ */
 
 #tray {
-    color: @on_surface;
+    color: #f8f8f2;
 }
 
 /* ============================================================
@@ -388,22 +449,14 @@ window#waybar {
  * ============================================================ */
 
 tooltip {
-    background-color: alpha(@surface_container, 0.85);
-    color: @on_surface;
-    border: 1px solid alpha(@outline_variant, 0.6);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px alpha(@shadow, 0.35);
-}
+    font-size: 0.85rem;
 
-tooltip label {
-    padding: 6px 8px;
-    background-color: transparent;
-    color: @on_surface;
-    border: none;
-    border-radius: 8px;
+    padding: 6px 10px;
 
-    font-family: "JetBrainsMono Nerd Font Propo", monospace;
-    font-size: 13px;
-    font-weight: 500;
-    text-shadow: none;
+    background-color: rgba(30, 30, 30, 0.94);
+    color: #fafafa;
+
+    border-radius: 5px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }

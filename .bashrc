@@ -224,7 +224,7 @@ alias yaysyu='yay -Syu --noconfirm'             # update standard pkgs and AUR p
 alias orphan='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages (DANGEROUS!)
 
 # get fastest mirrors
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirror="sudo reflector -c Bangladesh -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
@@ -265,6 +265,12 @@ alias newtag='git tag -a'
 
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
+
+# journal reduction by vacuum
+alias jctl100M="sudo journalctl --vacuum-size=100M"
+
+# journal reduction by time
+alias jctl7d="sudo journalctl --vacuum-time=7d"
 
 #video downloading options
 alias ysub="yt-dlp --write-subs --sub-langs en --embed-subs"

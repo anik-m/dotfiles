@@ -7,58 +7,58 @@ colorScheme :: String
 colorScheme = "wallpaper"
 
 colorBack :: String
-colorBack = "#0f1513"
+colorBack = "#f9f9ff"
 
 colorFore :: String
-colorFore = "#dee4e0"
+colorFore = "#1a1b20"
 
 color01 :: String
-color01 = "#303634"
+color01 = "#e2e2e9"
 
 color02 :: String
-color02 = "#ffb4ab"
+color02 = "#ba1a1a"
 
 color03 :: String
-color03 = "#a9cbe3"
+color03 = "#715573"
 
 color04 :: String
-color04 = "#b2ccc2"
+color04 = "#575e71"
 
 color05 :: String
-color05 = "#86d6bf"
+color05 = "#455e91"
 
 color06 :: String
-color06 = "#b2ccc2"
+color06 = "#575e71"
 
 color07 :: String
-color07 = "#a9cbe3"
+color07 = "#715573"
 
 color08 :: String
-color08 = "#252b29"
+color08 = "#e8e7ef"
 
 color09 :: String
-color09 = "#89938e"
+color09 = "#75777f"
 
 color10 :: String
-color10 = "#ffb4ab"
+color10 = "#ba1a1a"
 
 color11 :: String
-color11 = "#a9cbe3"
+color11 = "#715573"
 
 color12 :: String
-color12 = "#b2ccc2"
+color12 = "#575e71"
 
 color13 :: String
-color13 = "#86d6bf"
+color13 = "#455e91"
 
 color14 :: String
-color14 = "#b2ccc2"
+color14 = "#575e71"
 
 color15 :: String
-color15 = "#a9cbe3"
+color15 = "#715573"
 
 color16 :: String
-color16 = "#dee4e0"
+color16 = "#1a1b20"
 
 colorTrayer :: String
-colorTrayer = "--tint 0x0f1513"
+colorTrayer = "--tint 0xf9f9ff"

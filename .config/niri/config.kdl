@@ -376,6 +376,11 @@ window-rule {
     
 }
 
+window-rule {
+    match app-id="virt-manager"
+    open-maximized true
+}
+
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -616,6 +621,9 @@ binds {
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
+
+    
+    Mod+D { set-window-height "100%"; }
 
     Mod+C { center-column; }
 

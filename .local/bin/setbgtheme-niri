@@ -32,7 +32,7 @@ fi
 # ============================================================
 
 mapfile -t images < <(
-    find "$wallpaper_dir" -type f \
+    find -L "$wallpaper_dir" -type f \
         \( -iname "*.jpg" \
         -o -iname "*.jpeg" \
         -o -iname "*.png" \

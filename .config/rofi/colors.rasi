@@ -1,41 +1,41 @@
 * {
     /* backgrounds */
-    bg:                 #0f1513;
-    bg-trans:           #0f15134a;
+    bg:                 #f9f9ff;
+    bg-trans:           #f9f9ff4a;
 
-    bg-alt:             #1b211f;
-    bg-alt-trans:       #1b211f5a;
+    bg-alt:             #eeedf4;
+    bg-alt-trans:       #eeedf45a;
 
-    bg-hover:           #252b29;
+    bg-hover:           #e8e7ef;
 
-    bg-selected:        #005142;
-    bg-selected-trans:  #0051428a;
+    bg-selected:        #d8e2ff;
+    bg-selected-trans:  #d8e2ff8a;
 
     /* primary cyber accent */
-    cyan:               #102b24;
-    cyan-trans:         #102b245a;
-    cyan-dim:           #86d6bf;
+    cyan:               #6e82af;
+    cyan-trans:         #6e82af5a;
+    cyan-dim:           #455e91;
 
-    blue:               #b2ccc2;
+    blue:               #575e71;
 
     /* secondary cyber accent */
-    violet:             #a9cbe3;
-    magenta:            #c6e7ff;
+    violet:             #715573;
+    magenta:            #fcd7fb;
 
     /* text */
-    text:               #dee4e0;
-    text-dim:           #bfc9c4;
-    white:              #dee4e0;
+    text:               #1a1b20;
+    text-dim:           #44474f;
+    white:              #1a1b20;
 
     /* status */
-    red:                #ffb4ab;
-    green:              #b2ccc2;
-    yellow:             #a9cbe3;
+    red:                #ba1a1a;
+    green:              #575e71;
+    yellow:             #715573;
 
     /* borders */
-    border:             #86d6bf;
+    border:             #455e91;
 
     /* highlights */
-    highlight-cyan:     bold #102b24;
-    highlight-violet:   bold #a9cbe3;
+    highlight-cyan:     bold #6e82af;
+    highlight-violet:   bold #715573;
 }

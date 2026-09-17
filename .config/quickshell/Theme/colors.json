@@ -1,31 +1,31 @@
 {
     "colors": {
-"background": "#f5fbf7",
-        "surface": "#f5fbf7",
-        "surface_variant": "#dbe5e0",
+"background": "#111318",
+        "surface": "#111318",
+        "surface_variant": "#44474f",
 
-        "surface_container_lowest": "#ffffff",
-        "surface_container_low": "#eff5f1",
-        "surface_container": "#e9efeb",
-        "surface_container_high": "#e3eae6",
-        "surface_container_highest": "#dee4e0",
+        "surface_container_lowest": "#0c0e13",
+        "surface_container_low": "#1a1b20",
+        "surface_container": "#1e1f25",
+        "surface_container_high": "#282a2f",
+        "surface_container_highest": "#33353a",
 
-        "primary": "#0d6b58",
-        "on_primary": "#ffffff",
-        "primary_container": "#a2f2da",
-        "on_primary_container": "#002019",
+        "primary": "#aec6ff",
+        "on_primary": "#112f60",
+        "primary_container": "#2c4678",
+        "on_primary_container": "#d8e2ff",
 
-        "secondary": "#4b635b",
-        "on_secondary": "#ffffff",
+        "secondary": "#bfc6dc",
+        "on_secondary": "#293041",
 
-        "on_surface": "#171d1b",
-        "on_surface_variant": "#3f4945",
+        "on_surface": "#e2e2e9",
+        "on_surface_variant": "#c5c6d0",
 
-        "outline": "#6f7975",
-        "outline_variant": "#bfc9c4",
+        "outline": "#8e9099",
+        "outline_variant": "#44474f",
 
-        "error": "#ba1a1a",
-        "on_error": "#ffffff"
+        "error": "#ffb4ab",
+        "on_error": "#690005"
 
     }
 }

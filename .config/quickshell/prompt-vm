@@ -1,0 +1,50 @@
+I am running NixOS 26.05 on a machine booted in Legacy BIOS mode.
+
+Current system:
+- NixOS 26.05 installed successfully
+- Target disk: /dev/vda, 300 GB
+- /dev/vda1 = 1 GB ext4, label "boot", mounted at /boot
+- /dev/vda2 = 299 GB ext4, label "nixos", mounted at /
+- GRUB is installed in BIOS mode to /dev/vda
+- Normal user "user" exists
+- "user" is a normal user and has wheel/sudo access
+- root password was set interactively during nixos-install
+- sudo works
+- System boots successfully from the installed disk
+- Internet works
+
+I want to configure a graphical Wayland environment using:
+- Niri
+- Hyprland
+- Quickshell
+- Kitty terminal
+- Vim
+- Neovim
+- Firefox
+
+Important:
+- Use NixOS 26.05 documentation/current NixOS Wiki where appropriate.
+- Do not assume UEFI; this is Legacy BIOS.
+- Give me one command or a small group of commands at a time.
+- Explain briefly what each command does.
+- Do not give destructive commands without a clear warning.
+- Always validate with `nixos-rebuild dry-activate` before applying configuration changes.
+- Do not reboot until the configuration has successfully built.
+- Preserve my existing working configuration; don't replace the whole configuration.nix unnecessarily.
+- I am relatively new to Nix/NixOS, so explain Nix syntax when needed.
+
+Current issue:
+`programs.firefox.enable = true;` appears to cause a configuration problem, although this is normally a valid NixOS option. Diagnose the actual error rather than assuming Firefox itself is broken.
+
+After resolving that, help me set up:
+1. Niri
+2. Hyprland with UWSM
+3. A graphical login/session mechanism suitable for both compositors
+4. Kitty
+5. Vim and Neovim
+6. Firefox
+7. Quickshell
+8. Basic Wayland essentials such as XWayland, portals, polkit, notifications, clipboard tools, screenshots, and an application launcher as appropriate.
+
+For Quickshell, don't just install the package and claim the desktop is complete. Explain how it integrates with Niri/Hyprland and whether Home Manager is useful for managing the user's Quickshell configuration.
+

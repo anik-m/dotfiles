@@ -4,25 +4,25 @@
 -- ============================================================
 
 local colors = {
-	primary = "#86d6bf",
-	primary_container = "#005142",
+	primary = "#455e91",
+	primary_container = "#d8e2ff",
 
-	secondary = "#b2ccc2",
-	secondary_container = "#344c44",
+	secondary = "#575e71",
+	secondary_container = "#dbe2f9",
 
-	tertiary = "#a9cbe3",
-	tertiary_container = "#294a5e",
+	tertiary = "#715573",
+	tertiary_container = "#fcd7fb",
 
-	surface = "#0f1513",
-	surface_container = "#1b211f",
+	surface = "#f9f9ff",
+	surface_container = "#eeedf4",
 
-	on_surface = "#dee4e0",
-	on_surface_variant = "#bfc9c4",
+	on_surface = "#1a1b20",
+	on_surface_variant = "#44474f",
 
-	outline = "#89938e",
-	outline_variant = "#3f4945",
+	outline = "#75777f",
+	outline_variant = "#c5c6d0",
 
-	error = "#ffb4ab",
+	error = "#ba1a1a",
 }
 
 return colors
